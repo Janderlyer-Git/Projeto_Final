@@ -1,3 +1,4 @@
+
 package votacao;
 
 public class Administrador extends Pessoa {
