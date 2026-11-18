@@ -12,12 +12,12 @@ public class Administrador extends Pessoa {
         this.senha = senha;
     }
 
-    /* Construtor vazio para SQL / DAO */
+    /* Construtor vazio */
     public Administrador() {
         super();
     }
 
-    /* Sobrescrita polimórfica */
+    /*Exibir da classe filha (Herdaddo de pessoa) */
     public void exibirInfo() {
         System.out.printf("Administrador [ID: %d | Nome: %s | CPF: %s | Login: %s]%n",
                 getId(), getNome(), getCpf(), this.login);
