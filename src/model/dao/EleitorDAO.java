@@ -17,7 +17,7 @@ public class EleitorDAO {
     //inserir os dados de uma pessoa no mysql
     public void inserir(Eleitor el){
       try{   
-        String sql = "insert into Administrador (id, nome, cpf, tituloEleitoral, zona, secao, jaVotou) values ( ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into Eleitor (id, nome, cpf, tituloEleitoral, zona, secao, jaVotou) values ( ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         
         ps.setInt(1, el.getId());
