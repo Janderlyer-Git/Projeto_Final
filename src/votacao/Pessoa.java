@@ -7,7 +7,7 @@ public abstract class Pessoa {
     /*Atributos da classe mãe Pessoa*/
     
     private int id; 
-    String nome; 
+    private String nome; 
     private String cpf;
     
     /*Construtor*/
@@ -21,6 +21,7 @@ public abstract class Pessoa {
     /*Construtor Vazio*/
     
     public Pessoa() {
+        
     }
     
     /*Metódo abstrato para exibir*/
@@ -30,7 +31,7 @@ public abstract class Pessoa {
     
     /*Getters and Setters */
     
-        public int getId() {
+    public int getId() {
         return id;
     }
 
