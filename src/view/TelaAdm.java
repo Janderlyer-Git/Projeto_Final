@@ -79,7 +79,18 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         ExcluirCandidato = new javax.swing.JButton();
         Candidatos_Cadastrados = new javax.swing.JScrollPane();
         TabelaCandidato = new javax.swing.JTable();
-        Eleitores = new javax.swing.JPanel();
+        Eleitor = new javax.swing.JPanel();
+        NomeEleitor = new javax.swing.JLabel();
+        NomeEleitor_Caixa = new javax.swing.JTextField();
+        CpfEleitor = new javax.swing.JLabel();
+        CpfEleitor_Caixa = new javax.swing.JFormattedTextField();
+        TituloEleitor = new javax.swing.JLabel();
+        TituloEleitor_Caixa = new javax.swing.JFormattedTextField();
+        ExcluirEleitor = new javax.swing.JButton();
+        CadastrarEleitor = new javax.swing.JButton();
+        AtualizarEleitor = new javax.swing.JButton();
+        Eleitores_Cadastrados = new javax.swing.JScrollPane();
+        TabelaEleitor = new javax.swing.JTable();
         Apuracao = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -491,18 +502,115 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
 
         Opcoes.addTab("Candidato", Candidato);
 
-        javax.swing.GroupLayout EleitoresLayout = new javax.swing.GroupLayout(Eleitores);
-        Eleitores.setLayout(EleitoresLayout);
-        EleitoresLayout.setHorizontalGroup(
-            EleitoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 878, Short.MAX_VALUE)
+        NomeEleitor.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        NomeEleitor.setText("Nome do Eleitor");
+
+        CpfEleitor.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        CpfEleitor.setText("CPF");
+
+        try {
+            CpfEleitor_Caixa.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        CpfEleitor_Caixa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        TituloEleitor.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        TituloEleitor.setText("Titulo do Eleitor");
+
+        try {
+            TituloEleitor_Caixa.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("############")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        TituloEleitor_Caixa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        ExcluirEleitor.setBackground(new java.awt.Color(204, 0, 0));
+        ExcluirEleitor.setText("Excluir");
+        ExcluirEleitor.addActionListener(this::ExcluirEleitorActionPerformed);
+
+        CadastrarEleitor.setBackground(new java.awt.Color(0, 153, 0));
+        CadastrarEleitor.setText("Cadastrar");
+        CadastrarEleitor.addActionListener(this::CadastrarEleitorActionPerformed);
+
+        AtualizarEleitor.setBackground(new java.awt.Color(51, 204, 255));
+        AtualizarEleitor.setText("Atualizar");
+        AtualizarEleitor.addActionListener(this::AtualizarEleitorActionPerformed);
+
+        TabelaEleitor.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nome", "CPF", "Titulo", "Votou"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TabelaEleitor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaEleitorMouseClicked(evt);
+            }
+        });
+        Eleitores_Cadastrados.setViewportView(TabelaEleitor);
+
+        javax.swing.GroupLayout EleitorLayout = new javax.swing.GroupLayout(Eleitor);
+        Eleitor.setLayout(EleitorLayout);
+        EleitorLayout.setHorizontalGroup(
+            EleitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EleitorLayout.createSequentialGroup()
+                .addGap(74, 74, 74)
+                .addGroup(EleitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(CpfEleitor)
+                    .addComponent(NomeEleitor)
+                    .addComponent(TituloEleitor))
+                .addGap(18, 18, 18)
+                .addGroup(EleitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(NomeEleitor_Caixa)
+                    .addComponent(CpfEleitor_Caixa, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
+                    .addComponent(TituloEleitor_Caixa))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EleitorLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(EleitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(AtualizarEleitor, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CadastrarEleitor, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ExcluirEleitor, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(111, 111, 111))
+            .addComponent(Eleitores_Cadastrados, javax.swing.GroupLayout.DEFAULT_SIZE, 878, Short.MAX_VALUE)
         );
-        EleitoresLayout.setVerticalGroup(
-            EleitoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 538, Short.MAX_VALUE)
+        EleitorLayout.setVerticalGroup(
+            EleitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EleitorLayout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(ExcluirEleitor, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(EleitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NomeEleitor)
+                    .addComponent(NomeEleitor_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(EleitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CpfEleitor)
+                    .addComponent(CpfEleitor_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CadastrarEleitor, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(EleitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TituloEleitor)
+                    .addComponent(TituloEleitor_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(AtualizarEleitor, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Eleitores_Cadastrados, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        Opcoes.addTab("Eleitores", Eleitores);
+        Opcoes.addTab("Eleitor", Eleitor);
 
         javax.swing.GroupLayout ApuracaoLayout = new javax.swing.GroupLayout(Apuracao);
         Apuracao.setLayout(ApuracaoLayout);
@@ -1105,6 +1213,189 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
 
     }//GEN-LAST:event_PartidoCandidato_CaixaActionPerformed
 
+    private void ExcluirEleitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirEleitorActionPerformed
+       
+        // Obtém a linha selecionada
+    int linhaSelecionada = TabelaEleitor.getSelectedRow();
+
+    if (linhaSelecionada == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um eleitor na tabela para excluir.");
+        return;
+    }
+
+    // Confirmação de exclusão
+    int confirmacao = javax.swing.JOptionPane.showConfirmDialog(this,
+            "Tem certeza que deseja excluir este eleitor?",
+            "Confirmar Exclusão",
+            javax.swing.JOptionPane.YES_NO_OPTION);
+
+    if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
+        // Remove a linha da tabela visual
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaEleitor.getModel();
+        modelo.removeRow(linhaSelecionada);
+
+        // Limpa os campos
+        NomeEleitor_Caixa.setText("");
+        CpfEleitor_Caixa.setValue(null);
+        CpfEleitor_Caixa.setText("");
+        TituloEleitor_Caixa.setValue(null);
+        TituloEleitor_Caixa.setText("");
+        NomeEleitor_Caixa.requestFocus();
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Eleitor excluído com sucesso!");
+    }
+        
+    }//GEN-LAST:event_ExcluirEleitorActionPerformed
+
+    private void CadastrarEleitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarEleitorActionPerformed
+       
+       // Pega os dados digitados nos campos
+    String nome = NomeEleitor_Caixa.getText().trim();
+    String cpf = CpfEleitor_Caixa.getText().trim();
+    String titulo = TituloEleitor_Caixa.getText().trim();
+
+    // Remove pontos, traços e espaços para contar apenas os números
+    String cpfNumeros = cpf.replaceAll("[^0-9]", "");
+    String tituloNumeros = titulo.replaceAll("[^0-9]", "");
+
+    if (nome.isEmpty() || cpfNumeros.isEmpty() || tituloNumeros.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos do eleitor!");
+        return;
+    }
+
+    // Valida a quantidade exata de dígitos do CPF e do Título
+    if (cpfNumeros.length() != 11) {
+        javax.swing.JOptionPane.showMessageDialog(this, "O CPF deve conter exatamente 11 dígitos!");
+        return;
+    }
+
+    if (tituloNumeros.length() != 12) {
+        javax.swing.JOptionPane.showMessageDialog(this, "O Título de Eleitor deve conter exatamente 12 dígitos!");
+        return;
+    }
+
+    // Verifica se já existe eleitor com o mesmo CPF ou Título
+    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaEleitor.getModel();
+    for (int i = 0; i < modelo.getRowCount(); i++) {
+        String cpfExistente = modelo.getValueAt(i, 2).toString().replaceAll("[^0-9]", "");
+        String tituloExistente = modelo.getValueAt(i, 3).toString().replaceAll("[^0-9]", "");
+
+        if (cpfExistente.equals(cpfNumeros)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Já existe um eleitor cadastrado com este CPF!");
+            return;
+        }
+
+        if (tituloExistente.equals(tituloNumeros)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Já existe um eleitor cadastrado com este Título!");
+            return;
+        }
+    }
+
+    // Adiciona o eleitor na tabela com status inicial "Não" na coluna Votou
+    int novoId = modelo.getRowCount() + 1;
+    modelo.addRow(new Object[]{novoId, nome, cpf, titulo, "Não"});
+
+    // Limpa os campos do formulário
+    NomeEleitor_Caixa.setText("");
+    CpfEleitor_Caixa.setValue(null);
+    CpfEleitor_Caixa.setText("");
+    TituloEleitor_Caixa.setValue(null);
+    TituloEleitor_Caixa.setText("");
+    NomeEleitor_Caixa.requestFocus();
+        
+        
+    }//GEN-LAST:event_CadastrarEleitorActionPerformed
+
+    private void AtualizarEleitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizarEleitorActionPerformed
+       
+        // Obtém a linha selecionada
+    int linhaSelecionada = TabelaEleitor.getSelectedRow();
+
+    if (linhaSelecionada == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um eleitor na tabela para atualizar.");
+        return;
+    }
+
+    // Pega os dados atualizados dos campos
+    String nome = NomeEleitor_Caixa.getText().trim();
+    String cpf = CpfEleitor_Caixa.getText().trim();
+    String titulo = TituloEleitor_Caixa.getText().trim();
+
+    String cpfNumeros = cpf.replaceAll("[^0-9]", "");
+    String tituloNumeros = titulo.replaceAll("[^0-9]", "");
+
+    if (nome.isEmpty() || cpfNumeros.isEmpty() || tituloNumeros.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos para atualizar.");
+        return;
+    }
+
+    if (cpfNumeros.length() != 11) {
+        javax.swing.JOptionPane.showMessageDialog(this, "O CPF deve conter exatamente 11 dígitos!");
+        return;
+    }
+
+    if (tituloNumeros.length() != 12) {
+        javax.swing.JOptionPane.showMessageDialog(this, "O Título de Eleitor deve conter exatamente 12 dígitos!");
+        return;
+    }
+
+    // Verifica duplicidade ignorando a própria linha selecionada
+    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaEleitor.getModel();
+    for (int i = 0; i < modelo.getRowCount(); i++) {
+        if (i != linhaSelecionada) {
+            String cpfExistente = modelo.getValueAt(i, 2).toString().replaceAll("[^0-9]", "");
+            String tituloExistente = modelo.getValueAt(i, 3).toString().replaceAll("[^0-9]", "");
+
+            if (cpfExistente.equals(cpfNumeros)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Já existe outro eleitor cadastrado com este CPF!");
+                return;
+            }
+
+            if (tituloExistente.equals(tituloNumeros)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Já existe outro eleitor cadastrado com este Título!");
+                return;
+            }
+        }
+    }
+
+    // Atualiza os dados na tabela visual
+    TabelaEleitor.setValueAt(nome, linhaSelecionada, 1);
+    TabelaEleitor.setValueAt(cpf, linhaSelecionada, 2);
+    TabelaEleitor.setValueAt(titulo, linhaSelecionada, 3);
+
+    // Limpa os campos
+    NomeEleitor_Caixa.setText("");
+    CpfEleitor_Caixa.setValue(null);
+    CpfEleitor_Caixa.setText("");
+    TituloEleitor_Caixa.setValue(null);
+    TituloEleitor_Caixa.setText("");
+    NomeEleitor_Caixa.requestFocus();
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Eleitor atualizado com sucesso!");
+    
+    }//GEN-LAST:event_AtualizarEleitorActionPerformed
+
+    private void TabelaEleitorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaEleitorMouseClicked
+   
+        // Verifica se foi clique com o botão esquerdo
+    if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+        // Obtém a linha selecionada
+        int linhaSelecionada = TabelaEleitor.getSelectedRow();
+
+        if (linhaSelecionada != -1) {
+            // Pega os dados da linha clicada
+            String nome = TabelaEleitor.getValueAt(linhaSelecionada, 1).toString();
+            String cpf = TabelaEleitor.getValueAt(linhaSelecionada, 2).toString();
+            String titulo = TabelaEleitor.getValueAt(linhaSelecionada, 3).toString();
+
+            // Preenche os campos do formulário
+            NomeEleitor_Caixa.setText(nome);
+            CpfEleitor_Caixa.setText(cpf);
+            TituloEleitor_Caixa.setText(titulo);
+        }
+    }
+    }//GEN-LAST:event_TabelaEleitorMouseClicked
+
     /**
      * @param args the comêmand line arguments
      */
@@ -1133,9 +1424,11 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Apuracao;
     private javax.swing.JButton AtualizarCandidato;
+    private javax.swing.JButton AtualizarEleitor;
     private javax.swing.JButton AtualizarPartido;
     private javax.swing.JButton Atualizar_Cargo;
     private javax.swing.JButton CadastrarCandidato;
+    private javax.swing.JButton CadastrarEleitor;
     private javax.swing.JButton CadastrarPartido;
     private javax.swing.JButton Cadastrar_Cargo;
     private javax.swing.JPanel Candidato;
@@ -1144,13 +1437,17 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private javax.swing.JLabel CargoCandidato;
     private javax.swing.JComboBox<String> CargoCandidato_Caixa;
     private javax.swing.JScrollPane Cargos_Cadastrados;
+    private javax.swing.JLabel CpfEleitor;
+    private javax.swing.JFormattedTextField CpfEleitor_Caixa;
     private javax.swing.JLabel Descricao;
     private javax.swing.JScrollPane DescricaoCaixa;
     private javax.swing.JTextArea Descricao_Caixa;
     private javax.swing.JLabel Digitos;
     private javax.swing.JTextField Digitos_Caixa;
-    private javax.swing.JPanel Eleitores;
+    private javax.swing.JPanel Eleitor;
+    private javax.swing.JScrollPane Eleitores_Cadastrados;
     private javax.swing.JButton ExcluirCandidato;
+    private javax.swing.JButton ExcluirEleitor;
     private javax.swing.JButton ExcluirPartido;
     private javax.swing.JButton Excluir_Cargo;
     private javax.swing.JLabel Foto;
@@ -1158,6 +1455,8 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private javax.swing.JTextField NomeCandidato_Caixa;
     private javax.swing.JLabel NomeCargo;
     private javax.swing.JTextField NomeCargo_Caixa;
+    private javax.swing.JLabel NomeEleitor;
+    private javax.swing.JTextField NomeEleitor_Caixa;
     private javax.swing.JLabel NomePartido;
     private javax.swing.JTextField NomePartido_Caixa;
     private javax.swing.JLabel NumeroCandidato;
@@ -1176,8 +1475,11 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private javax.swing.JTextField SiglaPartido_Caixa;
     private javax.swing.JLabel SubTitulo;
     private javax.swing.JTable TabelaCandidato;
+    private javax.swing.JTable TabelaEleitor;
     private javax.swing.JTable TabelaPartido;
     private javax.swing.JTable Tabelas;
     private javax.swing.JLabel TituloAdm;
+    private javax.swing.JLabel TituloEleitor;
+    private javax.swing.JFormattedTextField TituloEleitor_Caixa;
     // End of variables declaration//GEN-END:variables
 }
