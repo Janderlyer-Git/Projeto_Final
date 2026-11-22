@@ -10,6 +10,11 @@ package view;
  */
 public class TelaAdm extends javax.swing.JFrame {
     
+    //Alocação do endereo da imagem ç
+ String caminhoFoto = "";
+java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
+
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaAdm.class.getName());
 
     /**
@@ -59,6 +64,21 @@ public class TelaAdm extends javax.swing.JFrame {
         ExcluirPartido = new javax.swing.JButton();
         AtualizarPartido = new javax.swing.JButton();
         Candidato = new javax.swing.JPanel();
+        NomeCandidato = new javax.swing.JLabel();
+        NomeCandidato_Caixa = new javax.swing.JTextField();
+        NumeroCandidato = new javax.swing.JLabel();
+        NumeroCandidato_Caixa = new javax.swing.JTextField();
+        CargoCandidato = new javax.swing.JLabel();
+        PartidoCandidato = new javax.swing.JLabel();
+        CargoCandidato_Caixa = new javax.swing.JComboBox<>();
+        PartidoCandidato_Caixa = new javax.swing.JComboBox<>();
+        Foto = new javax.swing.JLabel();
+        SelecionarFoto = new javax.swing.JButton();
+        CadastrarCandidato = new javax.swing.JButton();
+        AtualizarCandidato = new javax.swing.JButton();
+        ExcluirCandidato = new javax.swing.JButton();
+        Candidatos_Cadastrados = new javax.swing.JScrollPane();
+        TabelaCandidato = new javax.swing.JTable();
         Eleitores = new javax.swing.JPanel();
         Apuracao = new javax.swing.JPanel();
 
@@ -108,6 +128,7 @@ public class TelaAdm extends javax.swing.JFrame {
         );
 
         Opcoes.setBackground(new java.awt.Color(0, 153, 0));
+        Opcoes.addChangeListener(this::OpcoesStateChanged);
 
         NomeCargo.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         NomeCargo.setText("Nome do Cargo");
@@ -334,15 +355,138 @@ public class TelaAdm extends javax.swing.JFrame {
 
         Opcoes.addTab("Partido", Partido);
 
+        NomeCandidato.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        NomeCandidato.setText("Nome do Candidato");
+
+        NumeroCandidato.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        NumeroCandidato.setText("Número");
+
+        CargoCandidato.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        CargoCandidato.setText("Cargo");
+
+        PartidoCandidato.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        PartidoCandidato.setText("Partido");
+
+        CargoCandidato_Caixa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+
+        PartidoCandidato_Caixa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        PartidoCandidato_Caixa.addActionListener(this::PartidoCandidato_CaixaActionPerformed);
+
+        Foto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Foto.setText("FOTO");
+        Foto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        SelecionarFoto.setBackground(new java.awt.Color(204, 204, 204));
+        SelecionarFoto.setText("Selecionar Foto");
+        SelecionarFoto.addActionListener(this::SelecionarFotoActionPerformed);
+
+        CadastrarCandidato.setBackground(new java.awt.Color(0, 153, 0));
+        CadastrarCandidato.setText("Cadastrar");
+        CadastrarCandidato.addActionListener(this::CadastrarCandidatoActionPerformed);
+
+        AtualizarCandidato.setBackground(new java.awt.Color(51, 204, 255));
+        AtualizarCandidato.setText("Atualizar");
+        AtualizarCandidato.addActionListener(this::AtualizarCandidatoActionPerformed);
+
+        ExcluirCandidato.setBackground(new java.awt.Color(204, 0, 0));
+        ExcluirCandidato.setText("Excluir");
+        ExcluirCandidato.addActionListener(this::ExcluirCandidatoActionPerformed);
+
+        Candidatos_Cadastrados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Candidatos_CadastradosMouseClicked(evt);
+            }
+        });
+
+        TabelaCandidato.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Número", "Nome", "Cargo", "Partido"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        Candidatos_Cadastrados.setViewportView(TabelaCandidato);
+
         javax.swing.GroupLayout CandidatoLayout = new javax.swing.GroupLayout(Candidato);
         Candidato.setLayout(CandidatoLayout);
         CandidatoLayout.setHorizontalGroup(
             CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 878, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CandidatoLayout.createSequentialGroup()
+                .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CandidatoLayout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(NumeroCandidato)
+                            .addComponent(NomeCandidato)
+                            .addComponent(CargoCandidato)
+                            .addComponent(PartidoCandidato))
+                        .addGap(18, 18, 18)
+                        .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(CargoCandidato_Caixa, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(NumeroCandidato_Caixa, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(PartidoCandidato_Caixa, javax.swing.GroupLayout.Alignment.LEADING, 0, 145, Short.MAX_VALUE))
+                            .addComponent(NomeCandidato_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CandidatoLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ExcluirCandidato)
+                        .addGap(12, 12, 12)))
+                .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CandidatoLayout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(CadastrarCandidato)
+                        .addGap(18, 18, 18)
+                        .addComponent(AtualizarCandidato)
+                        .addGap(30, 30, 30))
+                    .addGroup(CandidatoLayout.createSequentialGroup()
+                        .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Foto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(SelecionarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(92, 92, 92))))
+            .addComponent(Candidatos_Cadastrados)
         );
         CandidatoLayout.setVerticalGroup(
             CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 538, Short.MAX_VALUE)
+            .addGroup(CandidatoLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CandidatoLayout.createSequentialGroup()
+                        .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(NomeCandidato)
+                            .addComponent(NomeCandidato_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)
+                        .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(NumeroCandidato)
+                            .addComponent(NumeroCandidato_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CargoCandidato)
+                            .addComponent(CargoCandidato_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(PartidoCandidato_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PartidoCandidato)))
+                    .addGroup(CandidatoLayout.createSequentialGroup()
+                        .addComponent(Foto, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(SelecionarFoto)))
+                .addGap(32, 32, 32)
+                .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CadastrarCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AtualizarCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ExcluirCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Candidatos_Cadastrados, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         Opcoes.addTab("Candidato", Candidato);
@@ -669,6 +813,298 @@ public class TelaAdm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_TabelasMouseClicked
 
+    private void OpcoesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_OpcoesStateChanged
+                                         
+    // Atualiza as listas de Cargos e Partidos ao trocar de aba
+    CargoCandidato_Caixa.removeAllItems();
+    for (int i = 0; i < Tabelas.getRowCount(); i++) {
+        CargoCandidato_Caixa.addItem(Tabelas.getValueAt(i, 1).toString());
+    }
+
+    PartidoCandidato_Caixa.removeAllItems();
+    for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
+        PartidoCandidato_Caixa.addItem(TabelaPartido.getValueAt(i, 2).toString());
+    }
+
+    }//GEN-LAST:event_OpcoesStateChanged
+
+    private void SelecionarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelecionarFotoActionPerformed
+        // Abre a janela para escolher o arquivo de imagem
+    javax.swing.JFileChooser seletor = new javax.swing.JFileChooser();
+    seletor.setDialogTitle("Selecione a foto do candidato");
+    seletor.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Imagens (JPG, PNG)", "jpg", "jpeg", "png"));
+
+    int resultado = seletor.showOpenDialog(this);
+
+    if (resultado == javax.swing.JFileChooser.APPROVE_OPTION) {
+        // Guarda o caminho da imagem escolhida
+        java.io.File arquivo = seletor.getSelectedFile();
+        caminhoFoto = arquivo.getAbsolutePath();
+
+        // Redimensiona a imagem para caber exatamente no quadro Foto
+        javax.swing.ImageIcon iconeOriginal = new javax.swing.ImageIcon(caminhoFoto);
+        java.awt.Image imagemAjustada = iconeOriginal.getImage().getScaledInstance(
+                Foto.getWidth(), Foto.getHeight(), java.awt.Image.SCALE_SMOOTH);
+
+        // Exibe a foto no JLabel e remove o texto
+        Foto.setText("");
+        Foto.setIcon(new javax.swing.ImageIcon(imagemAjustada));
+    }
+    }//GEN-LAST:event_SelecionarFotoActionPerformed
+
+    private void CadastrarCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarCandidatoActionPerformed
+    // Pega os dados digitados e selecionados
+    String nome = NomeCandidato_Caixa.getText().trim();
+    String numeroStr = NumeroCandidato_Caixa.getText().trim();
+
+    if (nome.isEmpty() || numeroStr.isEmpty() || CargoCandidato_Caixa.getSelectedItem() == null || PartidoCandidato_Caixa.getSelectedItem() == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos e selecione cargo e partido!");
+        return;
+    }
+
+    String cargo = CargoCandidato_Caixa.getSelectedItem().toString();
+    String partido = PartidoCandidato_Caixa.getSelectedItem().toString();
+
+    try {
+        // Valida se o número é um valor inteiro
+        int numero = Integer.parseInt(numeroStr);
+
+        // Busca o número do partido selecionado na tabela de partidos
+        String numeroPartido = "";
+        for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
+            if (TabelaPartido.getValueAt(i, 2).toString().equals(partido)) {
+                numeroPartido = TabelaPartido.getValueAt(i, 1).toString();
+                break;
+            }
+        }
+
+        // Verifica se o número do candidato inicia com o número do partido
+        if (!numeroPartido.isEmpty() && !numeroStr.startsWith(numeroPartido)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O número do candidato deve começar com " + numeroPartido + " (número do partido " + partido + ")!");
+            return;
+        }
+
+        // Busca a quantidade de dígitos exigida pelo cargo selecionado
+        int digitosExigidos = 0;
+        for (int i = 0; i < Tabelas.getRowCount(); i++) {
+            if (Tabelas.getValueAt(i, 1).toString().equals(cargo)) {
+                digitosExigidos = Integer.parseInt(Tabelas.getValueAt(i, 2).toString());
+                break;
+            }
+        }
+
+        if (digitosExigidos > 0 && numeroStr.length() != digitosExigidos) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O cargo " + cargo + " exige exatamente " + digitosExigidos + " dígitos!");
+            return;
+        }
+
+        // Verifica se já existe candidato com o mesmo número nesse cargo
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaCandidato.getModel();
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            String numExistente = modelo.getValueAt(i, 1).toString();
+            String cargoExistente = modelo.getValueAt(i, 3).toString();
+            if (numExistente.equals(numeroStr) && cargoExistente.equals(cargo)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Já existe um candidato com esse número para este cargo!");
+                return;
+            }
+        }
+
+        // Adiciona o candidato na tabela e salva o caminho da foto
+        int novoId = modelo.getRowCount() + 1;
+        modelo.addRow(new Object[]{novoId, numero, nome, cargo, partido});
+        listaFotos.add(caminhoFoto);
+
+        // Limpa os campos e restaura o quadro da foto
+        NomeCandidato_Caixa.setText("");
+        NumeroCandidato_Caixa.setText("");
+        caminhoFoto = "";
+        Foto.setIcon(null);
+        Foto.setText("FOTO");
+        NomeCandidato_Caixa.requestFocus();
+
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "O número do candidato deve conter apenas algarismos!");
+    }
+    }//GEN-LAST:event_CadastrarCandidatoActionPerformed
+
+    private void Candidatos_CadastradosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Candidatos_CadastradosMouseClicked
+        
+        // Verifica se foi clique com o botão esquerdo
+    if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+        // Obtém a linha selecionada
+        int linhaSelecionada = TabelaCandidato.getSelectedRow();
+
+        if (linhaSelecionada != -1) {
+            // Pega os dados da tabela conforme as colunas
+            String numero = TabelaCandidato.getValueAt(linhaSelecionada, 1).toString();
+            String nome = TabelaCandidato.getValueAt(linhaSelecionada, 2).toString();
+            String cargo = TabelaCandidato.getValueAt(linhaSelecionada, 3).toString();
+            String partido = TabelaCandidato.getValueAt(linhaSelecionada, 4).toString();
+
+            // Preenche os campos e os combos
+            NumeroCandidato_Caixa.setText(numero);
+            NomeCandidato_Caixa.setText(nome);
+            CargoCandidato_Caixa.setSelectedItem(cargo);
+            PartidoCandidato_Caixa.setSelectedItem(partido);
+
+            // Carrega a foto salva daquele candidato
+            caminhoFoto = listaFotos.get(linhaSelecionada);
+            if (!caminhoFoto.isEmpty()) {
+                javax.swing.ImageIcon iconeOriginal = new javax.swing.ImageIcon(caminhoFoto);
+                java.awt.Image imagemAjustada = iconeOriginal.getImage().getScaledInstance(
+                        Foto.getWidth(), Foto.getHeight(), java.awt.Image.SCALE_SMOOTH);
+                Foto.setText("");
+                Foto.setIcon(new javax.swing.ImageIcon(imagemAjustada));
+            } else {
+                Foto.setIcon(null);
+                Foto.setText("FOTO");
+            }
+        }
+    }
+    }//GEN-LAST:event_Candidatos_CadastradosMouseClicked
+
+    private void AtualizarCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizarCandidatoActionPerformed
+        
+       // Obtém a linha selecionada
+    int linhaSelecionada = TabelaCandidato.getSelectedRow();
+
+    if (linhaSelecionada == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um candidato na tabela para atualizar.");
+        return;
+    }
+
+    // Pega os dados atualizados
+    String nome = NomeCandidato_Caixa.getText().trim();
+    String numeroStr = NumeroCandidato_Caixa.getText().trim();
+
+    if (nome.isEmpty() || numeroStr.isEmpty() || CargoCandidato_Caixa.getSelectedItem() == null || PartidoCandidato_Caixa.getSelectedItem() == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos para atualizar.");
+        return;
+    }
+
+    String cargo = CargoCandidato_Caixa.getSelectedItem().toString();
+    String partido = PartidoCandidato_Caixa.getSelectedItem().toString();
+
+    try {
+        // Valida se o número é um valor inteiro
+        int numero = Integer.parseInt(numeroStr);
+
+        // Busca o número do partido selecionado na tabela de partidos
+        String numeroPartido = "";
+        for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
+            if (TabelaPartido.getValueAt(i, 2).toString().equals(partido)) {
+                numeroPartido = TabelaPartido.getValueAt(i, 1).toString();
+                break;
+            }
+        }
+
+        // Verifica se o número do candidato inicia com o número do partido
+        if (!numeroPartido.isEmpty() && !numeroStr.startsWith(numeroPartido)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O número do candidato deve começar com " + numeroPartido + " (número do partido " + partido + ")!");
+            return;
+        }
+
+        // Busca a quantidade de dígitos exigida pelo cargo
+        int digitosExigidos = 0;
+        for (int i = 0; i < Tabelas.getRowCount(); i++) {
+            if (Tabelas.getValueAt(i, 1).toString().equals(cargo)) {
+                digitosExigidos = Integer.parseInt(Tabelas.getValueAt(i, 2).toString());
+                break;
+            }
+        }
+
+        if (digitosExigidos > 0 && numeroStr.length() != digitosExigidos) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O cargo " + cargo + " exige exatamente " + digitosExigidos + " dígitos!");
+            return;
+        }
+
+        // Verifica duplicidade ignorando a própria linha selecionada
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaCandidato.getModel();
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            if (i != linhaSelecionada) {
+                String numExistente = modelo.getValueAt(i, 1).toString();
+                String cargoExistente = modelo.getValueAt(i, 3).toString();
+                if (numExistente.equals(numeroStr) && cargoExistente.equals(cargo)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Já existe outro candidato com esse número para este cargo!");
+                    return;
+                }
+            }
+        }
+
+        // Atualiza os dados na tabela e a foto na lista
+        TabelaCandidato.setValueAt(numero, linhaSelecionada, 1);
+        TabelaCandidato.setValueAt(nome, linhaSelecionada, 2);
+        TabelaCandidato.setValueAt(cargo, linhaSelecionada, 3);
+        TabelaCandidato.setValueAt(partido, linhaSelecionada, 4);
+        listaFotos.set(linhaSelecionada, caminhoFoto);
+
+        // Limpa os campos
+        NomeCandidato_Caixa.setText("");
+        NumeroCandidato_Caixa.setText("");
+        caminhoFoto = "";
+        Foto.setIcon(null);
+        Foto.setText("FOTO");
+        NomeCandidato_Caixa.requestFocus();
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Candidato atualizado com sucesso!");
+
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "O número do candidato deve conter apenas algarismos!");
+    }
+        
+    }//GEN-LAST:event_AtualizarCandidatoActionPerformed
+
+    private void ExcluirCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirCandidatoActionPerformed
+       
+        // Obtém a linha selecionada
+    int linhaSelecionada = TabelaCandidato.getSelectedRow();
+
+    if (linhaSelecionada == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um candidato na tabela para excluir.");
+        return;
+    }
+
+    // Confirmação de exclusão
+    int confirmacao = javax.swing.JOptionPane.showConfirmDialog(this,
+            "Tem certeza que deseja excluir este candidato?",
+            "Confirmar Exclusão",
+            javax.swing.JOptionPane.YES_NO_OPTION);
+
+    if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
+        // Remove a linha da tabela e a foto da lista
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaCandidato.getModel();
+        modelo.removeRow(linhaSelecionada);
+        listaFotos.remove(linhaSelecionada);
+
+        // Limpa os campos
+        NomeCandidato_Caixa.setText("");
+        NumeroCandidato_Caixa.setText("");
+        caminhoFoto = "";
+        Foto.setIcon(null);
+        Foto.setText("FOTO");
+        NomeCandidato_Caixa.requestFocus();
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Candidato excluído com sucesso!");
+    }
+    }//GEN-LAST:event_ExcluirCandidatoActionPerformed
+
+    private void PartidoCandidato_CaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PartidoCandidato_CaixaActionPerformed
+                                                  
+    // Verifica se há um partido selecionado
+    if (PartidoCandidato_Caixa.getSelectedItem() != null) {
+        String partido = PartidoCandidato_Caixa.getSelectedItem().toString();
+
+        // Busca o número correspondente ao partido e preenche o campo
+        for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
+            if (TabelaPartido.getValueAt(i, 2).toString().equals(partido)) {
+                NumeroCandidato_Caixa.setText(TabelaPartido.getValueAt(i, 1).toString());
+                break;
+            }
+        }
+    }
+
+    }//GEN-LAST:event_PartidoCandidato_CaixaActionPerformed
+
     /**
      * @param args the comêmand line arguments
      */
@@ -696,12 +1132,17 @@ public class TelaAdm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Apuracao;
+    private javax.swing.JButton AtualizarCandidato;
     private javax.swing.JButton AtualizarPartido;
     private javax.swing.JButton Atualizar_Cargo;
+    private javax.swing.JButton CadastrarCandidato;
     private javax.swing.JButton CadastrarPartido;
     private javax.swing.JButton Cadastrar_Cargo;
     private javax.swing.JPanel Candidato;
+    private javax.swing.JScrollPane Candidatos_Cadastrados;
     private javax.swing.JPanel Cargo;
+    private javax.swing.JLabel CargoCandidato;
+    private javax.swing.JComboBox<String> CargoCandidato_Caixa;
     private javax.swing.JScrollPane Cargos_Cadastrados;
     private javax.swing.JLabel Descricao;
     private javax.swing.JScrollPane DescricaoCaixa;
@@ -709,22 +1150,32 @@ public class TelaAdm extends javax.swing.JFrame {
     private javax.swing.JLabel Digitos;
     private javax.swing.JTextField Digitos_Caixa;
     private javax.swing.JPanel Eleitores;
+    private javax.swing.JButton ExcluirCandidato;
     private javax.swing.JButton ExcluirPartido;
     private javax.swing.JButton Excluir_Cargo;
+    private javax.swing.JLabel Foto;
+    private javax.swing.JLabel NomeCandidato;
+    private javax.swing.JTextField NomeCandidato_Caixa;
     private javax.swing.JLabel NomeCargo;
     private javax.swing.JTextField NomeCargo_Caixa;
     private javax.swing.JLabel NomePartido;
     private javax.swing.JTextField NomePartido_Caixa;
+    private javax.swing.JLabel NumeroCandidato;
+    private javax.swing.JTextField NumeroCandidato_Caixa;
     private javax.swing.JLabel NumeroPartido;
     private javax.swing.JTextField NumeroPartido_Caixa;
     private javax.swing.JTabbedPane Opcoes;
     private javax.swing.JPanel PainelAdm;
     private javax.swing.JPanel Partido;
+    private javax.swing.JLabel PartidoCandidato;
+    private javax.swing.JComboBox<String> PartidoCandidato_Caixa;
     private javax.swing.JScrollPane PartidosCadastrados;
     private javax.swing.JButton Sair;
+    private javax.swing.JButton SelecionarFoto;
     private javax.swing.JLabel SiglaPartido;
     private javax.swing.JTextField SiglaPartido_Caixa;
     private javax.swing.JLabel SubTitulo;
+    private javax.swing.JTable TabelaCandidato;
     private javax.swing.JTable TabelaPartido;
     private javax.swing.JTable Tabelas;
     private javax.swing.JLabel TituloAdm;
