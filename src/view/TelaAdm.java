@@ -44,7 +44,20 @@ public class TelaAdm extends javax.swing.JFrame {
         Cadastrar_Cargo = new javax.swing.JButton();
         Cargos_Cadastrados = new javax.swing.JScrollPane();
         Tabelas = new javax.swing.JTable();
+        Excluir_Cargo = new javax.swing.JButton();
+        Atualizar_Cargo = new javax.swing.JButton();
         Partido = new javax.swing.JPanel();
+        NumeroPartido = new javax.swing.JLabel();
+        NumeroPartido_Caixa = new javax.swing.JTextField();
+        SiglaPartido = new javax.swing.JLabel();
+        SiglaPartido_Caixa = new javax.swing.JTextField();
+        NomePartido = new javax.swing.JLabel();
+        NomePartido_Caixa = new javax.swing.JTextField();
+        CadastrarPartido = new javax.swing.JButton();
+        PartidosCadastrados = new javax.swing.JScrollPane();
+        TabelaPartido = new javax.swing.JTable();
+        ExcluirPartido = new javax.swing.JButton();
+        AtualizarPartido = new javax.swing.JButton();
         Candidato = new javax.swing.JPanel();
         Eleitores = new javax.swing.JPanel();
         Apuracao = new javax.swing.JPanel();
@@ -58,7 +71,8 @@ public class TelaAdm extends javax.swing.JFrame {
         TituloAdm.setText("Painel Administrativo ");
 
         Sair.setBackground(new java.awt.Color(204, 0, 0));
-        Sair.setText("Sair´");
+        Sair.setForeground(new java.awt.Color(255, 255, 255));
+        Sair.setText("Sair");
         Sair.addActionListener(this::SairActionPerformed);
 
         SubTitulo.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
@@ -93,6 +107,8 @@ public class TelaAdm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        Opcoes.setBackground(new java.awt.Color(0, 153, 0));
+
         NomeCargo.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         NomeCargo.setText("Nome do Cargo");
 
@@ -108,7 +124,7 @@ public class TelaAdm extends javax.swing.JFrame {
 
         Cadastrar_Cargo.setBackground(new java.awt.Color(0, 153, 0));
         Cadastrar_Cargo.setForeground(new java.awt.Color(255, 255, 255));
-        Cadastrar_Cargo.setText("Cadastrar´");
+        Cadastrar_Cargo.setText("Cadastrar");
         Cadastrar_Cargo.addActionListener(this::Cadastrar_CargoActionPerformed);
 
         Tabelas.setModel(new javax.swing.table.DefaultTableModel(
@@ -127,35 +143,51 @@ public class TelaAdm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        Tabelas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelasMouseClicked(evt);
+            }
+        });
         Cargos_Cadastrados.setViewportView(Tabelas);
+
+        Excluir_Cargo.setBackground(new java.awt.Color(204, 0, 0));
+        Excluir_Cargo.setForeground(new java.awt.Color(255, 255, 255));
+        Excluir_Cargo.setText("Excluir");
+        Excluir_Cargo.addActionListener(this::Excluir_CargoActionPerformed);
+
+        Atualizar_Cargo.setBackground(new java.awt.Color(51, 204, 255));
+        Atualizar_Cargo.setText("Atualizar");
+        Atualizar_Cargo.addActionListener(this::Atualizar_CargoActionPerformed);
 
         javax.swing.GroupLayout CargoLayout = new javax.swing.GroupLayout(Cargo);
         Cargo.setLayout(CargoLayout);
         CargoLayout.setHorizontalGroup(
             CargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Cargos_Cadastrados, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(CargoLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
                 .addGroup(CargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CargoLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                        .addComponent(NomeCargo)
+                        .addGap(402, 402, 402)
+                        .addComponent(Digitos))
+                    .addGroup(CargoLayout.createSequentialGroup()
+                        .addComponent(NomeCargo_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(Digitos_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(CargoLayout.createSequentialGroup()
+                        .addComponent(Descricao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(CargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(DescricaoCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(CargoLayout.createSequentialGroup()
-                                .addComponent(Descricao)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(DescricaoCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(CargoLayout.createSequentialGroup()
-                                .addComponent(NomeCargo)
-                                .addGap(402, 402, 402)
-                                .addComponent(Digitos))
-                            .addGroup(CargoLayout.createSequentialGroup()
-                                .addComponent(NomeCargo_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64)
-                                .addComponent(Digitos_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(Cadastrar_Cargo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(60, 60, 60)
+                                .addComponent(Excluir_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(76, 76, 76)
+                                .addComponent(Cadastrar_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(72, 72, 72)
+                                .addComponent(Atualizar_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(73, Short.MAX_VALUE))
-            .addGroup(CargoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Cargos_Cadastrados)
-                .addGap(16, 16, 16))
         );
         CargoLayout.setVerticalGroup(
             CargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,24 +206,130 @@ public class TelaAdm extends javax.swing.JFrame {
                     .addGroup(CargoLayout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(Descricao)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Cadastrar_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(CargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addComponent(Cadastrar_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(CargoLayout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(Atualizar_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(CargoLayout.createSequentialGroup()
+                        .addComponent(Excluir_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Cargos_Cadastrados, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-                .addGap(12, 12, 12))
+                .addComponent(Cargos_Cadastrados, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
         );
 
         Opcoes.addTab("Cargo", Cargo);
+
+        Partido.setBackground(new java.awt.Color(255, 255, 255));
+
+        NumeroPartido.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        NumeroPartido.setText("Número do Partido");
+
+        NumeroPartido_Caixa.addActionListener(this::NumeroPartido_CaixaActionPerformed);
+
+        SiglaPartido.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        SiglaPartido.setText("Sigla do Partido");
+
+        SiglaPartido_Caixa.addActionListener(this::SiglaPartido_CaixaActionPerformed);
+
+        NomePartido.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        NomePartido.setText("Nome do Partido");
+
+        NomePartido_Caixa.addActionListener(this::NomePartido_CaixaActionPerformed);
+
+        CadastrarPartido.setBackground(new java.awt.Color(0, 153, 0));
+        CadastrarPartido.setForeground(new java.awt.Color(255, 255, 255));
+        CadastrarPartido.setText("Cadastrar");
+        CadastrarPartido.addActionListener(this::CadastrarPartidoActionPerformed);
+
+        TabelaPartido.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Número", "Sigla ", "Nome"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TabelaPartido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaPartidoMouseClicked(evt);
+            }
+        });
+        PartidosCadastrados.setViewportView(TabelaPartido);
+
+        ExcluirPartido.setBackground(new java.awt.Color(204, 0, 0));
+        ExcluirPartido.setForeground(new java.awt.Color(255, 255, 255));
+        ExcluirPartido.setText("Excluir");
+        ExcluirPartido.addActionListener(this::ExcluirPartidoActionPerformed);
+
+        AtualizarPartido.setBackground(new java.awt.Color(51, 204, 255));
+        AtualizarPartido.setForeground(new java.awt.Color(255, 255, 255));
+        AtualizarPartido.setText("Atualizar");
+        AtualizarPartido.addActionListener(this::AtualizarPartidoActionPerformed);
 
         javax.swing.GroupLayout PartidoLayout = new javax.swing.GroupLayout(Partido);
         Partido.setLayout(PartidoLayout);
         PartidoLayout.setHorizontalGroup(
             PartidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 878, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PartidoLayout.createSequentialGroup()
+                .addGroup(PartidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PartidoLayout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addGroup(PartidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PartidoLayout.createSequentialGroup()
+                                .addComponent(NumeroPartido)
+                                .addGap(18, 18, 18))
+                            .addGroup(PartidoLayout.createSequentialGroup()
+                                .addComponent(NomePartido)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(PartidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PartidoLayout.createSequentialGroup()
+                                .addComponent(NumeroPartido_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(SiglaPartido)
+                                .addGap(18, 18, 18)
+                                .addComponent(SiglaPartido_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(NomePartido_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(PartidoLayout.createSequentialGroup()
+                        .addGap(166, 166, 166)
+                        .addComponent(ExcluirPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(112, 112, 112)
+                        .addComponent(CadastrarPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(111, 111, 111)
+                        .addComponent(AtualizarPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(88, 88, 88))
+            .addComponent(PartidosCadastrados)
         );
         PartidoLayout.setVerticalGroup(
             PartidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 538, Short.MAX_VALUE)
+            .addGroup(PartidoLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(PartidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NumeroPartido)
+                    .addComponent(NumeroPartido_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SiglaPartido)
+                    .addComponent(SiglaPartido_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
+                .addGroup(PartidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NomePartido)
+                    .addComponent(NomePartido_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(PartidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(CadastrarPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ExcluirPartido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(AtualizarPartido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(PartidosCadastrados, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE))
         );
 
         Opcoes.addTab("Partido", Partido);
@@ -286,8 +424,253 @@ public class TelaAdm extends javax.swing.JFrame {
     this.dispose();
     }//GEN-LAST:event_SairActionPerformed
 
+    private void SiglaPartido_CaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SiglaPartido_CaixaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SiglaPartido_CaixaActionPerformed
+
+    private void NumeroPartido_CaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumeroPartido_CaixaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NumeroPartido_CaixaActionPerformed
+
+    private void NomePartido_CaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NomePartido_CaixaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NomePartido_CaixaActionPerformed
+
+    private void CadastrarPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarPartidoActionPerformed
+        // TODO add your handling code here:
+        
+    String numeroStr = NumeroPartido_Caixa.getText().trim();
+    String sigla = SiglaPartido_Caixa.getText().trim().toUpperCase(); // Salva a sigla sempre em maiúsculas
+    String nome = NomePartido_Caixa.getText().trim();
+
+    //  Validação de Campos Vazios
+    if (numeroStr.isEmpty() || sigla.isEmpty() || nome.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!");
+        return;
+    }
+
+    try {
+        //  Validação se o número é de fato um inteiro
+        int numero = Integer.parseInt(numeroStr);
+        
+        //  Resgata o modelo da TabelaPartido
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaPartido.getModel();
+        
+        // Gera um ID sequencial com base no número de linhas na tabela
+        int novoId = modelo.getRowCount() + 1;
+
+        // Adiciona a linha na tabela seguindo a ordem correta das colunas 
+        modelo.addRow(new Object[]{novoId, numero, sigla, nome});
+
+        //  Limpa as informações e volta para o primeiro campo de texto 
+        NumeroPartido_Caixa.setText("");
+        SiglaPartido_Caixa.setText("");
+        NomePartido_Caixa.setText("");
+        NumeroPartido_Caixa.requestFocus();
+
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "O número do partido deve ser um valor numérico!");
+    }
+        
+        
+    }//GEN-LAST:event_CadastrarPartidoActionPerformed
+
+    private void TabelaPartidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaPartidoMouseClicked
+        // TODO add your handling code here:
+        
+        // Verifica se foi um clique  com o botão esquerdo
+    if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+        // Obtém o índice da linha selecionada
+        int linhaSelecionada = TabelaPartido.getSelectedRow();
+
+        if (linhaSelecionada != -1) { 
+           /* Se tem uma linha selecionada voc */
+            String id = TabelaPartido.getValueAt(linhaSelecionada, 0).toString();
+            String numero = TabelaPartido.getValueAt(linhaSelecionada, 1).toString();
+            String sigla = TabelaPartido.getValueAt(linhaSelecionada, 2).toString();
+            String nome = TabelaPartido.getValueAt(linhaSelecionada, 3).toString();
+
+            // Joga os dados de volta para os campos de texto para edição
+            NumeroPartido_Caixa.setText(numero);
+            SiglaPartido_Caixa.setText(sigla);
+            NomePartido_Caixa.setText(nome);
+        }
+    }
+    }//GEN-LAST:event_TabelaPartidoMouseClicked
+
+    private void AtualizarPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizarPartidoActionPerformed
+
+        //  Obtém a linha selecionada
+    int linhaSelecionada = TabelaPartido.getSelectedRow();
+    
+    if (linhaSelecionada == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um partido na tabela para atualizar.");
+        return;
+    }
+    
+    // Pega os novos dados dos campos de texto
+    String numero = NumeroPartido_Caixa.getText().trim();
+    String sigla = SiglaPartido_Caixa.getText().trim().toUpperCase();
+    String nome = NomePartido_Caixa.getText().trim();
+    
+    // Validações (mesmo do cadastro)
+    if (numero.isEmpty() || sigla.isEmpty() || nome.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos para atualizar.");
+        return;
+    }
+    
+    try {
+        Integer.parseInt(numero); // Verifica se o número ainda é um inteiro
+        
+        //  Atualiza a linha na tabela visual
+        TabelaPartido.setValueAt(numero, linhaSelecionada, 1);
+        TabelaPartido.setValueAt(sigla, linhaSelecionada, 2);
+        TabelaPartido.setValueAt(nome, linhaSelecionada, 3);
+        
+        //  Limpa os campos
+        NumeroPartido_Caixa.setText("");
+        SiglaPartido_Caixa.setText("");
+        NomePartido_Caixa.setText("");
+        NumeroPartido_Caixa.requestFocus();
+        
+        javax.swing.JOptionPane.showMessageDialog(this, "Partido atualizado com sucesso!");
+        
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "O número do partido deve ser um valor numérico!");
+    }
+    }//GEN-LAST:event_AtualizarPartidoActionPerformed
+
+    private void ExcluirPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirPartidoActionPerformed
+ 
+        // Obtém a linha selecionada
+    int linhaSelecionada = TabelaPartido.getSelectedRow();
+    
+    if (linhaSelecionada == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um partido na tabela para excluir.");
+        return;
+    }
+    
+    //  Confirmação de exclusão
+    int confirmacao = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "Tem certeza que deseja excluir este partido?", 
+            "Confirmar Exclusão", 
+            javax.swing.JOptionPane.YES_NO_OPTION);
+            
+    if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
+        // Remove a linha da tabela visual
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaPartido.getModel();
+        modelo.removeRow(linhaSelecionada);
+        
+        // Limpa os campos
+        NumeroPartido_Caixa.setText("");
+        SiglaPartido_Caixa.setText("");
+        NomePartido_Caixa.setText("");
+        NumeroPartido_Caixa.requestFocus();
+        
+        javax.swing.JOptionPane.showMessageDialog(this, "Partido excluído com sucesso!");
+    }
+    }//GEN-LAST:event_ExcluirPartidoActionPerformed
+
+    private void Excluir_CargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Excluir_CargoActionPerformed
+        
+        // Obtém a linha selecionada
+    int linhaSelecionada = Tabelas.getSelectedRow();
+
+    if (linhaSelecionada == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um cargo na tabela para excluir.");
+        return;
+    }
+
+    // Confirmação de exclusão
+    int confirmacao = javax.swing.JOptionPane.showConfirmDialog(this,
+            "Tem certeza que deseja excluir este cargo?",
+            "Confirmar Exclusão",
+            javax.swing.JOptionPane.YES_NO_OPTION);
+
+    if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
+        // Remove a linha da tabela visual
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) Tabelas.getModel();
+        modelo.removeRow(linhaSelecionada);
+
+        // Limpa os campos
+        NomeCargo_Caixa.setText("");
+        Digitos_Caixa.setText("");
+        Descricao_Caixa.setText("");
+        NomeCargo_Caixa.requestFocus();
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Cargo excluído com sucesso!");
+    }
+        
+        
+    }//GEN-LAST:event_Excluir_CargoActionPerformed
+
+    private void Atualizar_CargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Atualizar_CargoActionPerformed
+        // Obtém a linha selecionada
+    int linhaSelecionada = Tabelas.getSelectedRow();
+
+    if (linhaSelecionada == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um cargo na tabela para atualizar.");
+        return;
+    }
+
+    // Pega os dados atualizados dos campos
+    String nome = NomeCargo_Caixa.getText().trim();
+    String digitosStr = Digitos_Caixa.getText().trim();
+    String descricao = Descricao_Caixa.getText().trim();
+
+    if (nome.isEmpty() || digitosStr.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Preencha o nome do cargo e a quantidade de dígitos.");
+        return;
+    }
+
+    try {
+        // Valida se a quantidade de dígitos é um número inteiro
+        int digitos = Integer.parseInt(digitosStr);
+
+        // Atualiza os valores na tabela visual
+        Tabelas.setValueAt(nome, linhaSelecionada, 1);
+        Tabelas.setValueAt(digitos, linhaSelecionada, 2);
+        Tabelas.setValueAt(descricao, linhaSelecionada, 3);
+
+        // Limpa os campos
+        NomeCargo_Caixa.setText("");
+        Digitos_Caixa.setText("");
+        Descricao_Caixa.setText("");
+        NomeCargo_Caixa.requestFocus();
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Cargo atualizado com sucesso!");
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "A quantidade de dígitos deve ser um número inteiro.");
+    }
+    
+    }//GEN-LAST:event_Atualizar_CargoActionPerformed
+
+    private void TabelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelasMouseClicked
+
+        
+        // Verifica se foi clique com o botão esquerdo
+    if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+        // Obtém a linha selecionada
+        int linhaSelecionada = Tabelas.getSelectedRow();
+
+        if (linhaSelecionada != -1) {
+            // Pega os dados da tabela conforme a ordem das colunas
+            String nome = Tabelas.getValueAt(linhaSelecionada, 1).toString();
+            String digitos = Tabelas.getValueAt(linhaSelecionada, 2).toString();
+            String descricao = Tabelas.getValueAt(linhaSelecionada, 3).toString();
+
+            // Preenche os campos do formulário
+            NomeCargo_Caixa.setText(nome);
+            Digitos_Caixa.setText(digitos);
+            Descricao_Caixa.setText(descricao);
+        }
+    }
+        
+        
+    }//GEN-LAST:event_TabelasMouseClicked
+
     /**
-     * @param args the command line arguments
+     * @param args the comêmand line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -313,6 +696,9 @@ public class TelaAdm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Apuracao;
+    private javax.swing.JButton AtualizarPartido;
+    private javax.swing.JButton Atualizar_Cargo;
+    private javax.swing.JButton CadastrarPartido;
     private javax.swing.JButton Cadastrar_Cargo;
     private javax.swing.JPanel Candidato;
     private javax.swing.JPanel Cargo;
@@ -323,13 +709,23 @@ public class TelaAdm extends javax.swing.JFrame {
     private javax.swing.JLabel Digitos;
     private javax.swing.JTextField Digitos_Caixa;
     private javax.swing.JPanel Eleitores;
+    private javax.swing.JButton ExcluirPartido;
+    private javax.swing.JButton Excluir_Cargo;
     private javax.swing.JLabel NomeCargo;
     private javax.swing.JTextField NomeCargo_Caixa;
+    private javax.swing.JLabel NomePartido;
+    private javax.swing.JTextField NomePartido_Caixa;
+    private javax.swing.JLabel NumeroPartido;
+    private javax.swing.JTextField NumeroPartido_Caixa;
     private javax.swing.JTabbedPane Opcoes;
     private javax.swing.JPanel PainelAdm;
     private javax.swing.JPanel Partido;
+    private javax.swing.JScrollPane PartidosCadastrados;
     private javax.swing.JButton Sair;
+    private javax.swing.JLabel SiglaPartido;
+    private javax.swing.JTextField SiglaPartido_Caixa;
     private javax.swing.JLabel SubTitulo;
+    private javax.swing.JTable TabelaPartido;
     private javax.swing.JTable Tabelas;
     private javax.swing.JLabel TituloAdm;
     // End of variables declaration//GEN-END:variables
