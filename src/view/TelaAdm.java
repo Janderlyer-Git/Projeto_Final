@@ -418,7 +418,7 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -457,14 +457,14 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                         .addGap(14, 14, 14)
                         .addComponent(CadastrarCandidato)
                         .addGap(18, 18, 18)
-                        .addComponent(AtualizarCandidato)
-                        .addGap(30, 30, 30))
-                    .addGroup(CandidatoLayout.createSequentialGroup()
-                        .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Foto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(SelecionarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(92, 92, 92))))
-            .addComponent(Candidatos_Cadastrados)
+                        .addComponent(AtualizarCandidato))
+                    .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(Foto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(SelecionarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(37, 37, 37))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CandidatoLayout.createSequentialGroup()
+                .addComponent(Candidatos_Cadastrados)
+                .addContainerGap())
         );
         CandidatoLayout.setVerticalGroup(
             CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -488,15 +488,15 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                             .addComponent(PartidoCandidato_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(PartidoCandidato)))
                     .addGroup(CandidatoLayout.createSequentialGroup()
-                        .addComponent(Foto, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Foto, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(SelecionarFoto)))
                 .addGap(32, 32, 32)
                 .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CadastrarCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AtualizarCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ExcluirCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(Candidatos_Cadastrados, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -546,7 +546,7 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1482,4 +1482,8 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private javax.swing.JLabel TituloEleitor;
     private javax.swing.JFormattedTextField TituloEleitor_Caixa;
     // End of variables declaration//GEN-END:variables
+
+
+
+
 }
