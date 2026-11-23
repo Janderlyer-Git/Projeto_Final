@@ -17,7 +17,7 @@ public class CandidatoDAO {
     //inserir os dados de uma pessoa no mysql
     public void inserir(Candidato c){
       try{   
-        String sql = "insert into Candidato (id, nome, cpf, numero, foto, voto, idPartido, numeroPartido, sigla, nomePartido, idCargo, nomeCargo, quantidadeDigitos, descricao) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into Candidato (id, nome, cpf, numero, foto, votos, idPartido, numeroPartido, sigla, nomePartido, idCargo, nomeCargo, quantidadeDigitos, descricao) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         
         ps.setInt(1, c.getId());
@@ -25,19 +25,19 @@ public class CandidatoDAO {
         ps.setString(3, c.getCpf());
         ps.setInt(4, c.getNumero());
         ps.setBytes(5, c.getFoto());
-        ps.setInt(5, c.getVotos());
-        ps.setInt(6, c.getPartido().getId());
-        ps.setString(7, c.getPartido().getNumeroPartido());
-        ps.setString(8, c.getPartido().getSigla());
-        ps.setString(9, c.getPartido().getNome());
-        ps.setInt(10, c.getCargo().getId());
-        ps.setString(11, c.getCargo().getNome());
-        ps.setInt(12, c.getCargo().getQuantidadeDigitos());
-        ps.setString(13, c.getCargo().getDescricao());
+        ps.setInt(6, c.getVotos());
+        ps.setInt(7, c.getPartido().getId());
+        ps.setString(8, c.getPartido().getNumeroPartido());
+        ps.setString(9, c.getPartido().getSigla());
+        ps.setString(10, c.getPartido().getNome());
+        ps.setInt(11, c.getCargo().getId());
+        ps.setString(12, c.getCargo().getNome());
+        ps.setInt(13, c.getCargo().getQuantidadeDigitos());
+        ps.setString(14, c.getCargo().getDescricao());
          
         ps.executeUpdate();
         
-        JOptionPane.showMessageDialog(null, "Cadastro de Administrador realizado");
+        JOptionPane.showMessageDialog(null, "Cadastro de Candidato realizado");
       }catch(Exception e){
           System.out.println("Erro na insercao: "+e);
       }
@@ -48,7 +48,7 @@ public class CandidatoDAO {
         ArrayList<Candidato> candidato = new ArrayList<Candidato>();
         
         try{
-            String sql = "select * from administrador"; 
+            String sql = "select * from candidato"; 
             PreparedStatement ps = conexao.prepareStatement(sql);
             
             ResultSet rs = ps.executeQuery();
@@ -75,9 +75,8 @@ public class CandidatoDAO {
             rs.getString("nome"),
             rs.getString("cpf"),
             rs.getInt("numero"),
-            rs.getBytes("foto"),
-            rs.getInt("votos"),
-            partido, cargo);
+            partido, cargo, 
+            rs.getBytes("foto"));
 
     candidato.add(c);
 }
