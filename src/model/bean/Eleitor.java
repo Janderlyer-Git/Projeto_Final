@@ -1,4 +1,6 @@
-package votacao;
+
+package model.bean;
+
 
 public class Eleitor extends Pessoa {
 

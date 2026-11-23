@@ -1,5 +1,6 @@
 
-package votacao;
+package model.bean;
+
 
 
 public abstract class Pessoa {
@@ -56,3 +57,4 @@ public abstract class Pessoa {
     }
     
 }
+

@@ -1,5 +1,5 @@
 
-package votacao;
+package model.bean;
 
 public class Administrador extends Pessoa {
 
