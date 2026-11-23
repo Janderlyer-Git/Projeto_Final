@@ -1,6 +1,6 @@
 package model.dao;
 
-import model.bean.Voto;
+import model.bean.*;
 import conection.Conexao;
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,18 +17,19 @@ public class VotoDAO {
     //inserir os dados de um voto no mysql
     public void inserir(Voto v){
       try{   
-        String sql = "insert into Voto (id, idCandidato, nomeCandidato, cpfCandidato, numeroCandidato, idPartido, numeroPartido, sigla, nomePartido, idCargo, nomeCargo, quantidadeDigitos, descricao, tipoVoto, dataHora) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into Voto (id, idCandidato, nomeCandidato, cpfCandidato, numeroCandidato, fotoCandidato, idPartido, numeroPartido, sigla, nomePartido, idCargo, nomeCargo, quantidadeDigitos, descricao, tipoVoto, dataHora) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         
         ps.setInt(1, v.getId());
         ps.setInt(2, v.getCandidato().getId());
         ps.setString(3, v.getCandidato().getNome());
         ps.setString(4, v.getCandidato().getCpf());
-        ps.setString(5, v.getCandidato().getNumero());
-        ps.setInt(6, v.getCandidato().getPartido().getId());
-        ps.setString(7, v.getCandidato().getPartido().getNumeroPartido());
-        ps.setString(8, v.getCandidato().getPartido().getSigla());
-        ps.setString(9, v.getCandidato().getPartido().getNome());
+        ps.setInt (5, v.getCandidato().getNumero());
+        ps.setBytes(6, v.getCandidato().getFoto());
+        ps.setInt(7, v.getCandidato().getPartido().getId());
+        ps.setString(8, v.getCandidato().getPartido().getNumeroPartido());
+        ps.setString(9, v.getCandidato().getPartido().getSigla());
+        ps.setString(10, v.getCandidato().getPartido().getNome());
         ps.setInt(10, v.getCandidato().getCargo().getId());
         ps.setString(11, v.getCandidato().getCargo().getNome());
         ps.setInt(12, v.getCandidato().getCargo().getQuantidadeDigitos());
@@ -75,12 +76,13 @@ public class VotoDAO {
             rs.getInt("idCandidato"),
             rs.getString("nomeCandidato"),
             rs.getString("cpfCandidato"),
-            rs.getString("numeroCandidato"),
-            partido, cargo);
+            rs.getInt("numeroCandidato"),
+            partido, cargo, rs.getBytes("foto"));
 
         // 4. Passa os objetos prontos para o Voto
         Voto v = new Voto(
             rs.getInt("id"),
+            cargo,
             candidato,
             rs.getString("tipoVoto"),
             rs.getTimestamp("dataHora").toLocalDateTime());
