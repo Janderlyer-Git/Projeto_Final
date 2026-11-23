@@ -1,6 +1,6 @@
 package model.dao;
 
-import votacao.*;
+import model.bean.*;
 import conection.Conexao;
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,21 +17,23 @@ public class CandidatoDAO {
     //inserir os dados de uma pessoa no mysql
     public void inserir(Candidato c){
       try{   
-        String sql = "insert into Candidato (id, nome, cpf, numero, idPartido, numeroPartido, sigla, nomePartido, idCargo, nomeCargo, quantidadeDigitos, descricao) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into Candidato (id, nome, cpf, numero, foto, voto, idPartido, numeroPartido, sigla, nomePartido, idCargo, nomeCargo, quantidadeDigitos, descricao) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         
         ps.setInt(1, c.getId());
         ps.setString(2, c.getNome());
         ps.setString(3, c.getCpf());
-        ps.setString(4, c.getNumero());
-        ps.setInt(5, c.getPartido().getId());
-        ps.setString(6, c.getPartido().getNumeroPartido());
-        ps.setString(7, c.getPartido().getSigla());
-        ps.setString(8, c.getPartido().getNome());
-        ps.setInt(9, c.getCargo().getId());
-        ps.setString(10, c.getCargo().getNome());
-        ps.setInt(11, c.getCargo().getQuantidadeDigitos());
-        ps.setString(12, c.getCargo().getDescricao());
+        ps.setInt(4, c.getNumero());
+        ps.setBytes(5, c.getFoto());
+        ps.setInt(5, c.getVotos());
+        ps.setInt(6, c.getPartido().getId());
+        ps.setString(7, c.getPartido().getNumeroPartido());
+        ps.setString(8, c.getPartido().getSigla());
+        ps.setString(9, c.getPartido().getNome());
+        ps.setInt(10, c.getCargo().getId());
+        ps.setString(11, c.getCargo().getNome());
+        ps.setInt(12, c.getCargo().getQuantidadeDigitos());
+        ps.setString(13, c.getCargo().getDescricao());
          
         ps.executeUpdate();
         
@@ -72,7 +74,9 @@ public class CandidatoDAO {
             rs.getInt("id"),
             rs.getString("nome"),
             rs.getString("cpf"),
-            rs.getString("numero"),
+            rs.getInt("numero"),
+            rs.getBytes("foto"),
+            rs.getInt("votos"),
             partido, cargo);
 
     candidato.add(c);

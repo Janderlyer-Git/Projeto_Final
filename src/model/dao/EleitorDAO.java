@@ -1,6 +1,6 @@
 package model.dao;
 
-import votacao.Eleitor;
+import model.bean.Eleitor;
 import conection.Conexao;
 import java.sql.*;
 import java.util.ArrayList;
