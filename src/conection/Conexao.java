@@ -5,8 +5,8 @@ import java.sql.*;
 public class Conexao {
     static Connection conexao = null;
     String user = "root";
-    String password = "aopac0204";
-    String database = "TSE";
+    String password = "password";
+    String database = "Projeto_Final";
     String url = "jdbc:mysql://localhost:3306/"+database;
     
 
