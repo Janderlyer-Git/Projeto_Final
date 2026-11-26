@@ -40,12 +40,12 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         Opcoes = new javax.swing.JTabbedPane();
         Cargo = new javax.swing.JPanel();
         NomeCargo = new javax.swing.JLabel();
-        NomeCargo_Caixa = new javax.swing.JTextField();
+        txtNomeCargo = new javax.swing.JTextField();
         Digitos = new javax.swing.JLabel();
-        Digitos_Caixa = new javax.swing.JTextField();
+        txtQntDigitosCargo = new javax.swing.JTextField();
         Descricao = new javax.swing.JLabel();
         DescricaoCaixa = new javax.swing.JScrollPane();
-        Descricao_Caixa = new javax.swing.JTextArea();
+        txtDescricaoCargo = new javax.swing.JTextArea();
         Cadastrar_Cargo = new javax.swing.JButton();
         Cargos_Cadastrados = new javax.swing.JScrollPane();
         Tabelas = new javax.swing.JTable();
@@ -53,11 +53,11 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         Atualizar_Cargo = new javax.swing.JButton();
         Partido = new javax.swing.JPanel();
         NumeroPartido = new javax.swing.JLabel();
-        NumeroPartido_Caixa = new javax.swing.JTextField();
+        txtNumPartido = new javax.swing.JTextField();
         SiglaPartido = new javax.swing.JLabel();
-        SiglaPartido_Caixa = new javax.swing.JTextField();
+        txtSiglaPartido = new javax.swing.JTextField();
         NomePartido = new javax.swing.JLabel();
-        NomePartido_Caixa = new javax.swing.JTextField();
+        txtNomePartido = new javax.swing.JTextField();
         CadastrarPartido = new javax.swing.JButton();
         PartidosCadastrados = new javax.swing.JScrollPane();
         TabelaPartido = new javax.swing.JTable();
@@ -65,9 +65,9 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         AtualizarPartido = new javax.swing.JButton();
         Candidato = new javax.swing.JPanel();
         NomeCandidato = new javax.swing.JLabel();
-        NomeCandidato_Caixa = new javax.swing.JTextField();
+        txtNomeCandidato = new javax.swing.JTextField();
         NumeroCandidato = new javax.swing.JLabel();
-        NumeroCandidato_Caixa = new javax.swing.JTextField();
+        txtNumCandidato = new javax.swing.JTextField();
         CargoCandidato = new javax.swing.JLabel();
         PartidoCandidato = new javax.swing.JLabel();
         CargoCandidato_Caixa = new javax.swing.JComboBox<>();
@@ -144,15 +144,17 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         NomeCargo.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         NomeCargo.setText("Nome do Cargo");
 
+        txtNomeCargo.addActionListener(this::txtNomeCargoActionPerformed);
+
         Digitos.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         Digitos.setText("Qnt. Digitos ");
 
         Descricao.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         Descricao.setText("Descrição");
 
-        Descricao_Caixa.setColumns(20);
-        Descricao_Caixa.setRows(5);
-        DescricaoCaixa.setViewportView(Descricao_Caixa);
+        txtDescricaoCargo.setColumns(20);
+        txtDescricaoCargo.setRows(5);
+        DescricaoCaixa.setViewportView(txtDescricaoCargo);
 
         Cadastrar_Cargo.setBackground(new java.awt.Color(0, 153, 0));
         Cadastrar_Cargo.setForeground(new java.awt.Color(255, 255, 255));
@@ -204,9 +206,9 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                         .addGap(402, 402, 402)
                         .addComponent(Digitos))
                     .addGroup(CargoLayout.createSequentialGroup()
-                        .addComponent(NomeCargo_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNomeCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(64, 64, 64)
-                        .addComponent(Digitos_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtQntDigitosCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(CargoLayout.createSequentialGroup()
                         .addComponent(Descricao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -230,8 +232,8 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                     .addComponent(Digitos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NomeCargo_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Digitos_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNomeCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtQntDigitosCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(DescricaoCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -257,17 +259,17 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         NumeroPartido.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         NumeroPartido.setText("Número do Partido");
 
-        NumeroPartido_Caixa.addActionListener(this::NumeroPartido_CaixaActionPerformed);
+        txtNumPartido.addActionListener(this::txtNumPartidoActionPerformed);
 
         SiglaPartido.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         SiglaPartido.setText("Sigla do Partido");
 
-        SiglaPartido_Caixa.addActionListener(this::SiglaPartido_CaixaActionPerformed);
+        txtSiglaPartido.addActionListener(this::txtSiglaPartidoActionPerformed);
 
         NomePartido.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         NomePartido.setText("Nome do Partido");
 
-        NomePartido_Caixa.addActionListener(this::NomePartido_CaixaActionPerformed);
+        txtNomePartido.addActionListener(this::txtNomePartidoActionPerformed);
 
         CadastrarPartido.setBackground(new java.awt.Color(0, 153, 0));
         CadastrarPartido.setForeground(new java.awt.Color(255, 255, 255));
@@ -324,12 +326,12 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(PartidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PartidoLayout.createSequentialGroup()
-                                .addComponent(NumeroPartido_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtNumPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(36, 36, 36)
                                 .addComponent(SiglaPartido)
                                 .addGap(18, 18, 18)
-                                .addComponent(SiglaPartido_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(NomePartido_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtSiglaPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNomePartido, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(PartidoLayout.createSequentialGroup()
                         .addGap(166, 166, 166)
                         .addComponent(ExcluirPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -347,13 +349,13 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                 .addGap(37, 37, 37)
                 .addGroup(PartidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NumeroPartido)
-                    .addComponent(NumeroPartido_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNumPartido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SiglaPartido)
-                    .addComponent(SiglaPartido_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSiglaPartido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(PartidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NomePartido)
-                    .addComponent(NomePartido_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNomePartido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(PartidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(CadastrarPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -443,9 +445,9 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                         .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(CargoCandidato_Caixa, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(NumeroCandidato_Caixa, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNumCandidato, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(PartidoCandidato_Caixa, javax.swing.GroupLayout.Alignment.LEADING, 0, 145, Short.MAX_VALUE))
-                            .addComponent(NomeCandidato_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNomeCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CandidatoLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -473,11 +475,11 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                     .addGroup(CandidatoLayout.createSequentialGroup()
                         .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(NomeCandidato)
-                            .addComponent(NomeCandidato_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNomeCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(19, 19, 19)
                         .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(NumeroCandidato)
-                            .addComponent(NumeroCandidato_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNumCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(CargoCandidato)
@@ -644,9 +646,9 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
 
     private void Cadastrar_CargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cadastrar_CargoActionPerformed
         // TODO add your handling code here:                                             
-        String nome = NomeCargo_Caixa.getText().trim();
-    String digitosStr = Digitos_Caixa.getText().trim();
-    String descricao = Descricao_Caixa.getText().trim();
+        String nome = txtNomeCargo.getText().trim();
+    String digitosStr = txtQntDigitosCargo.getText().trim();
+    String descricao = txtDescricaoCargo.getText().trim();
 
     if (nome.isEmpty() || digitosStr.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "Preencha o nome do cargo e a quantidade de dígitos.");
@@ -660,10 +662,10 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
 
         modelo.addRow(new Object[]{novoId, nome, digitos, descricao});
 
-        NomeCargo_Caixa.setText("");
-        Digitos_Caixa.setText("");
-        Descricao_Caixa.setText("");
-        NomeCargo_Caixa.requestFocus();
+        txtNomeCargo.setText("");
+        txtQntDigitosCargo.setText("");
+        txtDescricaoCargo.setText("");
+        txtNomeCargo.requestFocus();
     } catch (NumberFormatException e) {
         javax.swing.JOptionPane.showMessageDialog(this, "A quantidade de dígitos deve ser um número inteiro.");
     }
@@ -675,24 +677,24 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     this.dispose();
     }//GEN-LAST:event_SairActionPerformed
 
-    private void SiglaPartido_CaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SiglaPartido_CaixaActionPerformed
+    private void txtSiglaPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSiglaPartidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_SiglaPartido_CaixaActionPerformed
+    }//GEN-LAST:event_txtSiglaPartidoActionPerformed
 
-    private void NumeroPartido_CaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumeroPartido_CaixaActionPerformed
+    private void txtNumPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumPartidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NumeroPartido_CaixaActionPerformed
+    }//GEN-LAST:event_txtNumPartidoActionPerformed
 
-    private void NomePartido_CaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NomePartido_CaixaActionPerformed
+    private void txtNomePartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomePartidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NomePartido_CaixaActionPerformed
+    }//GEN-LAST:event_txtNomePartidoActionPerformed
 
     private void CadastrarPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarPartidoActionPerformed
         // TODO add your handling code here:
         
-    String numeroStr = NumeroPartido_Caixa.getText().trim();
-    String sigla = SiglaPartido_Caixa.getText().trim().toUpperCase(); // Salva a sigla sempre em maiúsculas
-    String nome = NomePartido_Caixa.getText().trim();
+    String numeroStr = txtNumPartido.getText().trim();
+    String sigla = txtSiglaPartido.getText().trim().toUpperCase(); // Salva a sigla sempre em maiúsculas
+    String nome = txtNomePartido.getText().trim();
 
     //  Validação de Campos Vazios
     if (numeroStr.isEmpty() || sigla.isEmpty() || nome.isEmpty()) {
@@ -714,10 +716,10 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         modelo.addRow(new Object[]{novoId, numero, sigla, nome});
 
         //  Limpa as informações e volta para o primeiro campo de texto 
-        NumeroPartido_Caixa.setText("");
-        SiglaPartido_Caixa.setText("");
-        NomePartido_Caixa.setText("");
-        NumeroPartido_Caixa.requestFocus();
+        txtNumPartido.setText("");
+        txtSiglaPartido.setText("");
+        txtNomePartido.setText("");
+        txtNumPartido.requestFocus();
 
     } catch (NumberFormatException e) {
         javax.swing.JOptionPane.showMessageDialog(this, "O número do partido deve ser um valor numérico!");
@@ -742,9 +744,9 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
             String nome = TabelaPartido.getValueAt(linhaSelecionada, 3).toString();
 
             // Joga os dados de volta para os campos de texto para edição
-            NumeroPartido_Caixa.setText(numero);
-            SiglaPartido_Caixa.setText(sigla);
-            NomePartido_Caixa.setText(nome);
+            txtNumPartido.setText(numero);
+            txtSiglaPartido.setText(sigla);
+            txtNomePartido.setText(nome);
         }
     }
     }//GEN-LAST:event_TabelaPartidoMouseClicked
@@ -760,9 +762,9 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     }
     
     // Pega os novos dados dos campos de texto
-    String numero = NumeroPartido_Caixa.getText().trim();
-    String sigla = SiglaPartido_Caixa.getText().trim().toUpperCase();
-    String nome = NomePartido_Caixa.getText().trim();
+    String numero = txtNumPartido.getText().trim();
+    String sigla = txtSiglaPartido.getText().trim().toUpperCase();
+    String nome = txtNomePartido.getText().trim();
     
     // Validações (mesmo do cadastro)
     if (numero.isEmpty() || sigla.isEmpty() || nome.isEmpty()) {
@@ -779,10 +781,10 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         TabelaPartido.setValueAt(nome, linhaSelecionada, 3);
         
         //  Limpa os campos
-        NumeroPartido_Caixa.setText("");
-        SiglaPartido_Caixa.setText("");
-        NomePartido_Caixa.setText("");
-        NumeroPartido_Caixa.requestFocus();
+        txtNumPartido.setText("");
+        txtSiglaPartido.setText("");
+        txtNomePartido.setText("");
+        txtNumPartido.requestFocus();
         
         javax.swing.JOptionPane.showMessageDialog(this, "Partido atualizado com sucesso!");
         
@@ -813,10 +815,10 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         modelo.removeRow(linhaSelecionada);
         
         // Limpa os campos
-        NumeroPartido_Caixa.setText("");
-        SiglaPartido_Caixa.setText("");
-        NomePartido_Caixa.setText("");
-        NumeroPartido_Caixa.requestFocus();
+        txtNumPartido.setText("");
+        txtSiglaPartido.setText("");
+        txtNomePartido.setText("");
+        txtNumPartido.requestFocus();
         
         javax.swing.JOptionPane.showMessageDialog(this, "Partido excluído com sucesso!");
     }
@@ -844,10 +846,10 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         modelo.removeRow(linhaSelecionada);
 
         // Limpa os campos
-        NomeCargo_Caixa.setText("");
-        Digitos_Caixa.setText("");
-        Descricao_Caixa.setText("");
-        NomeCargo_Caixa.requestFocus();
+        txtNomeCargo.setText("");
+        txtQntDigitosCargo.setText("");
+        txtDescricaoCargo.setText("");
+        txtNomeCargo.requestFocus();
 
         javax.swing.JOptionPane.showMessageDialog(this, "Cargo excluído com sucesso!");
     }
@@ -865,9 +867,9 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     }
 
     // Pega os dados atualizados dos campos
-    String nome = NomeCargo_Caixa.getText().trim();
-    String digitosStr = Digitos_Caixa.getText().trim();
-    String descricao = Descricao_Caixa.getText().trim();
+    String nome = txtNomeCargo.getText().trim();
+    String digitosStr = txtQntDigitosCargo.getText().trim();
+    String descricao = txtDescricaoCargo.getText().trim();
 
     if (nome.isEmpty() || digitosStr.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "Preencha o nome do cargo e a quantidade de dígitos.");
@@ -884,10 +886,10 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         Tabelas.setValueAt(descricao, linhaSelecionada, 3);
 
         // Limpa os campos
-        NomeCargo_Caixa.setText("");
-        Digitos_Caixa.setText("");
-        Descricao_Caixa.setText("");
-        NomeCargo_Caixa.requestFocus();
+        txtNomeCargo.setText("");
+        txtQntDigitosCargo.setText("");
+        txtDescricaoCargo.setText("");
+        txtNomeCargo.requestFocus();
 
         javax.swing.JOptionPane.showMessageDialog(this, "Cargo atualizado com sucesso!");
     } catch (NumberFormatException e) {
@@ -911,9 +913,9 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
             String descricao = Tabelas.getValueAt(linhaSelecionada, 3).toString();
 
             // Preenche os campos do formulário
-            NomeCargo_Caixa.setText(nome);
-            Digitos_Caixa.setText(digitos);
-            Descricao_Caixa.setText(descricao);
+            txtNomeCargo.setText(nome);
+            txtQntDigitosCargo.setText(digitos);
+            txtDescricaoCargo.setText(descricao);
         }
     }
         
@@ -961,8 +963,8 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
 
     private void CadastrarCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarCandidatoActionPerformed
     // Pega os dados digitados e selecionados
-    String nome = NomeCandidato_Caixa.getText().trim();
-    String numeroStr = NumeroCandidato_Caixa.getText().trim();
+    String nome = txtNomeCandidato.getText().trim();
+    String numeroStr = txtNumCandidato.getText().trim();
 
     if (nome.isEmpty() || numeroStr.isEmpty() || CargoCandidato_Caixa.getSelectedItem() == null || PartidoCandidato_Caixa.getSelectedItem() == null) {
         javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos e selecione cargo e partido!");
@@ -1022,12 +1024,12 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         listaFotos.add(caminhoFoto);
 
         // Limpa os campos e restaura o quadro da foto
-        NomeCandidato_Caixa.setText("");
-        NumeroCandidato_Caixa.setText("");
+        txtNomeCandidato.setText("");
+        txtNumCandidato.setText("");
         caminhoFoto = "";
         Foto.setIcon(null);
         Foto.setText("FOTO");
-        NomeCandidato_Caixa.requestFocus();
+        txtNomeCandidato.requestFocus();
 
     } catch (NumberFormatException e) {
         javax.swing.JOptionPane.showMessageDialog(this, "O número do candidato deve conter apenas algarismos!");
@@ -1049,8 +1051,8 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
             String partido = TabelaCandidato.getValueAt(linhaSelecionada, 4).toString();
 
             // Preenche os campos e os combos
-            NumeroCandidato_Caixa.setText(numero);
-            NomeCandidato_Caixa.setText(nome);
+            txtNumCandidato.setText(numero);
+            txtNomeCandidato.setText(nome);
             CargoCandidato_Caixa.setSelectedItem(cargo);
             PartidoCandidato_Caixa.setSelectedItem(partido);
 
@@ -1081,8 +1083,8 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     }
 
     // Pega os dados atualizados
-    String nome = NomeCandidato_Caixa.getText().trim();
-    String numeroStr = NumeroCandidato_Caixa.getText().trim();
+    String nome = txtNomeCandidato.getText().trim();
+    String numeroStr = txtNumCandidato.getText().trim();
 
     if (nome.isEmpty() || numeroStr.isEmpty() || CargoCandidato_Caixa.getSelectedItem() == null || PartidoCandidato_Caixa.getSelectedItem() == null) {
         javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos para atualizar.");
@@ -1146,12 +1148,12 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         listaFotos.set(linhaSelecionada, caminhoFoto);
 
         // Limpa os campos
-        NomeCandidato_Caixa.setText("");
-        NumeroCandidato_Caixa.setText("");
+        txtNomeCandidato.setText("");
+        txtNumCandidato.setText("");
         caminhoFoto = "";
         Foto.setIcon(null);
         Foto.setText("FOTO");
-        NomeCandidato_Caixa.requestFocus();
+        txtNomeCandidato.requestFocus();
 
         javax.swing.JOptionPane.showMessageDialog(this, "Candidato atualizado com sucesso!");
 
@@ -1184,12 +1186,12 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         listaFotos.remove(linhaSelecionada);
 
         // Limpa os campos
-        NomeCandidato_Caixa.setText("");
-        NumeroCandidato_Caixa.setText("");
+        txtNomeCandidato.setText("");
+        txtNumCandidato.setText("");
         caminhoFoto = "";
         Foto.setIcon(null);
         Foto.setText("FOTO");
-        NomeCandidato_Caixa.requestFocus();
+        txtNomeCandidato.requestFocus();
 
         javax.swing.JOptionPane.showMessageDialog(this, "Candidato excluído com sucesso!");
     }
@@ -1204,7 +1206,7 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         // Busca o número correspondente ao partido e preenche o campo
         for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
             if (TabelaPartido.getValueAt(i, 2).toString().equals(partido)) {
-                NumeroCandidato_Caixa.setText(TabelaPartido.getValueAt(i, 1).toString());
+                txtNumCandidato.setText(TabelaPartido.getValueAt(i, 1).toString());
                 break;
             }
         }
@@ -1395,6 +1397,10 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     }
     }//GEN-LAST:event_TabelaEleitorMouseClicked
 
+    private void txtNomeCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeCargoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeCargoActionPerformed
+
     /**
      * @param args the comêmand line arguments
      */
@@ -1440,9 +1446,7 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private javax.swing.JFormattedTextField CpfEleitor_Caixa;
     private javax.swing.JLabel Descricao;
     private javax.swing.JScrollPane DescricaoCaixa;
-    private javax.swing.JTextArea Descricao_Caixa;
     private javax.swing.JLabel Digitos;
-    private javax.swing.JTextField Digitos_Caixa;
     private javax.swing.JPanel Eleitor;
     private javax.swing.JScrollPane Eleitores_Cadastrados;
     private javax.swing.JButton ExcluirCandidato;
@@ -1451,17 +1455,12 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private javax.swing.JButton Excluir_Cargo;
     private javax.swing.JLabel Foto;
     private javax.swing.JLabel NomeCandidato;
-    private javax.swing.JTextField NomeCandidato_Caixa;
     private javax.swing.JLabel NomeCargo;
-    private javax.swing.JTextField NomeCargo_Caixa;
     private javax.swing.JLabel NomeEleitor;
     private javax.swing.JTextField NomeEleitor_Caixa;
     private javax.swing.JLabel NomePartido;
-    private javax.swing.JTextField NomePartido_Caixa;
     private javax.swing.JLabel NumeroCandidato;
-    private javax.swing.JTextField NumeroCandidato_Caixa;
     private javax.swing.JLabel NumeroPartido;
-    private javax.swing.JTextField NumeroPartido_Caixa;
     private javax.swing.JTabbedPane Opcoes;
     private javax.swing.JPanel PainelAdm;
     private javax.swing.JPanel Partido;
@@ -1471,7 +1470,6 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private javax.swing.JButton Sair;
     private javax.swing.JButton SelecionarFoto;
     private javax.swing.JLabel SiglaPartido;
-    private javax.swing.JTextField SiglaPartido_Caixa;
     private javax.swing.JLabel SubTitulo;
     private javax.swing.JTable TabelaCandidato;
     private javax.swing.JTable TabelaEleitor;
@@ -1480,6 +1478,14 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private javax.swing.JLabel TituloAdm;
     private javax.swing.JLabel TituloEleitor;
     private javax.swing.JFormattedTextField TituloEleitor_Caixa;
+    private javax.swing.JTextArea txtDescricaoCargo;
+    private javax.swing.JTextField txtNomeCandidato;
+    private javax.swing.JTextField txtNomeCargo;
+    private javax.swing.JTextField txtNomePartido;
+    private javax.swing.JTextField txtNumCandidato;
+    private javax.swing.JTextField txtNumPartido;
+    private javax.swing.JTextField txtQntDigitosCargo;
+    private javax.swing.JTextField txtSiglaPartido;
     // End of variables declaration//GEN-END:variables
 
 

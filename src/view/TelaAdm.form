@@ -153,9 +153,9 @@
                               <Component id="Digitos" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="NomeCargo_Caixa" min="-2" pref="464" max="-2" attributes="0"/>
+                              <Component id="txtNomeCargo" min="-2" pref="464" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                              <Component id="Digitos_Caixa" min="-2" pref="124" max="-2" attributes="0"/>
+                              <Component id="txtQntDigitosCargo" min="-2" pref="124" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="Descricao" min="-2" max="-2" attributes="0"/>
@@ -187,8 +187,8 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="NomeCargo_Caixa" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Digitos_Caixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNomeCargo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtQntDigitosCargo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -224,7 +224,10 @@
                 <Property name="text" type="java.lang.String" value="Nome do Cargo"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="NomeCargo_Caixa">
+            <Component class="javax.swing.JTextField" name="txtNomeCargo">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNomeCargoActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="Digitos">
               <Properties>
@@ -234,7 +237,7 @@
                 <Property name="text" type="java.lang.String" value="Qnt. Digitos "/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="Digitos_Caixa">
+            <Component class="javax.swing.JTextField" name="txtQntDigitosCargo">
             </Component>
             <Component class="javax.swing.JLabel" name="Descricao">
               <Properties>
@@ -251,7 +254,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="Descricao_Caixa">
+                <Component class="javax.swing.JTextArea" name="txtDescricaoCargo">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
@@ -381,13 +384,13 @@
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="NumeroPartido_Caixa" min="-2" pref="159" max="-2" attributes="0"/>
+                                      <Component id="txtNumPartido" min="-2" pref="159" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                                       <Component id="SiglaPartido" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="SiglaPartido_Caixa" min="-2" pref="159" max="-2" attributes="0"/>
+                                      <Component id="txtSiglaPartido" min="-2" pref="159" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="NomePartido_Caixa" min="-2" pref="510" max="-2" attributes="0"/>
+                                  <Component id="txtNomePartido" min="-2" pref="510" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
@@ -411,14 +414,14 @@
                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="NumeroPartido" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="NumeroPartido_Caixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNumPartido" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="SiglaPartido" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="SiglaPartido_Caixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtSiglaPartido" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="NomePartido" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="NomePartido_Caixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNomePartido" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -441,9 +444,9 @@
                 <Property name="text" type="java.lang.String" value="N&#xfa;mero do Partido"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="NumeroPartido_Caixa">
+            <Component class="javax.swing.JTextField" name="txtNumPartido">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NumeroPartido_CaixaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNumPartidoActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="SiglaPartido">
@@ -454,9 +457,9 @@
                 <Property name="text" type="java.lang.String" value="Sigla do Partido"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="SiglaPartido_Caixa">
+            <Component class="javax.swing.JTextField" name="txtSiglaPartido">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SiglaPartido_CaixaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSiglaPartidoActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="NomePartido">
@@ -467,9 +470,9 @@
                 <Property name="text" type="java.lang.String" value="Nome do Partido"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="NomePartido_Caixa">
+            <Component class="javax.swing.JTextField" name="txtNomePartido">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NomePartido_CaixaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNomePartidoActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="CadastrarPartido">
@@ -590,10 +593,10 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                       <Component id="CargoCandidato_Caixa" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="NumeroCandidato_Caixa" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtNumCandidato" alignment="0" max="32767" attributes="0"/>
                                       <Component id="PartidoCandidato_Caixa" alignment="0" pref="145" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="NomeCandidato_Caixa" min="-2" pref="328" max="-2" attributes="0"/>
+                                  <Component id="txtNomeCandidato" min="-2" pref="328" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="45" max="32767" attributes="0"/>
                           </Group>
@@ -631,12 +634,12 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="NomeCandidato" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="NomeCandidato_Caixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtNomeCandidato" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="NumeroCandidato" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="NumeroCandidato_Caixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtNumCandidato" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -676,7 +679,7 @@
                 <Property name="text" type="java.lang.String" value="Nome do Candidato"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="NomeCandidato_Caixa">
+            <Component class="javax.swing.JTextField" name="txtNomeCandidato">
             </Component>
             <Component class="javax.swing.JLabel" name="NumeroCandidato">
               <Properties>
@@ -686,7 +689,7 @@
                 <Property name="text" type="java.lang.String" value="N&#xfa;mero"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="NumeroCandidato_Caixa">
+            <Component class="javax.swing.JTextField" name="txtNumCandidato">
             </Component>
             <Component class="javax.swing.JLabel" name="CargoCandidato">
               <Properties>
