@@ -7,28 +7,27 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
         
 public class PartidoDAO {
-    Connection conexao;
+    private Connection conexao;
 
     public PartidoDAO(){
-        conexao = Conexao.getConexao();        
+        this.conexao = new Conexao().getConexao();        
     }
     
            
     //inserir os dados de uma pessoa no mysql
     public void inserir(Partido p){
       try{   
-        String sql = "insert into Partido (id, numeroPartido, sigla, nome) values ( ?, ?, ?, ?)";
+        String sql = "insert into Partido (numeroPartido, sigla, nome) values ( ?, ?, ?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         
-        ps.setInt(1, p.getId());
-        ps.setString(2, p.getNumeroPartido());
-        ps.setString(3, p.getSigla());
-        ps.setString(4, p.getNome());
+        ps.setString(1, p.getNumeroPartido());
+        ps.setString(2, p.getSigla());
+        ps.setString(3, p.getNome());
 
          
         ps.executeUpdate();
         
-        JOptionPane.showMessageDialog(null, "Cadastro de Administrador realizado");
+        JOptionPane.showMessageDialog(null, "Cadastro de Partido realizado");
       }catch(Exception e){
           System.out.println("Erro na insercao: "+e);
       }
@@ -39,7 +38,7 @@ public class PartidoDAO {
         ArrayList<Partido> partido = new ArrayList<Partido>();
         
         try{
-            String sql = "select * from administrador"; 
+            String sql = "select * from Partido"; 
             PreparedStatement ps = conexao.prepareStatement(sql);
             
             ResultSet rs = ps.executeQuery();

@@ -7,33 +7,27 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
         
 public class CandidatoDAO {
-    Connection conexao;
+    private Connection conexao;
 
     public CandidatoDAO(){
-        conexao = Conexao.getConexao();        
+        this.conexao = new Conexao().getConexao();        
     }
     
            
     //inserir os dados de uma pessoa no mysql
     public void inserir(Candidato c){
       try{   
-        String sql = "insert into Candidato (id, nome, cpf, numero, foto, votos, idPartido, numeroPartido, sigla, nomePartido, idCargo, nomeCargo, quantidadeDigitos, descricao) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into Candidato ( nome, cpf, numero, foto, votos, idPartido, idCargo) values ( ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         
-        ps.setInt(1, c.getId());
-        ps.setString(2, c.getNome());
-        ps.setString(3, c.getCpf());
-        ps.setInt(4, c.getNumero());
-        ps.setBytes(5, c.getFoto());
-        ps.setInt(6, c.getVotos());
-        ps.setInt(7, c.getPartido().getId());
-        ps.setString(8, c.getPartido().getNumeroPartido());
-        ps.setString(9, c.getPartido().getSigla());
-        ps.setString(10, c.getPartido().getNome());
-        ps.setInt(11, c.getCargo().getId());
-        ps.setString(12, c.getCargo().getNome());
-        ps.setInt(13, c.getCargo().getQuantidadeDigitos());
-        ps.setString(14, c.getCargo().getDescricao());
+
+        ps.setString(1, c.getNome());
+        ps.setString(2, c.getCpf());
+        ps.setInt(3, c.getNumero());
+        ps.setBytes(4, c.getFoto());
+        ps.setInt(5, c.getVotos());
+        ps.setInt(6, c.getPartido().getId());;
+        ps.setInt(7, c.getCargo().getId());
          
         ps.executeUpdate();
         
@@ -48,7 +42,7 @@ public class CandidatoDAO {
         ArrayList<Candidato> candidato = new ArrayList<Candidato>();
         
         try{
-            String sql = "select * from candidato"; 
+            String sql = "select * from Candidato"; 
             PreparedStatement ps = conexao.prepareStatement(sql);
             
             ResultSet rs = ps.executeQuery();

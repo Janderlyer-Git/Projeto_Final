@@ -7,28 +7,27 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
         
 public class CargoDAO {
-    Connection conexao;
+    private Connection conexao;
 
     public CargoDAO(){
-        conexao = Conexao.getConexao();        
+        this.conexao = new Conexao().getConexao();        
     }
     
            
     //inserir os dados de uma pessoa no mysql
     public void inserir(Cargo c){
       try{   
-        String sql = "insert into Cargo (id, nome, quantidadeDigitos, descricao) values ( ?, ?, ?, ?)";
+        String sql = "insert into Cargo (nome, quantidadeDigitos, descricao) values ( ?, ?, ?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         
-        ps.setInt(1, c.getId());
-        ps.setString(2, c.getNome());
-        ps.setInt(3, c.getQuantidadeDigitos());
-        ps.setString(4, c.getDescricao());
+        ps.setString(1, c.getNome());
+        ps.setInt(2, c.getQuantidadeDigitos());
+        ps.setString(3, c.getDescricao());
 
          
         ps.executeUpdate();
         
-        JOptionPane.showMessageDialog(null, "Cadastro de Administrador realizado");
+        JOptionPane.showMessageDialog(null, "Cadastro de Cargo realizado");
       }catch(Exception e){
           System.out.println("Erro na insercao: "+e);
       }
@@ -39,12 +38,12 @@ public class CargoDAO {
         ArrayList<Cargo> cargo = new ArrayList<Cargo>();
         
         try{
-            String sql = "select * from administrador"; 
+            String sql = "select * from Cargo"; 
             PreparedStatement ps = conexao.prepareStatement(sql);
             
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                Cargo p = new Cargo(rs.getInt("id"), rs.getString("nome"),
+                Cargo p = new Cargo(rs.getInt("id"),rs.getString("nome"),
                 rs.getInt("quantidadeDigitos"), rs.getString("descricao"));
                
                 cargo.add(p);

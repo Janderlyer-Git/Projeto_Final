@@ -4,6 +4,9 @@
  */
 package view;
 
+import model.bean.*;
+import model.dao.*;
+
 /**
  *
  * @author janderlyer
@@ -42,7 +45,6 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         NomeCargo = new javax.swing.JLabel();
         txtNomeCargo = new javax.swing.JTextField();
         Digitos = new javax.swing.JLabel();
-        txtQntDigitosCargo = new javax.swing.JTextField();
         Descricao = new javax.swing.JLabel();
         DescricaoCaixa = new javax.swing.JScrollPane();
         txtDescricaoCargo = new javax.swing.JTextArea();
@@ -51,6 +53,7 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         Tabelas = new javax.swing.JTable();
         Excluir_Cargo = new javax.swing.JButton();
         Atualizar_Cargo = new javax.swing.JButton();
+        boxQntDigitosCargo = new javax.swing.JComboBox<>();
         Partido = new javax.swing.JPanel();
         NumeroPartido = new javax.swing.JLabel();
         txtNumPartido = new javax.swing.JTextField();
@@ -193,6 +196,8 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         Atualizar_Cargo.setText("Atualizar");
         Atualizar_Cargo.addActionListener(this::Atualizar_CargoActionPerformed);
 
+        boxQntDigitosCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
+
         javax.swing.GroupLayout CargoLayout = new javax.swing.GroupLayout(Cargo);
         Cargo.setLayout(CargoLayout);
         CargoLayout.setHorizontalGroup(
@@ -201,14 +206,6 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
             .addGroup(CargoLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(CargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CargoLayout.createSequentialGroup()
-                        .addComponent(NomeCargo)
-                        .addGap(402, 402, 402)
-                        .addComponent(Digitos))
-                    .addGroup(CargoLayout.createSequentialGroup()
-                        .addComponent(txtNomeCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64)
-                        .addComponent(txtQntDigitosCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(CargoLayout.createSequentialGroup()
                         .addComponent(Descricao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -220,7 +217,17 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                                 .addGap(76, 76, 76)
                                 .addComponent(Cadastrar_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(72, 72, 72)
-                                .addComponent(Atualizar_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(Atualizar_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(CargoLayout.createSequentialGroup()
+                        .addGroup(CargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(NomeCargo)
+                            .addComponent(txtNomeCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(74, 74, 74)
+                        .addGroup(CargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Digitos)
+                            .addGroup(CargoLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(boxQntDigitosCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(73, Short.MAX_VALUE))
         );
         CargoLayout.setVerticalGroup(
@@ -233,7 +240,7 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNomeCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtQntDigitosCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(boxQntDigitosCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(DescricaoCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,14 +248,11 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                         .addGap(19, 19, 19)
                         .addComponent(Descricao)))
                 .addGap(30, 30, 30)
-                .addGroup(CargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(CargoLayout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(Atualizar_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CargoLayout.createSequentialGroup()
-                        .addComponent(Excluir_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24))
-                    .addComponent(Cadastrar_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(CargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(Cadastrar_Cargo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Excluir_Cargo, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                    .addComponent(Atualizar_Cargo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
                 .addComponent(Cargos_Cadastrados, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
         );
 
@@ -647,9 +651,10 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private void Cadastrar_CargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cadastrar_CargoActionPerformed
         // TODO add your handling code here:                                             
         String nome = txtNomeCargo.getText().trim();
-    String digitosStr = txtQntDigitosCargo.getText().trim();
+    String digitosStr = boxQntDigitosCargo.getSelectedItem().toString().trim();
     String descricao = txtDescricaoCargo.getText().trim();
-
+    
+    
     if (nome.isEmpty() || digitosStr.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "Preencha o nome do cargo e a quantidade de dígitos.");
         return;
@@ -657,13 +662,25 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
 
     try {
         int digitos = Integer.parseInt(digitosStr);
+        
+        // parte de inserir no banco de dados:
+        Cargo c = new Cargo();
+        CargoDAO cdao = new CargoDAO();
+    
+        c.setNome(txtNomeCargo.getText());
+        c.setDescricao(txtDescricaoCargo.getText());
+        c.setQuantidadeDigitos(Integer.parseInt(boxQntDigitosCargo.getSelectedItem().toString()));
+    
+        cdao.inserir(c);
+        //finalizou
+    
         javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) Tabelas.getModel();
         int novoId = modelo.getRowCount() + 1;
 
         modelo.addRow(new Object[]{novoId, nome, digitos, descricao});
 
         txtNomeCargo.setText("");
-        txtQntDigitosCargo.setText("");
+        boxQntDigitosCargo.setSelectedIndex(-1);
         txtDescricaoCargo.setText("");
         txtNomeCargo.requestFocus();
     } catch (NumberFormatException e) {
@@ -847,7 +864,7 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
 
         // Limpa os campos
         txtNomeCargo.setText("");
-        txtQntDigitosCargo.setText("");
+        boxQntDigitosCargo.setSelectedIndex(-1);
         txtDescricaoCargo.setText("");
         txtNomeCargo.requestFocus();
 
@@ -868,7 +885,7 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
 
     // Pega os dados atualizados dos campos
     String nome = txtNomeCargo.getText().trim();
-    String digitosStr = txtQntDigitosCargo.getText().trim();
+    String digitosStr = boxQntDigitosCargo.getSelectedItem().toString();
     String descricao = txtDescricaoCargo.getText().trim();
 
     if (nome.isEmpty() || digitosStr.isEmpty()) {
@@ -887,7 +904,7 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
 
         // Limpa os campos
         txtNomeCargo.setText("");
-        txtQntDigitosCargo.setText("");
+        boxQntDigitosCargo.setSelectedIndex(-1);
         txtDescricaoCargo.setText("");
         txtNomeCargo.requestFocus();
 
@@ -914,12 +931,11 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
 
             // Preenche os campos do formulário
             txtNomeCargo.setText(nome);
-            txtQntDigitosCargo.setText(digitos);
+            boxQntDigitosCargo.setSelectedItem(digitos);
             txtDescricaoCargo.setText(descricao);
         }
     }
-        
-        
+                
     }//GEN-LAST:event_TabelasMouseClicked
 
     private void OpcoesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_OpcoesStateChanged
@@ -1478,13 +1494,13 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private javax.swing.JLabel TituloAdm;
     private javax.swing.JLabel TituloEleitor;
     private javax.swing.JFormattedTextField TituloEleitor_Caixa;
+    private javax.swing.JComboBox<String> boxQntDigitosCargo;
     private javax.swing.JTextArea txtDescricaoCargo;
     private javax.swing.JTextField txtNomeCandidato;
     private javax.swing.JTextField txtNomeCargo;
     private javax.swing.JTextField txtNomePartido;
     private javax.swing.JTextField txtNumCandidato;
     private javax.swing.JTextField txtNumPartido;
-    private javax.swing.JTextField txtQntDigitosCargo;
     private javax.swing.JTextField txtSiglaPartido;
     // End of variables declaration//GEN-END:variables
 

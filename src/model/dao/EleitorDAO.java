@@ -7,30 +7,29 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
         
 public class EleitorDAO {
-    Connection conexao;
+    private Connection conexao;
 
     public EleitorDAO(){
-        conexao = Conexao.getConexao();        
+        this.conexao = new Conexao().getConexao();        
     }
     
            
     //inserir os dados de uma pessoa no mysql
     public void inserir(Eleitor el){
       try{   
-        String sql = "insert into Eleitor (id, nome, cpf, tituloEleitoral, zona, secao, jaVotou) values ( ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into Eleitor (nome, cpf, tituloEleitoral, zona, secao, jaVotou) values ( ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         
-        ps.setInt(1, el.getId());
-        ps.setString(2, el.getNome());
-        ps.setString(3, el.getCpf());
-        ps.setString(4, el.getTituloEleitoral());
-        ps.setString(5, el.getZona());
-        ps.setString(6, el.getSecao());
-        ps.setBoolean(7, el.isJaVotou());
+        ps.setString(1, el.getNome());
+        ps.setString(2, el.getCpf());
+        ps.setString(3, el.getTituloEleitoral());
+        ps.setString(4, el.getZona());
+        ps.setString(5, el.getSecao());
+        ps.setBoolean(6, el.isJaVotou());
          
         ps.executeUpdate();
         
-        JOptionPane.showMessageDialog(null, "Cadastro de Administrador realizado");
+        JOptionPane.showMessageDialog(null, "Cadastro de Eleitor realizado");
       }catch(Exception e){
           System.out.println("Erro na insercao: "+e);
       }
@@ -41,7 +40,7 @@ public class EleitorDAO {
         ArrayList<Eleitor> eleitor = new ArrayList<Eleitor>();
         
         try{
-            String sql = "select * from administrador"; 
+            String sql = "select * from Eleitor"; 
             PreparedStatement ps = conexao.prepareStatement(sql);
             
             ResultSet rs = ps.executeQuery();

@@ -7,35 +7,24 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
         
 public class VotoDAO {
-    Connection conexao;
+    private Connection conexao;
 
     public VotoDAO(){
-        conexao = Conexao.getConexao();        
+        this.conexao = new Conexao().getConexao();        
     }
     
            
     //inserir os dados de um voto no mysql
     public void inserir(Voto v){
       try{   
-        String sql = "insert into Voto (id, idCandidato, nomeCandidato, cpfCandidato, numeroCandidato, fotoCandidato, idPartido, numeroPartido, sigla, nomePartido, idCargo, nomeCargo, quantidadeDigitos, descricao, tipoVoto, dataHora) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into Voto (idCandidato, idPartido, idCargo, tipoVoto, dataHora) values ( ?, ?, ?, ?, ?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         
-        ps.setInt(1, v.getId());
-        ps.setInt(2, v.getCandidato().getId());
-        ps.setString(3, v.getCandidato().getNome());
-        ps.setString(4, v.getCandidato().getCpf());
-        ps.setInt (5, v.getCandidato().getNumero());
-        ps.setBytes(6, v.getCandidato().getFoto());
-        ps.setInt(7, v.getCandidato().getPartido().getId());
-        ps.setString(8, v.getCandidato().getPartido().getNumeroPartido());
-        ps.setString(9, v.getCandidato().getPartido().getSigla());
-        ps.setString(10, v.getCandidato().getPartido().getNome());
-        ps.setInt(10, v.getCandidato().getCargo().getId());
-        ps.setString(11, v.getCandidato().getCargo().getNome());
-        ps.setInt(12, v.getCandidato().getCargo().getQuantidadeDigitos());
-        ps.setString(13, v.getCandidato().getCargo().getDescricao());
-        ps.setString(14, v.getTipoVoto());
-        ps.setTimestamp(15, Timestamp.valueOf(v.getDataHora()));
+        ps.setInt(1, v.getCandidato().getId());
+        ps.setInt(2, v.getCandidato().getPartido().getId());
+        ps.setInt(3, v.getCandidato().getCargo().getId());
+        ps.setString(4, v.getTipoVoto());
+        ps.setTimestamp(5, Timestamp.valueOf(v.getDataHora()));
          
         ps.executeUpdate();
         

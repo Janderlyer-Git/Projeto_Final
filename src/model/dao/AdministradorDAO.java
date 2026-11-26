@@ -7,24 +7,23 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
         
 public class AdministradorDAO {
-    Connection conexao;
+    private Connection conexao;
 
     public AdministradorDAO(){
-        conexao = Conexao.getConexao();        
+        this.conexao = new Conexao().getConexao();        
     }
     
            
     //inserir os dados de uma pessoa no mysql
     public void inserir(Administrador a){
       try{   
-        String sql = "insert into Administrador (id, nome, cpf, login, senha) values ( ?, ?, ?, ?, ?)";
+        String sql = "insert into Administrador (nome, cpf, login, senha) values ( ?, ?, ?, ?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         
-        ps.setInt(1, a.getId());
-        ps.setString(2, a.getNome());
-        ps.setString(3, a.getCpf());
-        ps.setString(4, a.getLogin());
-        ps.setString(5, a.getSenha());
+        ps.setString(1, a.getNome());
+        ps.setString(2, a.getCpf());
+        ps.setString(3, a.getLogin());
+        ps.setString(4, a.getSenha());
          
         ps.executeUpdate();
         
@@ -39,7 +38,7 @@ public class AdministradorDAO {
         ArrayList<Administrador> administrador = new ArrayList<Administrador>();
         
         try{
-            String sql = "select * from administrador"; 
+            String sql = "select * from Administrador"; 
             PreparedStatement ps = conexao.prepareStatement(sql);
             
             ResultSet rs = ps.executeQuery();
