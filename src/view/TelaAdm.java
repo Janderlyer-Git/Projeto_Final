@@ -871,32 +871,40 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private void Excluir_CargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Excluir_CargoActionPerformed
         
         // Obtém a linha selecionada
-    int linhaSelecionada = Tabelas.getSelectedRow();
+    if(Tabelas.getSelectedRow() != -1){
+        
+        String nome = txtNomeCargo.getText().trim();
+        String digitosStr = boxQntDigitosCargo.getSelectedItem().toString().trim();
+        String descricao = txtDescricaoCargo.getText().trim();
+    
+    
+        if (nome.isEmpty() || digitosStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Preencha o nome do cargo e a quantidade de dígitos.");
+            return;
+            }
 
-    if (linhaSelecionada == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um cargo na tabela para excluir.");
-        return;
-    }
-
-    // Confirmação de exclusão
-    int confirmacao = javax.swing.JOptionPane.showConfirmDialog(this,
-            "Tem certeza que deseja excluir este cargo?",
-            "Confirmar Exclusão",
-            javax.swing.JOptionPane.YES_NO_OPTION);
-
-    if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
-        // Remove a linha da tabela visual
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) Tabelas.getModel();
-        modelo.removeRow(linhaSelecionada);
-
-        // Limpa os campos
-        txtNomeCargo.setText("");
-        boxQntDigitosCargo.setSelectedIndex(-1);
-        txtDescricaoCargo.setText("");
-        txtNomeCargo.requestFocus();
-
-        javax.swing.JOptionPane.showMessageDialog(this, "Cargo excluído com sucesso!");
-    }
+        try {
+            int digitos = Integer.parseInt(digitosStr);
+        
+            // parte de EXCLUIR do banco de dados:
+           Cargo c = new Cargo();
+           CargoDAO cdao = new CargoDAO();
+    
+           c.setId((int)Tabelas.getValueAt(Tabelas.getSelectedRow(), 0));
+           
+           cdao.delete(c);
+           //finalizou
+        
+           readTelaAdm();
+        
+           txtNomeCargo.setText("");
+           boxQntDigitosCargo.setSelectedIndex(-1);
+           txtDescricaoCargo.setText("");
+           txtNomeCargo.requestFocus();
+            } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "A quantidade de dígitos deve ser um número inteiro.");
+            }
+        }
         
         
     }//GEN-LAST:event_Excluir_CargoActionPerformed

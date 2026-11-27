@@ -76,5 +76,21 @@ public class CargoDAO {
           System.out.println("Erro ao Atualizar: "+e);
       }
     }
+   
+   public void delete(Cargo c){
+      try{   
+        String sql = "DELETE FROM Cargo WHERE id = ?";
+        PreparedStatement ps = conexao.prepareStatement(sql);
+
+        ps.setInt(1, c.getId());
+
+         
+        ps.executeUpdate();
+        
+        JOptionPane.showMessageDialog(null, "Cargo excluido com sucesso");
+      }catch(Exception e){
+          System.out.println("Erro ao excluir: "+e);
+      }
+    }
     
 }
