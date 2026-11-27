@@ -188,6 +188,12 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         Cadastrar_Cargo.setText("Cadastrar");
         Cadastrar_Cargo.addActionListener(this::Cadastrar_CargoActionPerformed);
 
+        Cargos_Cadastrados.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Cargos_CadastradosKeyReleased(evt);
+            }
+        });
+
         Tabelas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -897,42 +903,43 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
 
     private void Atualizar_CargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Atualizar_CargoActionPerformed
         // Obtém a linha selecionada
-    int linhaSelecionada = Tabelas.getSelectedRow();
+    if(Tabelas.getSelectedRow() != -1){
+        
+        String nome = txtNomeCargo.getText().trim();
+        String digitosStr = boxQntDigitosCargo.getSelectedItem().toString().trim();
+        String descricao = txtDescricaoCargo.getText().trim();
+    
+    
+        if (nome.isEmpty() || digitosStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Preencha o nome do cargo e a quantidade de dígitos.");
+            return;
+            }
 
-    if (linhaSelecionada == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um cargo na tabela para atualizar.");
-        return;
-    }
-
-    // Pega os dados atualizados dos campos
-    String nome = txtNomeCargo.getText().trim();
-    String digitosStr = boxQntDigitosCargo.getSelectedItem().toString();
-    String descricao = txtDescricaoCargo.getText().trim();
-
-    if (nome.isEmpty() || digitosStr.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Preencha o nome do cargo e a quantidade de dígitos.");
-        return;
-    }
-
-    try {
-        // Valida se a quantidade de dígitos é um número inteiro
-        int digitos = Integer.parseInt(digitosStr);
-
-        // Atualiza os valores na tabela visual
-        Tabelas.setValueAt(nome, linhaSelecionada, 1);
-        Tabelas.setValueAt(digitos, linhaSelecionada, 2);
-        Tabelas.setValueAt(descricao, linhaSelecionada, 3);
-
-        // Limpa os campos
-        txtNomeCargo.setText("");
-        boxQntDigitosCargo.setSelectedIndex(-1);
-        txtDescricaoCargo.setText("");
-        txtNomeCargo.requestFocus();
-
-        javax.swing.JOptionPane.showMessageDialog(this, "Cargo atualizado com sucesso!");
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "A quantidade de dígitos deve ser um número inteiro.");
-    }
+        try {
+            int digitos = Integer.parseInt(digitosStr);
+        
+            // parte de atualizar no banco de dados:
+           Cargo c = new Cargo();
+           CargoDAO cdao = new CargoDAO();
+    
+           c.setNome(txtNomeCargo.getText());
+           c.setDescricao(txtDescricaoCargo.getText());
+           c.setQuantidadeDigitos(Integer.parseInt(boxQntDigitosCargo.getSelectedItem().toString()));
+           c.setId((int)Tabelas.getValueAt(Tabelas.getSelectedRow(), 0));
+           
+           cdao.atualizar(c);
+           //finalizou
+        
+           readTelaAdm();
+        
+           txtNomeCargo.setText("");
+           boxQntDigitosCargo.setSelectedIndex(-1);
+           txtDescricaoCargo.setText("");
+           txtNomeCargo.requestFocus();
+            } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "A quantidade de dígitos deve ser um número inteiro.");
+            }
+        }
     
     }//GEN-LAST:event_Atualizar_CargoActionPerformed
 
@@ -1419,23 +1426,30 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
 
         // Verifica se foi clique com o botão esquerdo
         if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+            
             // Obtém a linha selecionada
-            int linhaSelecionada = Tabelas.getSelectedRow();
-
-            if (linhaSelecionada != -1) {
-                // Pega os dados da tabela conforme a ordem das colunas
-                String nome = Tabelas.getValueAt(linhaSelecionada, 1).toString();
-                String digitos = Tabelas.getValueAt(linhaSelecionada, 2).toString();
-                String descricao = Tabelas.getValueAt(linhaSelecionada, 3).toString();
-
-                // Preenche os campos do formulário
-                txtNomeCargo.setText(nome);
-                boxQntDigitosCargo.setSelectedItem(digitos);
-                txtDescricaoCargo.setText(descricao);
-            }
+            if(Tabelas.getSelectedRow() != -1) {
+            
+            txtNomeCargo.setText(Tabelas.getValueAt(Tabelas.getSelectedRow(), 1).toString());
+            boxQntDigitosCargo.setSelectedItem(Tabelas.getValueAt(Tabelas.getSelectedRow(), 2).toString());
+            txtDescricaoCargo.setText(Tabelas.getValueAt(Tabelas.getSelectedRow(), 3).toString());
         }
+    }   
 
     }//GEN-LAST:event_TabelasMouseClicked
+
+    private void Cargos_CadastradosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Cargos_CadastradosKeyReleased
+        // TODO add your handling code here:
+        
+        // codigo que sera executado quando soltar o botao apos clicar na tabela
+        
+        if(Tabelas.getSelectedRow() != -1) {
+            
+            txtNomeCargo.setText(Tabelas.getValueAt(Tabelas.getSelectedRow(), 1).toString());
+            boxQntDigitosCargo.setSelectedItem(Tabelas.getValueAt(Tabelas.getSelectedRow(), 2).toString());
+            txtDescricaoCargo.setText(Tabelas.getValueAt(Tabelas.getSelectedRow(), 3).toString());
+        }
+    }//GEN-LAST:event_Cargos_CadastradosKeyReleased
 
     /**
      * @param args the comêmand line arguments

@@ -60,19 +60,20 @@ public class CargoDAO {
    
    public void atualizar(Cargo c){
       try{   
-        String sql = "UPDATE Cargo SET nome, quantidadeDigitos, descricao";
+        String sql = "UPDATE Cargo SET nome = ?, quantidadeDigitos = ?, descricao = ? WHERE id = ?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         
         ps.setString(1, c.getNome());
         ps.setInt(2, c.getQuantidadeDigitos());
         ps.setString(3, c.getDescricao());
+        ps.setInt(4, c.getId());
 
          
         ps.executeUpdate();
         
-        JOptionPane.showMessageDialog(null, "Cadastro de Cargo realizado");
+        JOptionPane.showMessageDialog(null, "Atualizaçao de Cargo realizado");
       }catch(Exception e){
-          System.out.println("Erro na insercao: "+e);
+          System.out.println("Erro ao Atualizar: "+e);
       }
     }
     
