@@ -6,7 +6,7 @@ package view;
 
 import model.bean.*;
 import model.dao.*;
-
+import javax.swing.table.*;
 /**
  *
  * @author janderlyer
@@ -25,8 +25,32 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
      */
     public TelaAdm() {
         initComponents();
+        DefaultTableModel modelo = (DefaultTableModel) Tabelas.getModel();
+        Tabelas.setRowSorter(new TableRowSorter(modelo));
+        
+        readTelaAdm();
     }
-
+    
+    
+    
+    public void readTelaAdm(){
+        DefaultTableModel modelo = (DefaultTableModel) Tabelas.getModel();
+        modelo.setNumRows(0);
+        
+        CargoDAO cdao = new CargoDAO();
+        
+        for(Cargo c: cdao.consultarTodos()){
+            
+           modelo.addRow(new Object[]{
+               c.getId(), c.getNome(), c.getQuantidadeDigitos(), c.getDescricao()});
+           
+           
+        }
+    }
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -673,12 +697,9 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     
         cdao.inserir(c);
         //finalizou
-    
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) Tabelas.getModel();
-        int novoId = modelo.getRowCount() + 1;
-
-        modelo.addRow(new Object[]{novoId, nome, digitos, descricao});
-
+        
+        readTelaAdm();
+        
         txtNomeCargo.setText("");
         boxQntDigitosCargo.setSelectedIndex(-1);
         txtDescricaoCargo.setText("");
@@ -914,29 +935,6 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     }
     
     }//GEN-LAST:event_Atualizar_CargoActionPerformed
-
-    private void TabelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelasMouseClicked
-
-        
-        // Verifica se foi clique com o botão esquerdo
-    if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
-        // Obtém a linha selecionada
-        int linhaSelecionada = Tabelas.getSelectedRow();
-
-        if (linhaSelecionada != -1) {
-            // Pega os dados da tabela conforme a ordem das colunas
-            String nome = Tabelas.getValueAt(linhaSelecionada, 1).toString();
-            String digitos = Tabelas.getValueAt(linhaSelecionada, 2).toString();
-            String descricao = Tabelas.getValueAt(linhaSelecionada, 3).toString();
-
-            // Preenche os campos do formulário
-            txtNomeCargo.setText(nome);
-            boxQntDigitosCargo.setSelectedItem(digitos);
-            txtDescricaoCargo.setText(descricao);
-        }
-    }
-                
-    }//GEN-LAST:event_TabelasMouseClicked
 
     private void OpcoesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_OpcoesStateChanged
                                          
@@ -1416,6 +1414,28 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private void txtNomeCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeCargoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeCargoActionPerformed
+
+    private void TabelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelasMouseClicked
+
+        // Verifica se foi clique com o botão esquerdo
+        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+            // Obtém a linha selecionada
+            int linhaSelecionada = Tabelas.getSelectedRow();
+
+            if (linhaSelecionada != -1) {
+                // Pega os dados da tabela conforme a ordem das colunas
+                String nome = Tabelas.getValueAt(linhaSelecionada, 1).toString();
+                String digitos = Tabelas.getValueAt(linhaSelecionada, 2).toString();
+                String descricao = Tabelas.getValueAt(linhaSelecionada, 3).toString();
+
+                // Preenche os campos do formulário
+                txtNomeCargo.setText(nome);
+                boxQntDigitosCargo.setSelectedItem(digitos);
+                txtDescricaoCargo.setText(descricao);
+            }
+        }
+
+    }//GEN-LAST:event_TabelasMouseClicked
 
     /**
      * @param args the comêmand line arguments

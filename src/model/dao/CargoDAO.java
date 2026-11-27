@@ -43,10 +43,10 @@ public class CargoDAO {
             
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                Cargo p = new Cargo(rs.getInt("id"),rs.getString("nome"),
+                Cargo c = new Cargo(rs.getInt("id"),rs.getString("nome"),
                 rs.getInt("quantidadeDigitos"), rs.getString("descricao"));
                
-                cargo.add(p);
+                cargo.add(c);
             }
             
         }catch(Exception e){
@@ -54,6 +54,26 @@ public class CargoDAO {
         }
         
         return cargo;
+    }
+   
+   
+   
+   public void atualizar(Cargo c){
+      try{   
+        String sql = "UPDATE Cargo SET nome, quantidadeDigitos, descricao";
+        PreparedStatement ps = conexao.prepareStatement(sql);
+        
+        ps.setString(1, c.getNome());
+        ps.setInt(2, c.getQuantidadeDigitos());
+        ps.setString(3, c.getDescricao());
+
+         
+        ps.executeUpdate();
+        
+        JOptionPane.showMessageDialog(null, "Cadastro de Cargo realizado");
+      }catch(Exception e){
+          System.out.println("Erro na insercao: "+e);
+      }
     }
     
 }
