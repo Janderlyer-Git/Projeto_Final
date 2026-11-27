@@ -85,5 +85,45 @@ public class VotoDAO {
         
         return voto;
     }
+   
+   
+   
+   
+   public void atualizar(Voto v){
+      try{   
+        String sql = "UPDATE Voto SET nome = ?, quantidadeDigitos = ?, descricao = ? WHERE id = ?";
+        PreparedStatement ps = conexao.prepareStatement(sql);
+        
+        ps.setInt(1, v.getCandidato().getId());
+        ps.setInt(2, v.getCandidato().getPartido().getId());
+        ps.setInt(3, v.getCandidato().getCargo().getId());
+        ps.setString(4, v.getTipoVoto());
+        ps.setTimestamp(5, Timestamp.valueOf(v.getDataHora()));
+        ps.setInt(6, v.getId());
+
+         
+        ps.executeUpdate();
+        
+        JOptionPane.showMessageDialog(null, "Atualizaçao de Voto realizado");
+      }catch(Exception e){
+          System.out.println("Erro ao Atualizar: "+e);
+      }
+    }
+   
+   public void delete(Voto v){
+      try{   
+        String sql = "DELETE FROM Voto WHERE id = ?";
+        PreparedStatement ps = conexao.prepareStatement(sql);
+
+        ps.setInt(1, v.getId());
+
+         
+        ps.executeUpdate();
+        
+        JOptionPane.showMessageDialog(null, "Voto excluido com sucesso");
+      }catch(Exception e){
+          System.out.println("Erro ao excluir: "+e);
+      }
+    }
     
 }

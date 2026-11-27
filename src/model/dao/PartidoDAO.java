@@ -55,5 +55,42 @@ public class PartidoDAO {
         
         return partido;
     }
+   
+   
+   
+   public void atualizar(Partido p){
+      try{   
+        String sql = "UPDATE Partido SET numeroPartido = ?, sigla = ?, nomePartido = ? WHERE id = ?";
+        PreparedStatement ps = conexao.prepareStatement(sql);
+        
+        ps.setString(1, p.getNumeroPartido());
+        ps.setString(2, p.getSigla());
+        ps.setString(3, p.getNome());
+        ps.setInt(4, p.getId());
+
+         
+        ps.executeUpdate();
+        
+        JOptionPane.showMessageDialog(null, "Atualizaçao de Partido realizado");
+      }catch(Exception e){
+          System.out.println("Erro ao Atualizar: "+e);
+      }
+    }
+   
+   public void delete(Partido p){
+      try{   
+        String sql = "DELETE FROM Partido WHERE id = ?";
+        PreparedStatement ps = conexao.prepareStatement(sql);
+
+        ps.setInt(1, p.getId());
+
+         
+        ps.executeUpdate();
+        
+        JOptionPane.showMessageDialog(null, "Partido excluido com sucesso");
+      }catch(Exception e){
+          System.out.println("Erro ao excluir: "+e);
+      }
+    }
     
 }

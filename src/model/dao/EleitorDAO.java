@@ -58,5 +58,45 @@ public class EleitorDAO {
         
         return eleitor;
     }
+   
+   
+   
+   public void atualizar(Eleitor el){
+      try{   
+        String sql = "UPDATE Eleitor SET nome = ?, cpf = ?, tituloEleitoral = ?, zona = ?, secao = ?, jaVotou = ? WHERE id = ?";
+        PreparedStatement ps = conexao.prepareStatement(sql);
+        
+        ps.setString(1, el.getNome());
+        ps.setString(2, el.getCpf());
+        ps.setString(3, el.getTituloEleitoral());
+        ps.setString(4, el.getZona());
+        ps.setString(5, el.getSecao());
+        ps.setBoolean(6, el.isJaVotou());
+        ps.setInt(7, el.getId());
+
+         
+        ps.executeUpdate();
+        
+        JOptionPane.showMessageDialog(null, "Atualizaçao de Eleitor realizado");
+      }catch(Exception e){
+          System.out.println("Erro ao Atualizar: "+e);
+      }
+    }
+   
+   public void delete(Eleitor el){
+      try{   
+        String sql = "DELETE FROM Eleitor WHERE id = ?";
+        PreparedStatement ps = conexao.prepareStatement(sql);
+
+        ps.setInt(1, el.getId());
+
+         
+        ps.executeUpdate();
+        
+        JOptionPane.showMessageDialog(null, "Eleitor excluido com sucesso");
+      }catch(Exception e){
+          System.out.println("Erro ao excluir: "+e);
+      }
+    }
     
 }

@@ -81,5 +81,45 @@ public class CandidatoDAO {
         
         return candidato;
     }
+   
+   
+   public void atualizar(Candidato c){
+      try{   
+        String sql = "UPDATE Candidato SET nome = ?, cpf = ?, numero = ?, foto = ?, votos = ?, idPartido = ?, idCargo = ? WHERE id = ?";
+        PreparedStatement ps = conexao.prepareStatement(sql);
+        
+        ps.setString(1, c.getNome());
+        ps.setString(2, c.getCpf());
+        ps.setInt(3, c.getNumero());
+        ps.setBytes(4, c.getFoto());
+        ps.setInt(5, c.getVotos());
+        ps.setInt(6, c.getPartido().getId());;
+        ps.setInt(7, c.getCargo().getId());
+        ps.setInt(8, c.getId());
+
+         
+        ps.executeUpdate();
+        
+        JOptionPane.showMessageDialog(null, "Atualizaçao de Candidato realizado");
+      }catch(Exception e){
+          System.out.println("Erro ao Atualizar: "+e);
+      }
+    }
+   
+   public void delete(Candidato c){
+      try{   
+        String sql = "DELETE FROM Candidato WHERE id = ?";
+        PreparedStatement ps = conexao.prepareStatement(sql);
+
+        ps.setInt(1, c.getId());
+
+         
+        ps.executeUpdate();
+        
+        JOptionPane.showMessageDialog(null, "Candidato excluido com sucesso");
+      }catch(Exception e){
+          System.out.println("Erro ao excluir: "+e);
+      }
+    }
     
 }
