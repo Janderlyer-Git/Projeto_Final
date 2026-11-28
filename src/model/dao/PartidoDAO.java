@@ -92,5 +92,28 @@ public class PartidoDAO {
           System.out.println("Erro ao excluir: "+e);
       }
     }
+   
+   
+   public Partido buscarPorSigla(String sigla) {
+    Partido p = null;
+    try {
+        String sql = "SELECT * FROM Partido WHERE nome = ?";
+        PreparedStatement ps = conexao.prepareStatement(sql);
+        ps.setString(1, sigla);
+        
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            p = new Partido(
+                rs.getInt("id"),
+                rs.getString("numeroPartido"),
+                rs.getString("sigla"),
+                rs.getString("nomePartido")
+            );
+        }
+    } catch (Exception e) {
+        System.out.println("Erro ao buscar Partido por nome: " + e);
+    }
+    return p;
+}
     
 }

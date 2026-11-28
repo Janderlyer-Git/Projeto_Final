@@ -92,5 +92,28 @@ public class CargoDAO {
           System.out.println("Erro ao excluir: "+e);
       }
     }
+   
+   
+   public Cargo buscarPorNome(String nome) {
+    Cargo c = null;
+    try {
+        String sql = "SELECT * FROM Cargo WHERE nome = ?";
+        PreparedStatement ps = conexao.prepareStatement(sql);
+        ps.setString(1, nome);
+        
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            c = new Cargo(
+                rs.getInt("id"),
+                rs.getString("nome"),
+                rs.getInt("quantidadeDigitos"),
+                rs.getString("descricao")
+            );
+        }
+    } catch (Exception e) {
+        System.out.println("Erro ao buscar cargo por nome: " + e);
+    }
+    return c;
+}
     
 }

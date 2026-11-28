@@ -120,8 +120,8 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         txtNumCandidato = new javax.swing.JTextField();
         CargoCandidato = new javax.swing.JLabel();
         PartidoCandidato = new javax.swing.JLabel();
-        CargoCandidato_Caixa = new javax.swing.JComboBox<>();
-        PartidoCandidato_Caixa = new javax.swing.JComboBox<>();
+        boxCargoCandidato = new javax.swing.JComboBox<>();
+        boxPartidoCandidato = new javax.swing.JComboBox<>();
         Foto = new javax.swing.JLabel();
         SelecionarFoto = new javax.swing.JButton();
         CadastrarCandidato = new javax.swing.JButton();
@@ -442,10 +442,10 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         PartidoCandidato.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         PartidoCandidato.setText("Partido");
 
-        CargoCandidato_Caixa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        boxCargoCandidato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
 
-        PartidoCandidato_Caixa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-        PartidoCandidato_Caixa.addActionListener(this::PartidoCandidato_CaixaActionPerformed);
+        boxPartidoCandidato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        boxPartidoCandidato.addActionListener(this::boxPartidoCandidatoActionPerformed);
 
         Foto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Foto.setText("FOTO");
@@ -507,9 +507,9 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                         .addGap(18, 18, 18)
                         .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(CargoCandidato_Caixa, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(boxCargoCandidato, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtNumCandidato, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(PartidoCandidato_Caixa, javax.swing.GroupLayout.Alignment.LEADING, 0, 145, Short.MAX_VALUE))
+                                .addComponent(boxPartidoCandidato, javax.swing.GroupLayout.Alignment.LEADING, 0, 145, Short.MAX_VALUE))
                             .addComponent(txtNomeCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CandidatoLayout.createSequentialGroup()
@@ -546,10 +546,10 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                         .addGap(18, 18, 18)
                         .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(CargoCandidato)
-                            .addComponent(CargoCandidato_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(boxCargoCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(28, 28, 28)
                         .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(PartidoCandidato_Caixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(boxPartidoCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(PartidoCandidato)))
                     .addGroup(CandidatoLayout.createSequentialGroup()
                         .addComponent(Foto, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -716,14 +716,14 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private void OpcoesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_OpcoesStateChanged
 
         // Atualiza as listas de Cargos e Partidos ao trocar de aba
-        CargoCandidato_Caixa.removeAllItems();
+        boxCargoCandidato.removeAllItems();
         for (int i = 0; i < Tabelas.getRowCount(); i++) {
-            CargoCandidato_Caixa.addItem(Tabelas.getValueAt(i, 1).toString());
+            boxCargoCandidato.addItem(Tabelas.getValueAt(i, 1).toString());
         }
 
-        PartidoCandidato_Caixa.removeAllItems();
+        boxPartidoCandidato.removeAllItems();
         for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
-            PartidoCandidato_Caixa.addItem(TabelaPartido.getValueAt(i, 2).toString());
+            boxPartidoCandidato.addItem(TabelaPartido.getValueAt(i, 2).toString());
         }
     }//GEN-LAST:event_OpcoesStateChanged
 
@@ -926,8 +926,8 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                 // Preenche os campos e os combos
                 txtNumCandidato.setText(numero);
                 txtNomeCandidato.setText(nome);
-                CargoCandidato_Caixa.setSelectedItem(cargo);
-                PartidoCandidato_Caixa.setSelectedItem(partido);
+                boxCargoCandidato.setSelectedItem(cargo);
+                boxPartidoCandidato.setSelectedItem(partido);
 
                 // Carrega a foto salva daquele candidato
                 caminhoFoto = listaFotos.get(linhaSelecionada);
@@ -993,13 +993,13 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         String nome = txtNomeCandidato.getText().trim();
         String numeroStr = txtNumCandidato.getText().trim();
 
-        if (nome.isEmpty() || numeroStr.isEmpty() || CargoCandidato_Caixa.getSelectedItem() == null || PartidoCandidato_Caixa.getSelectedItem() == null) {
+        if (nome.isEmpty() || numeroStr.isEmpty() || boxCargoCandidato.getSelectedItem() == null || boxPartidoCandidato.getSelectedItem() == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos para atualizar.");
             return;
         }
 
-        String cargo = CargoCandidato_Caixa.getSelectedItem().toString();
-        String partido = PartidoCandidato_Caixa.getSelectedItem().toString();
+        String cargo = boxCargoCandidato.getSelectedItem().toString();
+        String partido = boxPartidoCandidato.getSelectedItem().toString();
 
         try {
             // Valida se o número é um valor inteiro
@@ -1075,13 +1075,13 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         String nome = txtNomeCandidato.getText().trim();
         String numeroStr = txtNumCandidato.getText().trim();
 
-        if (nome.isEmpty() || numeroStr.isEmpty() || CargoCandidato_Caixa.getSelectedItem() == null || PartidoCandidato_Caixa.getSelectedItem() == null) {
+        if (nome.isEmpty() || numeroStr.isEmpty() || boxCargoCandidato.getSelectedItem() == null || boxPartidoCandidato.getSelectedItem() == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos e selecione cargo e partido!");
             return;
         }
 
-        String cargo = CargoCandidato_Caixa.getSelectedItem().toString();
-        String partido = PartidoCandidato_Caixa.getSelectedItem().toString();
+        String cargo = boxCargoCandidato.getSelectedItem().toString();
+        String partido = boxPartidoCandidato.getSelectedItem().toString();
 
         try {
             // Valida se o número é um valor inteiro
@@ -1128,8 +1128,18 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
             }
 
             // Adiciona o candidato na tabela e salva o caminho da foto
-            int novoId = modelo.getRowCount() + 1;
-            modelo.addRow(new Object[]{novoId, numero, nome, cargo, partido});
+            CargoDAO cargoDao = new CargoDAO();
+            Cargo ca = cargoDao.buscarPorNome(cargo);
+            
+            PartidoDAO partidoDao = new PartidoDAO();
+            Partido pa = partidoDao.buscarPorSigla(partido);
+            
+            Candidato c = new Candidato();
+            CandidatoDAO cdao = new CandidatoDAO();
+            
+            ca.setNome(boxCargoCandidato.getSelectedItem().toString());
+
+            
             listaFotos.add(caminhoFoto);
 
             // Limpa os campos e restaura o quadro da foto
@@ -1169,11 +1179,11 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         }
     }//GEN-LAST:event_SelecionarFotoActionPerformed
 
-    private void PartidoCandidato_CaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PartidoCandidato_CaixaActionPerformed
+    private void boxPartidoCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxPartidoCandidatoActionPerformed
 
         // Verifica se há um partido selecionado
-        if (PartidoCandidato_Caixa.getSelectedItem() != null) {
-            String partido = PartidoCandidato_Caixa.getSelectedItem().toString();
+        if (boxPartidoCandidato.getSelectedItem() != null) {
+            String partido = boxPartidoCandidato.getSelectedItem().toString();
 
             // Busca o número correspondente ao partido e preenche o campo
             for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
@@ -1183,7 +1193,7 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                 }
             }
         }
-    }//GEN-LAST:event_PartidoCandidato_CaixaActionPerformed
+    }//GEN-LAST:event_boxPartidoCandidatoActionPerformed
 
     private void AtualizarPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizarPartidoActionPerformed
 
@@ -1495,7 +1505,6 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private javax.swing.JScrollPane Candidatos_Cadastrados;
     private javax.swing.JPanel Cargo;
     private javax.swing.JLabel CargoCandidato;
-    private javax.swing.JComboBox<String> CargoCandidato_Caixa;
     private javax.swing.JScrollPane Cargos_Cadastrados;
     private javax.swing.JLabel CpfEleitor;
     private javax.swing.JFormattedTextField CpfEleitor_Caixa;
@@ -1520,7 +1529,6 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private javax.swing.JPanel PainelAdm;
     private javax.swing.JPanel Partido;
     private javax.swing.JLabel PartidoCandidato;
-    private javax.swing.JComboBox<String> PartidoCandidato_Caixa;
     private javax.swing.JScrollPane PartidosCadastrados;
     private javax.swing.JButton Sair;
     private javax.swing.JButton SelecionarFoto;
@@ -1533,6 +1541,8 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private javax.swing.JLabel TituloAdm;
     private javax.swing.JLabel TituloEleitor;
     private javax.swing.JFormattedTextField TituloEleitor_Caixa;
+    private javax.swing.JComboBox<String> boxCargoCandidato;
+    private javax.swing.JComboBox<String> boxPartidoCandidato;
     private javax.swing.JComboBox<String> boxQntDigitosCargo;
     private javax.swing.JTextArea txtDescricaoCargo;
     private javax.swing.JTextField txtNomeCandidato;

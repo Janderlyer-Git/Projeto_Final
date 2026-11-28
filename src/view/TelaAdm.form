@@ -611,9 +611,9 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="CargoCandidato_Caixa" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="boxCargoCandidato" alignment="0" max="32767" attributes="0"/>
                                       <Component id="txtNumCandidato" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="PartidoCandidato_Caixa" alignment="0" pref="145" max="32767" attributes="0"/>
+                                      <Component id="boxPartidoCandidato" alignment="0" pref="145" max="32767" attributes="0"/>
                                   </Group>
                                   <Component id="txtNomeCandidato" min="-2" pref="328" max="-2" attributes="0"/>
                               </Group>
@@ -663,11 +663,11 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="CargoCandidato" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="CargoCandidato_Caixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="boxCargoCandidato" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="PartidoCandidato_Caixa" min="-2" max="-2" attributes="0"/>
+                                  <Component id="boxPartidoCandidato" min="-2" max="-2" attributes="0"/>
                                   <Component id="PartidoCandidato" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -726,7 +726,7 @@
                 <Property name="text" type="java.lang.String" value="Partido"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="CargoCandidato_Caixa">
+            <Component class="javax.swing.JComboBox" name="boxCargoCandidato">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="1">
@@ -738,7 +738,7 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JComboBox" name="PartidoCandidato_Caixa">
+            <Component class="javax.swing.JComboBox" name="boxPartidoCandidato">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="1">
@@ -747,7 +747,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PartidoCandidato_CaixaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boxPartidoCandidatoActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
