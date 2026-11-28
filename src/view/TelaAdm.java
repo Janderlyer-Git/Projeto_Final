@@ -25,15 +25,20 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
      */
     public TelaAdm() {
         initComponents();
-        DefaultTableModel modelo = (DefaultTableModel) Tabelas.getModel();
-        Tabelas.setRowSorter(new TableRowSorter(modelo));
         
-        readTelaAdm();
+        DefaultTableModel modeloCargo = (DefaultTableModel) Tabelas.getModel();
+        Tabelas.setRowSorter(new TableRowSorter(modeloCargo));
+        
+        DefaultTableModel modeloPartido = (DefaultTableModel) TabelaPartido.getModel();
+        TabelaPartido.setRowSorter(new TableRowSorter(modeloPartido));
+    
+        readTabelaCargo();
+        readTabelaPartido();
     }
     
     
     
-    public void readTelaAdm(){
+    public void readTabelaCargo(){
         DefaultTableModel modelo = (DefaultTableModel) Tabelas.getModel();
         modelo.setNumRows(0);
         
@@ -42,12 +47,30 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         for(Cargo c: cdao.consultarTodos()){
             
            modelo.addRow(new Object[]{
-               c.getId(), c.getNome(), c.getQuantidadeDigitos(), c.getDescricao()});
+               c.getId(), 
+               c.getNome(), 
+               c.getQuantidadeDigitos(), 
+               c.getDescricao()});
            
            
         }
     }
     
+    public void readTabelaPartido() {
+        DefaultTableModel modelo = (DefaultTableModel) TabelaPartido.getModel();
+        modelo.setNumRows(0);
+
+        PartidoDAO pdao = new PartidoDAO();
+
+        for (Partido p : pdao.consultarTodos()) { // ajuste o nome do método se no seu PartidoDAO for diferente
+            modelo.addRow(new Object[]{
+                p.getId(),
+                p.getNumeroPartido(),
+                p.getSigla(),
+                p.getNomePartido()
+            });
+        }
+    }
     
     
     
@@ -310,6 +333,12 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         CadastrarPartido.setText("Cadastrar");
         CadastrarPartido.addActionListener(this::CadastrarPartidoActionPerformed);
 
+        PartidosCadastrados.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                PartidosCadastradosKeyReleased(evt);
+            }
+        });
+
         TabelaPartido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -367,7 +396,7 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                                 .addComponent(txtSiglaPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtNomePartido, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(PartidoLayout.createSequentialGroup()
-                        .addGap(166, 166, 166)
+                        .addGap(160, 160, 160)
                         .addComponent(ExcluirPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(112, 112, 112)
                         .addComponent(CadastrarPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -678,591 +707,103 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Cadastrar_CargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cadastrar_CargoActionPerformed
-        // TODO add your handling code here:                                             
-        String nome = txtNomeCargo.getText().trim();
-    String digitosStr = boxQntDigitosCargo.getSelectedItem().toString().trim();
-    String descricao = txtDescricaoCargo.getText().trim();
-    
-    
-    if (nome.isEmpty() || digitosStr.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Preencha o nome do cargo e a quantidade de dígitos.");
-        return;
-    }
-
-    try {
-        int digitos = Integer.parseInt(digitosStr);
-        
-        // parte de inserir no banco de dados:
-        Cargo c = new Cargo();
-        CargoDAO cdao = new CargoDAO();
-    
-        c.setNome(txtNomeCargo.getText());
-        c.setDescricao(txtDescricaoCargo.getText());
-        c.setQuantidadeDigitos(Integer.parseInt(boxQntDigitosCargo.getSelectedItem().toString()));
-    
-        cdao.inserir(c);
-        //finalizou
-        
-        readTelaAdm();
-        
-        txtNomeCargo.setText("");
-        boxQntDigitosCargo.setSelectedIndex(-1);
-        txtDescricaoCargo.setText("");
-        txtNomeCargo.requestFocus();
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "A quantidade de dígitos deve ser um número inteiro.");
-    }
-    }//GEN-LAST:event_Cadastrar_CargoActionPerformed
-
     private void SairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SairActionPerformed
         // TODO add your handling code here:
     new Login().setVisible(true);
     this.dispose();
     }//GEN-LAST:event_SairActionPerformed
 
-    private void txtSiglaPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSiglaPartidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSiglaPartidoActionPerformed
-
-    private void txtNumPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumPartidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumPartidoActionPerformed
-
-    private void txtNomePartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomePartidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomePartidoActionPerformed
-
-    private void CadastrarPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarPartidoActionPerformed
-        // TODO add your handling code here:
-        
-    String numeroStr = txtNumPartido.getText().trim();
-    String sigla = txtSiglaPartido.getText().trim().toUpperCase(); // Salva a sigla sempre em maiúsculas
-    String nome = txtNomePartido.getText().trim();
-
-    //  Validação de Campos Vazios
-    if (numeroStr.isEmpty() || sigla.isEmpty() || nome.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos!");
-        return;
-    }
-
-    try {
-        //  Validação se o número é de fato um inteiro
-        int numero = Integer.parseInt(numeroStr);
-        
-        //  Resgata o modelo da TabelaPartido
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaPartido.getModel();
-        
-        // Gera um ID sequencial com base no número de linhas na tabela
-        int novoId = modelo.getRowCount() + 1;
-
-        // Adiciona a linha na tabela seguindo a ordem correta das colunas 
-        modelo.addRow(new Object[]{novoId, numero, sigla, nome});
-
-        //  Limpa as informações e volta para o primeiro campo de texto 
-        txtNumPartido.setText("");
-        txtSiglaPartido.setText("");
-        txtNomePartido.setText("");
-        txtNumPartido.requestFocus();
-
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "O número do partido deve ser um valor numérico!");
-    }
-        
-        
-    }//GEN-LAST:event_CadastrarPartidoActionPerformed
-
-    private void TabelaPartidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaPartidoMouseClicked
-        // TODO add your handling code here:
-        
-        // Verifica se foi um clique  com o botão esquerdo
-    if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
-        // Obtém o índice da linha selecionada
-        int linhaSelecionada = TabelaPartido.getSelectedRow();
-
-        if (linhaSelecionada != -1) { 
-           /* Se tem uma linha selecionada voc */
-            String id = TabelaPartido.getValueAt(linhaSelecionada, 0).toString();
-            String numero = TabelaPartido.getValueAt(linhaSelecionada, 1).toString();
-            String sigla = TabelaPartido.getValueAt(linhaSelecionada, 2).toString();
-            String nome = TabelaPartido.getValueAt(linhaSelecionada, 3).toString();
-
-            // Joga os dados de volta para os campos de texto para edição
-            txtNumPartido.setText(numero);
-            txtSiglaPartido.setText(sigla);
-            txtNomePartido.setText(nome);
-        }
-    }
-    }//GEN-LAST:event_TabelaPartidoMouseClicked
-
-    private void AtualizarPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizarPartidoActionPerformed
-
-        //  Obtém a linha selecionada
-    int linhaSelecionada = TabelaPartido.getSelectedRow();
-    
-    if (linhaSelecionada == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um partido na tabela para atualizar.");
-        return;
-    }
-    
-    // Pega os novos dados dos campos de texto
-    String numero = txtNumPartido.getText().trim();
-    String sigla = txtSiglaPartido.getText().trim().toUpperCase();
-    String nome = txtNomePartido.getText().trim();
-    
-    // Validações (mesmo do cadastro)
-    if (numero.isEmpty() || sigla.isEmpty() || nome.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos para atualizar.");
-        return;
-    }
-    
-    try {
-        Integer.parseInt(numero); // Verifica se o número ainda é um inteiro
-        
-        //  Atualiza a linha na tabela visual
-        TabelaPartido.setValueAt(numero, linhaSelecionada, 1);
-        TabelaPartido.setValueAt(sigla, linhaSelecionada, 2);
-        TabelaPartido.setValueAt(nome, linhaSelecionada, 3);
-        
-        //  Limpa os campos
-        txtNumPartido.setText("");
-        txtSiglaPartido.setText("");
-        txtNomePartido.setText("");
-        txtNumPartido.requestFocus();
-        
-        javax.swing.JOptionPane.showMessageDialog(this, "Partido atualizado com sucesso!");
-        
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "O número do partido deve ser um valor numérico!");
-    }
-    }//GEN-LAST:event_AtualizarPartidoActionPerformed
-
-    private void ExcluirPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirPartidoActionPerformed
- 
-        // Obtém a linha selecionada
-    int linhaSelecionada = TabelaPartido.getSelectedRow();
-    
-    if (linhaSelecionada == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um partido na tabela para excluir.");
-        return;
-    }
-    
-    //  Confirmação de exclusão
-    int confirmacao = javax.swing.JOptionPane.showConfirmDialog(this, 
-            "Tem certeza que deseja excluir este partido?", 
-            "Confirmar Exclusão", 
-            javax.swing.JOptionPane.YES_NO_OPTION);
-            
-    if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
-        // Remove a linha da tabela visual
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaPartido.getModel();
-        modelo.removeRow(linhaSelecionada);
-        
-        // Limpa os campos
-        txtNumPartido.setText("");
-        txtSiglaPartido.setText("");
-        txtNomePartido.setText("");
-        txtNumPartido.requestFocus();
-        
-        javax.swing.JOptionPane.showMessageDialog(this, "Partido excluído com sucesso!");
-    }
-    }//GEN-LAST:event_ExcluirPartidoActionPerformed
-
-    private void Excluir_CargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Excluir_CargoActionPerformed
-        
-        // Obtém a linha selecionada
-    if(Tabelas.getSelectedRow() != -1){
-        
-        String nome = txtNomeCargo.getText().trim();
-        String digitosStr = boxQntDigitosCargo.getSelectedItem().toString().trim();
-        String descricao = txtDescricaoCargo.getText().trim();
-    
-    
-        if (nome.isEmpty() || digitosStr.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Preencha o nome do cargo e a quantidade de dígitos.");
-            return;
-            }
-
-        try {
-            int digitos = Integer.parseInt(digitosStr);
-        
-            // parte de EXCLUIR do banco de dados:
-           Cargo c = new Cargo();
-           CargoDAO cdao = new CargoDAO();
-    
-           c.setId((int)Tabelas.getValueAt(Tabelas.getSelectedRow(), 0));
-           
-           cdao.delete(c);
-           //finalizou
-        
-           readTelaAdm();
-        
-           txtNomeCargo.setText("");
-           boxQntDigitosCargo.setSelectedIndex(-1);
-           txtDescricaoCargo.setText("");
-           txtNomeCargo.requestFocus();
-            } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "A quantidade de dígitos deve ser um número inteiro.");
-            }
-        }
-        
-        
-    }//GEN-LAST:event_Excluir_CargoActionPerformed
-
-    private void Atualizar_CargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Atualizar_CargoActionPerformed
-        // Obtém a linha selecionada
-    if(Tabelas.getSelectedRow() != -1){
-        
-        String nome = txtNomeCargo.getText().trim();
-        String digitosStr = boxQntDigitosCargo.getSelectedItem().toString().trim();
-        String descricao = txtDescricaoCargo.getText().trim();
-    
-    
-        if (nome.isEmpty() || digitosStr.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Preencha o nome do cargo e a quantidade de dígitos.");
-            return;
-            }
-
-        try {
-            int digitos = Integer.parseInt(digitosStr);
-        
-            // parte de atualizar no banco de dados:
-           Cargo c = new Cargo();
-           CargoDAO cdao = new CargoDAO();
-    
-           c.setNome(txtNomeCargo.getText());
-           c.setDescricao(txtDescricaoCargo.getText());
-           c.setQuantidadeDigitos(Integer.parseInt(boxQntDigitosCargo.getSelectedItem().toString()));
-           c.setId((int)Tabelas.getValueAt(Tabelas.getSelectedRow(), 0));
-           
-           cdao.atualizar(c);
-           //finalizou
-        
-           readTelaAdm();
-        
-           txtNomeCargo.setText("");
-           boxQntDigitosCargo.setSelectedIndex(-1);
-           txtDescricaoCargo.setText("");
-           txtNomeCargo.requestFocus();
-            } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "A quantidade de dígitos deve ser um número inteiro.");
-            }
-        }
-    
-    }//GEN-LAST:event_Atualizar_CargoActionPerformed
-
     private void OpcoesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_OpcoesStateChanged
-                                         
-    // Atualiza as listas de Cargos e Partidos ao trocar de aba
-    CargoCandidato_Caixa.removeAllItems();
-    for (int i = 0; i < Tabelas.getRowCount(); i++) {
-        CargoCandidato_Caixa.addItem(Tabelas.getValueAt(i, 1).toString());
-    }
 
-    PartidoCandidato_Caixa.removeAllItems();
-    for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
-        PartidoCandidato_Caixa.addItem(TabelaPartido.getValueAt(i, 2).toString());
-    }
+        // Atualiza as listas de Cargos e Partidos ao trocar de aba
+        CargoCandidato_Caixa.removeAllItems();
+        for (int i = 0; i < Tabelas.getRowCount(); i++) {
+            CargoCandidato_Caixa.addItem(Tabelas.getValueAt(i, 1).toString());
+        }
 
+        PartidoCandidato_Caixa.removeAllItems();
+        for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
+            PartidoCandidato_Caixa.addItem(TabelaPartido.getValueAt(i, 2).toString());
+        }
     }//GEN-LAST:event_OpcoesStateChanged
 
-    private void SelecionarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelecionarFotoActionPerformed
-        // Abre a janela para escolher o arquivo de imagem
-    javax.swing.JFileChooser seletor = new javax.swing.JFileChooser();
-    seletor.setDialogTitle("Selecione a foto do candidato");
-    seletor.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Imagens (JPG, PNG)", "jpg", "jpeg", "png"));
+    private void TabelaEleitorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaEleitorMouseClicked
 
-    int resultado = seletor.showOpenDialog(this);
-
-    if (resultado == javax.swing.JFileChooser.APPROVE_OPTION) {
-        // Guarda o caminho da imagem escolhida
-        java.io.File arquivo = seletor.getSelectedFile();
-        caminhoFoto = arquivo.getAbsolutePath();
-
-        // Redimensiona a imagem para caber exatamente no quadro Foto
-        javax.swing.ImageIcon iconeOriginal = new javax.swing.ImageIcon(caminhoFoto);
-        java.awt.Image imagemAjustada = iconeOriginal.getImage().getScaledInstance(
-                Foto.getWidth(), Foto.getHeight(), java.awt.Image.SCALE_SMOOTH);
-
-        // Exibe a foto no JLabel e remove o texto
-        Foto.setText("");
-        Foto.setIcon(new javax.swing.ImageIcon(imagemAjustada));
-    }
-    }//GEN-LAST:event_SelecionarFotoActionPerformed
-
-    private void CadastrarCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarCandidatoActionPerformed
-    // Pega os dados digitados e selecionados
-    String nome = txtNomeCandidato.getText().trim();
-    String numeroStr = txtNumCandidato.getText().trim();
-
-    if (nome.isEmpty() || numeroStr.isEmpty() || CargoCandidato_Caixa.getSelectedItem() == null || PartidoCandidato_Caixa.getSelectedItem() == null) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos e selecione cargo e partido!");
-        return;
-    }
-
-    String cargo = CargoCandidato_Caixa.getSelectedItem().toString();
-    String partido = PartidoCandidato_Caixa.getSelectedItem().toString();
-
-    try {
-        // Valida se o número é um valor inteiro
-        int numero = Integer.parseInt(numeroStr);
-
-        // Busca o número do partido selecionado na tabela de partidos
-        String numeroPartido = "";
-        for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
-            if (TabelaPartido.getValueAt(i, 2).toString().equals(partido)) {
-                numeroPartido = TabelaPartido.getValueAt(i, 1).toString();
-                break;
-            }
-        }
-
-        // Verifica se o número do candidato inicia com o número do partido
-        if (!numeroPartido.isEmpty() && !numeroStr.startsWith(numeroPartido)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "O número do candidato deve começar com " + numeroPartido + " (número do partido " + partido + ")!");
-            return;
-        }
-
-        // Busca a quantidade de dígitos exigida pelo cargo selecionado
-        int digitosExigidos = 0;
-        for (int i = 0; i < Tabelas.getRowCount(); i++) {
-            if (Tabelas.getValueAt(i, 1).toString().equals(cargo)) {
-                digitosExigidos = Integer.parseInt(Tabelas.getValueAt(i, 2).toString());
-                break;
-            }
-        }
-
-        if (digitosExigidos > 0 && numeroStr.length() != digitosExigidos) {
-            javax.swing.JOptionPane.showMessageDialog(this, "O cargo " + cargo + " exige exatamente " + digitosExigidos + " dígitos!");
-            return;
-        }
-
-        // Verifica se já existe candidato com o mesmo número nesse cargo
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaCandidato.getModel();
-        for (int i = 0; i < modelo.getRowCount(); i++) {
-            String numExistente = modelo.getValueAt(i, 1).toString();
-            String cargoExistente = modelo.getValueAt(i, 3).toString();
-            if (numExistente.equals(numeroStr) && cargoExistente.equals(cargo)) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Já existe um candidato com esse número para este cargo!");
-                return;
-            }
-        }
-
-        // Adiciona o candidato na tabela e salva o caminho da foto
-        int novoId = modelo.getRowCount() + 1;
-        modelo.addRow(new Object[]{novoId, numero, nome, cargo, partido});
-        listaFotos.add(caminhoFoto);
-
-        // Limpa os campos e restaura o quadro da foto
-        txtNomeCandidato.setText("");
-        txtNumCandidato.setText("");
-        caminhoFoto = "";
-        Foto.setIcon(null);
-        Foto.setText("FOTO");
-        txtNomeCandidato.requestFocus();
-
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "O número do candidato deve conter apenas algarismos!");
-    }
-    }//GEN-LAST:event_CadastrarCandidatoActionPerformed
-
-    private void Candidatos_CadastradosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Candidatos_CadastradosMouseClicked
-        
         // Verifica se foi clique com o botão esquerdo
-    if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+            // Obtém a linha selecionada
+            int linhaSelecionada = TabelaEleitor.getSelectedRow();
+
+            if (linhaSelecionada != -1) {
+                // Pega os dados da linha clicada
+                String nome = TabelaEleitor.getValueAt(linhaSelecionada, 1).toString();
+                String cpf = TabelaEleitor.getValueAt(linhaSelecionada, 2).toString();
+                String titulo = TabelaEleitor.getValueAt(linhaSelecionada, 3).toString();
+
+                // Preenche os campos do formulário
+                NomeEleitor_Caixa.setText(nome);
+                CpfEleitor_Caixa.setText(cpf);
+                TituloEleitor_Caixa.setText(titulo);
+            }
+        }
+    }//GEN-LAST:event_TabelaEleitorMouseClicked
+
+    private void AtualizarEleitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizarEleitorActionPerformed
+
         // Obtém a linha selecionada
-        int linhaSelecionada = TabelaCandidato.getSelectedRow();
+        int linhaSelecionada = TabelaEleitor.getSelectedRow();
 
-        if (linhaSelecionada != -1) {
-            // Pega os dados da tabela conforme as colunas
-            String numero = TabelaCandidato.getValueAt(linhaSelecionada, 1).toString();
-            String nome = TabelaCandidato.getValueAt(linhaSelecionada, 2).toString();
-            String cargo = TabelaCandidato.getValueAt(linhaSelecionada, 3).toString();
-            String partido = TabelaCandidato.getValueAt(linhaSelecionada, 4).toString();
-
-            // Preenche os campos e os combos
-            txtNumCandidato.setText(numero);
-            txtNomeCandidato.setText(nome);
-            CargoCandidato_Caixa.setSelectedItem(cargo);
-            PartidoCandidato_Caixa.setSelectedItem(partido);
-
-            // Carrega a foto salva daquele candidato
-            caminhoFoto = listaFotos.get(linhaSelecionada);
-            if (!caminhoFoto.isEmpty()) {
-                javax.swing.ImageIcon iconeOriginal = new javax.swing.ImageIcon(caminhoFoto);
-                java.awt.Image imagemAjustada = iconeOriginal.getImage().getScaledInstance(
-                        Foto.getWidth(), Foto.getHeight(), java.awt.Image.SCALE_SMOOTH);
-                Foto.setText("");
-                Foto.setIcon(new javax.swing.ImageIcon(imagemAjustada));
-            } else {
-                Foto.setIcon(null);
-                Foto.setText("FOTO");
-            }
-        }
-    }
-    }//GEN-LAST:event_Candidatos_CadastradosMouseClicked
-
-    private void AtualizarCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizarCandidatoActionPerformed
-        
-       // Obtém a linha selecionada
-    int linhaSelecionada = TabelaCandidato.getSelectedRow();
-
-    if (linhaSelecionada == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um candidato na tabela para atualizar.");
-        return;
-    }
-
-    // Pega os dados atualizados
-    String nome = txtNomeCandidato.getText().trim();
-    String numeroStr = txtNumCandidato.getText().trim();
-
-    if (nome.isEmpty() || numeroStr.isEmpty() || CargoCandidato_Caixa.getSelectedItem() == null || PartidoCandidato_Caixa.getSelectedItem() == null) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos para atualizar.");
-        return;
-    }
-
-    String cargo = CargoCandidato_Caixa.getSelectedItem().toString();
-    String partido = PartidoCandidato_Caixa.getSelectedItem().toString();
-
-    try {
-        // Valida se o número é um valor inteiro
-        int numero = Integer.parseInt(numeroStr);
-
-        // Busca o número do partido selecionado na tabela de partidos
-        String numeroPartido = "";
-        for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
-            if (TabelaPartido.getValueAt(i, 2).toString().equals(partido)) {
-                numeroPartido = TabelaPartido.getValueAt(i, 1).toString();
-                break;
-            }
-        }
-
-        // Verifica se o número do candidato inicia com o número do partido
-        if (!numeroPartido.isEmpty() && !numeroStr.startsWith(numeroPartido)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "O número do candidato deve começar com " + numeroPartido + " (número do partido " + partido + ")!");
+        if (linhaSelecionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um eleitor na tabela para atualizar.");
             return;
         }
 
-        // Busca a quantidade de dígitos exigida pelo cargo
-        int digitosExigidos = 0;
-        for (int i = 0; i < Tabelas.getRowCount(); i++) {
-            if (Tabelas.getValueAt(i, 1).toString().equals(cargo)) {
-                digitosExigidos = Integer.parseInt(Tabelas.getValueAt(i, 2).toString());
-                break;
-            }
+        // Pega os dados atualizados dos campos
+        String nome = NomeEleitor_Caixa.getText().trim();
+        String cpf = CpfEleitor_Caixa.getText().trim();
+        String titulo = TituloEleitor_Caixa.getText().trim();
+
+        String cpfNumeros = cpf.replaceAll("[^0-9]", "");
+        String tituloNumeros = titulo.replaceAll("[^0-9]", "");
+
+        if (nome.isEmpty() || cpfNumeros.isEmpty() || tituloNumeros.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos para atualizar.");
+            return;
         }
 
-        if (digitosExigidos > 0 && numeroStr.length() != digitosExigidos) {
-            javax.swing.JOptionPane.showMessageDialog(this, "O cargo " + cargo + " exige exatamente " + digitosExigidos + " dígitos!");
+        if (cpfNumeros.length() != 11) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O CPF deve conter exatamente 11 dígitos!");
+            return;
+        }
+
+        if (tituloNumeros.length() != 12) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O Título de Eleitor deve conter exatamente 12 dígitos!");
             return;
         }
 
         // Verifica duplicidade ignorando a própria linha selecionada
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaCandidato.getModel();
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaEleitor.getModel();
         for (int i = 0; i < modelo.getRowCount(); i++) {
             if (i != linhaSelecionada) {
-                String numExistente = modelo.getValueAt(i, 1).toString();
-                String cargoExistente = modelo.getValueAt(i, 3).toString();
-                if (numExistente.equals(numeroStr) && cargoExistente.equals(cargo)) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Já existe outro candidato com esse número para este cargo!");
+                String cpfExistente = modelo.getValueAt(i, 2).toString().replaceAll("[^0-9]", "");
+                String tituloExistente = modelo.getValueAt(i, 3).toString().replaceAll("[^0-9]", "");
+
+                if (cpfExistente.equals(cpfNumeros)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Já existe outro eleitor cadastrado com este CPF!");
+                    return;
+                }
+
+                if (tituloExistente.equals(tituloNumeros)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Já existe outro eleitor cadastrado com este Título!");
                     return;
                 }
             }
         }
 
-        // Atualiza os dados na tabela e a foto na lista
-        TabelaCandidato.setValueAt(numero, linhaSelecionada, 1);
-        TabelaCandidato.setValueAt(nome, linhaSelecionada, 2);
-        TabelaCandidato.setValueAt(cargo, linhaSelecionada, 3);
-        TabelaCandidato.setValueAt(partido, linhaSelecionada, 4);
-        listaFotos.set(linhaSelecionada, caminhoFoto);
-
-        // Limpa os campos
-        txtNomeCandidato.setText("");
-        txtNumCandidato.setText("");
-        caminhoFoto = "";
-        Foto.setIcon(null);
-        Foto.setText("FOTO");
-        txtNomeCandidato.requestFocus();
-
-        javax.swing.JOptionPane.showMessageDialog(this, "Candidato atualizado com sucesso!");
-
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "O número do candidato deve conter apenas algarismos!");
-    }
-        
-    }//GEN-LAST:event_AtualizarCandidatoActionPerformed
-
-    private void ExcluirCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirCandidatoActionPerformed
-       
-        // Obtém a linha selecionada
-    int linhaSelecionada = TabelaCandidato.getSelectedRow();
-
-    if (linhaSelecionada == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um candidato na tabela para excluir.");
-        return;
-    }
-
-    // Confirmação de exclusão
-    int confirmacao = javax.swing.JOptionPane.showConfirmDialog(this,
-            "Tem certeza que deseja excluir este candidato?",
-            "Confirmar Exclusão",
-            javax.swing.JOptionPane.YES_NO_OPTION);
-
-    if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
-        // Remove a linha da tabela e a foto da lista
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaCandidato.getModel();
-        modelo.removeRow(linhaSelecionada);
-        listaFotos.remove(linhaSelecionada);
-
-        // Limpa os campos
-        txtNomeCandidato.setText("");
-        txtNumCandidato.setText("");
-        caminhoFoto = "";
-        Foto.setIcon(null);
-        Foto.setText("FOTO");
-        txtNomeCandidato.requestFocus();
-
-        javax.swing.JOptionPane.showMessageDialog(this, "Candidato excluído com sucesso!");
-    }
-    }//GEN-LAST:event_ExcluirCandidatoActionPerformed
-
-    private void PartidoCandidato_CaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PartidoCandidato_CaixaActionPerformed
-                                                  
-    // Verifica se há um partido selecionado
-    if (PartidoCandidato_Caixa.getSelectedItem() != null) {
-        String partido = PartidoCandidato_Caixa.getSelectedItem().toString();
-
-        // Busca o número correspondente ao partido e preenche o campo
-        for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
-            if (TabelaPartido.getValueAt(i, 2).toString().equals(partido)) {
-                txtNumCandidato.setText(TabelaPartido.getValueAt(i, 1).toString());
-                break;
-            }
-        }
-    }
-
-    }//GEN-LAST:event_PartidoCandidato_CaixaActionPerformed
-
-    private void ExcluirEleitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirEleitorActionPerformed
-       
-        // Obtém a linha selecionada
-    int linhaSelecionada = TabelaEleitor.getSelectedRow();
-
-    if (linhaSelecionada == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um eleitor na tabela para excluir.");
-        return;
-    }
-
-    // Confirmação de exclusão
-    int confirmacao = javax.swing.JOptionPane.showConfirmDialog(this,
-            "Tem certeza que deseja excluir este eleitor?",
-            "Confirmar Exclusão",
-            javax.swing.JOptionPane.YES_NO_OPTION);
-
-    if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
-        // Remove a linha da tabela visual
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaEleitor.getModel();
-        modelo.removeRow(linhaSelecionada);
+        // Atualiza os dados na tabela visual
+        TabelaEleitor.setValueAt(nome, linhaSelecionada, 1);
+        TabelaEleitor.setValueAt(cpf, linhaSelecionada, 2);
+        TabelaEleitor.setValueAt(titulo, linhaSelecionada, 3);
 
         // Limpa os campos
         NomeEleitor_Caixa.setText("");
@@ -1272,192 +813,648 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         TituloEleitor_Caixa.setText("");
         NomeEleitor_Caixa.requestFocus();
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Eleitor excluído com sucesso!");
-    }
-        
-    }//GEN-LAST:event_ExcluirEleitorActionPerformed
+        javax.swing.JOptionPane.showMessageDialog(this, "Eleitor atualizado com sucesso!");
+
+    }//GEN-LAST:event_AtualizarEleitorActionPerformed
 
     private void CadastrarEleitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarEleitorActionPerformed
-       
-       // Pega os dados digitados nos campos
-    String nome = NomeEleitor_Caixa.getText().trim();
-    String cpf = CpfEleitor_Caixa.getText().trim();
-    String titulo = TituloEleitor_Caixa.getText().trim();
 
-    // Remove pontos, traços e espaços para contar apenas os números
-    String cpfNumeros = cpf.replaceAll("[^0-9]", "");
-    String tituloNumeros = titulo.replaceAll("[^0-9]", "");
+        // Pega os dados digitados nos campos
+        String nome = NomeEleitor_Caixa.getText().trim();
+        String cpf = CpfEleitor_Caixa.getText().trim();
+        String titulo = TituloEleitor_Caixa.getText().trim();
 
-    if (nome.isEmpty() || cpfNumeros.isEmpty() || tituloNumeros.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos do eleitor!");
-        return;
-    }
+        // Remove pontos, traços e espaços para contar apenas os números
+        String cpfNumeros = cpf.replaceAll("[^0-9]", "");
+        String tituloNumeros = titulo.replaceAll("[^0-9]", "");
 
-    // Valida a quantidade exata de dígitos do CPF e do Título
-    if (cpfNumeros.length() != 11) {
-        javax.swing.JOptionPane.showMessageDialog(this, "O CPF deve conter exatamente 11 dígitos!");
-        return;
-    }
-
-    if (tituloNumeros.length() != 12) {
-        javax.swing.JOptionPane.showMessageDialog(this, "O Título de Eleitor deve conter exatamente 12 dígitos!");
-        return;
-    }
-
-    // Verifica se já existe eleitor com o mesmo CPF ou Título
-    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaEleitor.getModel();
-    for (int i = 0; i < modelo.getRowCount(); i++) {
-        String cpfExistente = modelo.getValueAt(i, 2).toString().replaceAll("[^0-9]", "");
-        String tituloExistente = modelo.getValueAt(i, 3).toString().replaceAll("[^0-9]", "");
-
-        if (cpfExistente.equals(cpfNumeros)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Já existe um eleitor cadastrado com este CPF!");
+        if (nome.isEmpty() || cpfNumeros.isEmpty() || tituloNumeros.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos do eleitor!");
             return;
         }
 
-        if (tituloExistente.equals(tituloNumeros)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Já existe um eleitor cadastrado com este Título!");
+        // Valida a quantidade exata de dígitos do CPF e do Título
+        if (cpfNumeros.length() != 11) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O CPF deve conter exatamente 11 dígitos!");
             return;
         }
-    }
 
-    // Adiciona o eleitor na tabela com status inicial "Não" na coluna Votou
-    int novoId = modelo.getRowCount() + 1;
-    modelo.addRow(new Object[]{novoId, nome, cpf, titulo, "Não"});
+        if (tituloNumeros.length() != 12) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O Título de Eleitor deve conter exatamente 12 dígitos!");
+            return;
+        }
 
-    // Limpa os campos do formulário
-    NomeEleitor_Caixa.setText("");
-    CpfEleitor_Caixa.setValue(null);
-    CpfEleitor_Caixa.setText("");
-    TituloEleitor_Caixa.setValue(null);
-    TituloEleitor_Caixa.setText("");
-    NomeEleitor_Caixa.requestFocus();
-        
-        
-    }//GEN-LAST:event_CadastrarEleitorActionPerformed
-
-    private void AtualizarEleitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizarEleitorActionPerformed
-       
-        // Obtém a linha selecionada
-    int linhaSelecionada = TabelaEleitor.getSelectedRow();
-
-    if (linhaSelecionada == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um eleitor na tabela para atualizar.");
-        return;
-    }
-
-    // Pega os dados atualizados dos campos
-    String nome = NomeEleitor_Caixa.getText().trim();
-    String cpf = CpfEleitor_Caixa.getText().trim();
-    String titulo = TituloEleitor_Caixa.getText().trim();
-
-    String cpfNumeros = cpf.replaceAll("[^0-9]", "");
-    String tituloNumeros = titulo.replaceAll("[^0-9]", "");
-
-    if (nome.isEmpty() || cpfNumeros.isEmpty() || tituloNumeros.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos para atualizar.");
-        return;
-    }
-
-    if (cpfNumeros.length() != 11) {
-        javax.swing.JOptionPane.showMessageDialog(this, "O CPF deve conter exatamente 11 dígitos!");
-        return;
-    }
-
-    if (tituloNumeros.length() != 12) {
-        javax.swing.JOptionPane.showMessageDialog(this, "O Título de Eleitor deve conter exatamente 12 dígitos!");
-        return;
-    }
-
-    // Verifica duplicidade ignorando a própria linha selecionada
-    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaEleitor.getModel();
-    for (int i = 0; i < modelo.getRowCount(); i++) {
-        if (i != linhaSelecionada) {
+        // Verifica se já existe eleitor com o mesmo CPF ou Título
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaEleitor.getModel();
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             String cpfExistente = modelo.getValueAt(i, 2).toString().replaceAll("[^0-9]", "");
             String tituloExistente = modelo.getValueAt(i, 3).toString().replaceAll("[^0-9]", "");
 
             if (cpfExistente.equals(cpfNumeros)) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Já existe outro eleitor cadastrado com este CPF!");
+                javax.swing.JOptionPane.showMessageDialog(this, "Já existe um eleitor cadastrado com este CPF!");
                 return;
             }
 
             if (tituloExistente.equals(tituloNumeros)) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Já existe outro eleitor cadastrado com este Título!");
+                javax.swing.JOptionPane.showMessageDialog(this, "Já existe um eleitor cadastrado com este Título!");
                 return;
             }
         }
-    }
 
-    // Atualiza os dados na tabela visual
-    TabelaEleitor.setValueAt(nome, linhaSelecionada, 1);
-    TabelaEleitor.setValueAt(cpf, linhaSelecionada, 2);
-    TabelaEleitor.setValueAt(titulo, linhaSelecionada, 3);
+        // Adiciona o eleitor na tabela com status inicial "Não" na coluna Votou
+        int novoId = modelo.getRowCount() + 1;
+        modelo.addRow(new Object[]{novoId, nome, cpf, titulo, "Não"});
 
-    // Limpa os campos
-    NomeEleitor_Caixa.setText("");
-    CpfEleitor_Caixa.setValue(null);
-    CpfEleitor_Caixa.setText("");
-    TituloEleitor_Caixa.setValue(null);
-    TituloEleitor_Caixa.setText("");
-    NomeEleitor_Caixa.requestFocus();
+        // Limpa os campos do formulário
+        NomeEleitor_Caixa.setText("");
+        CpfEleitor_Caixa.setValue(null);
+        CpfEleitor_Caixa.setText("");
+        TituloEleitor_Caixa.setValue(null);
+        TituloEleitor_Caixa.setText("");
+        NomeEleitor_Caixa.requestFocus();
 
-    javax.swing.JOptionPane.showMessageDialog(this, "Eleitor atualizado com sucesso!");
-    
-    }//GEN-LAST:event_AtualizarEleitorActionPerformed
+    }//GEN-LAST:event_CadastrarEleitorActionPerformed
 
-    private void TabelaEleitorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaEleitorMouseClicked
-   
-        // Verifica se foi clique com o botão esquerdo
-    if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+    private void ExcluirEleitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirEleitorActionPerformed
+
         // Obtém a linha selecionada
         int linhaSelecionada = TabelaEleitor.getSelectedRow();
 
-        if (linhaSelecionada != -1) {
-            // Pega os dados da linha clicada
-            String nome = TabelaEleitor.getValueAt(linhaSelecionada, 1).toString();
-            String cpf = TabelaEleitor.getValueAt(linhaSelecionada, 2).toString();
-            String titulo = TabelaEleitor.getValueAt(linhaSelecionada, 3).toString();
-
-            // Preenche os campos do formulário
-            NomeEleitor_Caixa.setText(nome);
-            CpfEleitor_Caixa.setText(cpf);
-            TituloEleitor_Caixa.setText(titulo);
+        if (linhaSelecionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um eleitor na tabela para excluir.");
+            return;
         }
-    }
-    }//GEN-LAST:event_TabelaEleitorMouseClicked
 
-    private void txtNomeCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeCargoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeCargoActionPerformed
+        // Confirmação de exclusão
+        int confirmacao = javax.swing.JOptionPane.showConfirmDialog(this,
+            "Tem certeza que deseja excluir este eleitor?",
+            "Confirmar Exclusão",
+            javax.swing.JOptionPane.YES_NO_OPTION);
 
-    private void TabelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelasMouseClicked
+        if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
+            // Remove a linha da tabela visual
+            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaEleitor.getModel();
+            modelo.removeRow(linhaSelecionada);
+
+            // Limpa os campos
+            NomeEleitor_Caixa.setText("");
+            CpfEleitor_Caixa.setValue(null);
+            CpfEleitor_Caixa.setText("");
+            TituloEleitor_Caixa.setValue(null);
+            TituloEleitor_Caixa.setText("");
+            NomeEleitor_Caixa.requestFocus();
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Eleitor excluído com sucesso!");
+        }
+
+    }//GEN-LAST:event_ExcluirEleitorActionPerformed
+
+    private void Candidatos_CadastradosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Candidatos_CadastradosMouseClicked
 
         // Verifica se foi clique com o botão esquerdo
         if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
-            
             // Obtém a linha selecionada
-            if(Tabelas.getSelectedRow() != -1) {
-            
-            txtNomeCargo.setText(Tabelas.getValueAt(Tabelas.getSelectedRow(), 1).toString());
-            boxQntDigitosCargo.setSelectedItem(Tabelas.getValueAt(Tabelas.getSelectedRow(), 2).toString());
-            txtDescricaoCargo.setText(Tabelas.getValueAt(Tabelas.getSelectedRow(), 3).toString());
-        }
-    }   
+            int linhaSelecionada = TabelaCandidato.getSelectedRow();
 
-    }//GEN-LAST:event_TabelasMouseClicked
+            if (linhaSelecionada != -1) {
+                // Pega os dados da tabela conforme as colunas
+                String numero = TabelaCandidato.getValueAt(linhaSelecionada, 1).toString();
+                String nome = TabelaCandidato.getValueAt(linhaSelecionada, 2).toString();
+                String cargo = TabelaCandidato.getValueAt(linhaSelecionada, 3).toString();
+                String partido = TabelaCandidato.getValueAt(linhaSelecionada, 4).toString();
+
+                // Preenche os campos e os combos
+                txtNumCandidato.setText(numero);
+                txtNomeCandidato.setText(nome);
+                CargoCandidato_Caixa.setSelectedItem(cargo);
+                PartidoCandidato_Caixa.setSelectedItem(partido);
+
+                // Carrega a foto salva daquele candidato
+                caminhoFoto = listaFotos.get(linhaSelecionada);
+                if (!caminhoFoto.isEmpty()) {
+                    javax.swing.ImageIcon iconeOriginal = new javax.swing.ImageIcon(caminhoFoto);
+                    java.awt.Image imagemAjustada = iconeOriginal.getImage().getScaledInstance(
+                        Foto.getWidth(), Foto.getHeight(), java.awt.Image.SCALE_SMOOTH);
+                    Foto.setText("");
+                    Foto.setIcon(new javax.swing.ImageIcon(imagemAjustada));
+                } else {
+                    Foto.setIcon(null);
+                    Foto.setText("FOTO");
+                }
+            }
+        }
+    }//GEN-LAST:event_Candidatos_CadastradosMouseClicked
+
+    private void ExcluirCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirCandidatoActionPerformed
+
+        // Obtém a linha selecionada
+        int linhaSelecionada = TabelaCandidato.getSelectedRow();
+
+        if (linhaSelecionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um candidato na tabela para excluir.");
+            return;
+        }
+
+        // Confirmação de exclusão
+        int confirmacao = javax.swing.JOptionPane.showConfirmDialog(this,
+            "Tem certeza que deseja excluir este candidato?",
+            "Confirmar Exclusão",
+            javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
+            // Remove a linha da tabela e a foto da lista
+            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaCandidato.getModel();
+            modelo.removeRow(linhaSelecionada);
+            listaFotos.remove(linhaSelecionada);
+
+            // Limpa os campos
+            txtNomeCandidato.setText("");
+            txtNumCandidato.setText("");
+            caminhoFoto = "";
+            Foto.setIcon(null);
+            Foto.setText("FOTO");
+            txtNomeCandidato.requestFocus();
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Candidato excluído com sucesso!");
+        }
+    }//GEN-LAST:event_ExcluirCandidatoActionPerformed
+
+    private void AtualizarCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizarCandidatoActionPerformed
+
+        // Obtém a linha selecionada
+        int linhaSelecionada = TabelaCandidato.getSelectedRow();
+
+        if (linhaSelecionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um candidato na tabela para atualizar.");
+            return;
+        }
+
+        // Pega os dados atualizados
+        String nome = txtNomeCandidato.getText().trim();
+        String numeroStr = txtNumCandidato.getText().trim();
+
+        if (nome.isEmpty() || numeroStr.isEmpty() || CargoCandidato_Caixa.getSelectedItem() == null || PartidoCandidato_Caixa.getSelectedItem() == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos para atualizar.");
+            return;
+        }
+
+        String cargo = CargoCandidato_Caixa.getSelectedItem().toString();
+        String partido = PartidoCandidato_Caixa.getSelectedItem().toString();
+
+        try {
+            // Valida se o número é um valor inteiro
+            int numero = Integer.parseInt(numeroStr);
+
+            // Busca o número do partido selecionado na tabela de partidos
+            String numeroPartido = "";
+            for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
+                if (TabelaPartido.getValueAt(i, 2).toString().equals(partido)) {
+                    numeroPartido = TabelaPartido.getValueAt(i, 1).toString();
+                    break;
+                }
+            }
+
+            // Verifica se o número do candidato inicia com o número do partido
+            if (!numeroPartido.isEmpty() && !numeroStr.startsWith(numeroPartido)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "O número do candidato deve começar com " + numeroPartido + " (número do partido " + partido + ")!");
+                return;
+            }
+
+            // Busca a quantidade de dígitos exigida pelo cargo
+            int digitosExigidos = 0;
+            for (int i = 0; i < Tabelas.getRowCount(); i++) {
+                if (Tabelas.getValueAt(i, 1).toString().equals(cargo)) {
+                    digitosExigidos = Integer.parseInt(Tabelas.getValueAt(i, 2).toString());
+                    break;
+                }
+            }
+
+            if (digitosExigidos > 0 && numeroStr.length() != digitosExigidos) {
+                javax.swing.JOptionPane.showMessageDialog(this, "O cargo " + cargo + " exige exatamente " + digitosExigidos + " dígitos!");
+                return;
+            }
+
+            // Verifica duplicidade ignorando a própria linha selecionada
+            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaCandidato.getModel();
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                if (i != linhaSelecionada) {
+                    String numExistente = modelo.getValueAt(i, 1).toString();
+                    String cargoExistente = modelo.getValueAt(i, 3).toString();
+                    if (numExistente.equals(numeroStr) && cargoExistente.equals(cargo)) {
+                        javax.swing.JOptionPane.showMessageDialog(this, "Já existe outro candidato com esse número para este cargo!");
+                        return;
+                    }
+                }
+            }
+
+            // Atualiza os dados na tabela e a foto na lista
+            TabelaCandidato.setValueAt(numero, linhaSelecionada, 1);
+            TabelaCandidato.setValueAt(nome, linhaSelecionada, 2);
+            TabelaCandidato.setValueAt(cargo, linhaSelecionada, 3);
+            TabelaCandidato.setValueAt(partido, linhaSelecionada, 4);
+            listaFotos.set(linhaSelecionada, caminhoFoto);
+
+            // Limpa os campos
+            txtNomeCandidato.setText("");
+            txtNumCandidato.setText("");
+            caminhoFoto = "";
+            Foto.setIcon(null);
+            Foto.setText("FOTO");
+            txtNomeCandidato.requestFocus();
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Candidato atualizado com sucesso!");
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O número do candidato deve conter apenas algarismos!");
+        }
+
+    }//GEN-LAST:event_AtualizarCandidatoActionPerformed
+
+    private void CadastrarCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarCandidatoActionPerformed
+        // Pega os dados digitados e selecionados
+        String nome = txtNomeCandidato.getText().trim();
+        String numeroStr = txtNumCandidato.getText().trim();
+
+        if (nome.isEmpty() || numeroStr.isEmpty() || CargoCandidato_Caixa.getSelectedItem() == null || PartidoCandidato_Caixa.getSelectedItem() == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos e selecione cargo e partido!");
+            return;
+        }
+
+        String cargo = CargoCandidato_Caixa.getSelectedItem().toString();
+        String partido = PartidoCandidato_Caixa.getSelectedItem().toString();
+
+        try {
+            // Valida se o número é um valor inteiro
+            int numero = Integer.parseInt(numeroStr);
+
+            // Busca o número do partido selecionado na tabela de partidos
+            String numeroPartido = "";
+            for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
+                if (TabelaPartido.getValueAt(i, 2).toString().equals(partido)) {
+                    numeroPartido = TabelaPartido.getValueAt(i, 1).toString();
+                    break;
+                }
+            }
+
+            // Verifica se o número do candidato inicia com o número do partido
+            if (!numeroPartido.isEmpty() && !numeroStr.startsWith(numeroPartido)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "O número do candidato deve começar com " + numeroPartido + " (número do partido " + partido + ")!");
+                return;
+            }
+
+            // Busca a quantidade de dígitos exigida pelo cargo selecionado
+            int digitosExigidos = 0;
+            for (int i = 0; i < Tabelas.getRowCount(); i++) {
+                if (Tabelas.getValueAt(i, 1).toString().equals(cargo)) {
+                    digitosExigidos = Integer.parseInt(Tabelas.getValueAt(i, 2).toString());
+                    break;
+                }
+            }
+
+            if (digitosExigidos > 0 && numeroStr.length() != digitosExigidos) {
+                javax.swing.JOptionPane.showMessageDialog(this, "O cargo " + cargo + " exige exatamente " + digitosExigidos + " dígitos!");
+                return;
+            }
+
+            // Verifica se já existe candidato com o mesmo número nesse cargo
+            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TabelaCandidato.getModel();
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                String numExistente = modelo.getValueAt(i, 1).toString();
+                String cargoExistente = modelo.getValueAt(i, 3).toString();
+                if (numExistente.equals(numeroStr) && cargoExistente.equals(cargo)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Já existe um candidato com esse número para este cargo!");
+                    return;
+                }
+            }
+
+            // Adiciona o candidato na tabela e salva o caminho da foto
+            int novoId = modelo.getRowCount() + 1;
+            modelo.addRow(new Object[]{novoId, numero, nome, cargo, partido});
+            listaFotos.add(caminhoFoto);
+
+            // Limpa os campos e restaura o quadro da foto
+            txtNomeCandidato.setText("");
+            txtNumCandidato.setText("");
+            caminhoFoto = "";
+            Foto.setIcon(null);
+            Foto.setText("FOTO");
+            txtNomeCandidato.requestFocus();
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O número do candidato deve conter apenas algarismos!");
+        }
+    }//GEN-LAST:event_CadastrarCandidatoActionPerformed
+
+    private void SelecionarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelecionarFotoActionPerformed
+        // Abre a janela para escolher o arquivo de imagem
+        javax.swing.JFileChooser seletor = new javax.swing.JFileChooser();
+        seletor.setDialogTitle("Selecione a foto do candidato");
+        seletor.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Imagens (JPG, PNG)", "jpg", "jpeg", "png"));
+
+        int resultado = seletor.showOpenDialog(this);
+
+        if (resultado == javax.swing.JFileChooser.APPROVE_OPTION) {
+            // Guarda o caminho da imagem escolhida
+            java.io.File arquivo = seletor.getSelectedFile();
+            caminhoFoto = arquivo.getAbsolutePath();
+
+            // Redimensiona a imagem para caber exatamente no quadro Foto
+            javax.swing.ImageIcon iconeOriginal = new javax.swing.ImageIcon(caminhoFoto);
+            java.awt.Image imagemAjustada = iconeOriginal.getImage().getScaledInstance(
+                Foto.getWidth(), Foto.getHeight(), java.awt.Image.SCALE_SMOOTH);
+
+            // Exibe a foto no JLabel e remove o texto
+            Foto.setText("");
+            Foto.setIcon(new javax.swing.ImageIcon(imagemAjustada));
+        }
+    }//GEN-LAST:event_SelecionarFotoActionPerformed
+
+    private void PartidoCandidato_CaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PartidoCandidato_CaixaActionPerformed
+
+        // Verifica se há um partido selecionado
+        if (PartidoCandidato_Caixa.getSelectedItem() != null) {
+            String partido = PartidoCandidato_Caixa.getSelectedItem().toString();
+
+            // Busca o número correspondente ao partido e preenche o campo
+            for (int i = 0; i < TabelaPartido.getRowCount(); i++) {
+                if (TabelaPartido.getValueAt(i, 2).toString().equals(partido)) {
+                    txtNumCandidato.setText(TabelaPartido.getValueAt(i, 1).toString());
+                    break;
+                }
+            }
+        }
+    }//GEN-LAST:event_PartidoCandidato_CaixaActionPerformed
+
+    private void AtualizarPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizarPartidoActionPerformed
+
+        //  Obtém a linha selecionada
+        if(TabelaPartido.getSelectedRow() != -1){
+
+            String numero = txtNumPartido.getText().trim();
+            String sigla = txtSiglaPartido.getText().trim();
+            String nome = txtNomePartido.getText().trim();
+
+            if (numero.isEmpty() || sigla.isEmpty() || nome.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Preencha o nome do partido, numero e a sigla.");
+                return;
+            }
+
+            // parte de inserir no banco de dados:
+            Partido p = new Partido();
+            PartidoDAO pdao = new PartidoDAO();
+
+            p.setNumeroPartido(txtNumPartido.getText());
+            p.setSigla(txtSiglaPartido.getText());
+            p.setNomePartido(txtNomePartido.getText());
+            p.setId((int)TabelaPartido.getValueAt(TabelaPartido.getSelectedRow(), 0));
+
+            pdao.atualizar(p);
+            //finalizou
+
+            readTabelaPartido();
+
+            txtNumPartido.setText("");
+            txtSiglaPartido.setText("");
+            txtNomePartido.setText("");
+            txtNumPartido.requestFocus();
+        }
+    }//GEN-LAST:event_AtualizarPartidoActionPerformed
+
+    private void ExcluirPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirPartidoActionPerformed
+
+        // Obtém a linha selecionada
+        if(TabelaPartido.getSelectedRow() != -1){
+
+            // parte de EXCLUIR do banco de dados:
+            Partido p = new Partido();
+            PartidoDAO pdao = new PartidoDAO();
+
+            p.setId((int)TabelaPartido.getValueAt(TabelaPartido.getSelectedRow(), 0));
+
+            pdao.delete(p);
+            //finalizou
+
+            readTabelaPartido();
+
+            txtNomeCargo.setText("");
+            boxQntDigitosCargo.setSelectedIndex(-1);
+            txtDescricaoCargo.setText("");
+            txtNomeCargo.requestFocus();
+
+        }
+    }//GEN-LAST:event_ExcluirPartidoActionPerformed
+
+    private void CadastrarPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarPartidoActionPerformed
+        // TODO add your handling code here:
+
+        String numero = txtNumPartido.getText().trim();
+        String sigla = txtSiglaPartido.getText().trim();
+        String nome = txtNomePartido.getText().trim();
+
+        if (numero.isEmpty() || sigla.isEmpty() || nome.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Preencha o nome do partido, numero e a sigla.");
+            return;
+        }
+
+        // parte de inserir no banco de dados:
+        Partido p = new Partido();
+        PartidoDAO pdao = new PartidoDAO();
+
+        p.setNumeroPartido(txtNumPartido.getText());
+        p.setSigla(txtSiglaPartido.getText());
+        p.setNomePartido(txtNomePartido.getText());
+
+        pdao.inserir(p);
+        //finalizou
+
+        readTabelaPartido();
+
+        txtNumPartido.setText("");
+        txtSiglaPartido.setText("");
+        txtNomePartido.setText("");
+        txtNumPartido.requestFocus();
+
+    }//GEN-LAST:event_CadastrarPartidoActionPerformed
+
+    private void txtNomePartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomePartidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomePartidoActionPerformed
+
+    private void txtSiglaPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSiglaPartidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSiglaPartidoActionPerformed
+
+    private void txtNumPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumPartidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumPartidoActionPerformed
+
+    private void Atualizar_CargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Atualizar_CargoActionPerformed
+        // Obtém a linha selecionada
+        if(Tabelas.getSelectedRow() != -1){
+
+            String nome = txtNomeCargo.getText().trim();
+            String digitosStr = boxQntDigitosCargo.getSelectedItem().toString().trim();
+
+            if (nome.isEmpty() || digitosStr.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Preencha o nome do cargo e a quantidade de dígitos.");
+                return;
+            }
+
+            try {
+
+                // parte de atualizar no banco de dados:
+                Cargo c = new Cargo();
+                CargoDAO cdao = new CargoDAO();
+
+                c.setNome(txtNomeCargo.getText());
+                c.setDescricao(txtDescricaoCargo.getText());
+                c.setQuantidadeDigitos(Integer.parseInt(boxQntDigitosCargo.getSelectedItem().toString()));
+                c.setId((int)Tabelas.getValueAt(TabelaPartido.getSelectedRow(), 0));
+
+                cdao.atualizar(c);
+                //finalizou
+
+                readTabelaCargo();
+
+                txtNomeCargo.setText("");
+                boxQntDigitosCargo.setSelectedIndex(-1);
+                txtDescricaoCargo.setText("");
+                txtNomeCargo.requestFocus();
+            } catch (NumberFormatException e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "A quantidade de dígitos deve ser um número inteiro.");
+            }
+        }
+
+    }//GEN-LAST:event_Atualizar_CargoActionPerformed
+
+    private void Excluir_CargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Excluir_CargoActionPerformed
+
+        // Obtém a linha selecionada
+        if(Tabelas.getSelectedRow() != -1){
+
+            // parte de EXCLUIR do banco de dados:
+            Cargo c = new Cargo();
+            CargoDAO cdao = new CargoDAO();
+
+            c.setId((int)Tabelas.getValueAt(Tabelas.getSelectedRow(), 0));
+
+            cdao.delete(c);
+            //finalizou
+
+            readTabelaCargo();
+
+            txtNomeCargo.setText("");
+            boxQntDigitosCargo.setSelectedIndex(-1);
+            txtDescricaoCargo.setText("");
+            txtNomeCargo.requestFocus();
+
+        }
+
+    }//GEN-LAST:event_Excluir_CargoActionPerformed
 
     private void Cargos_CadastradosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Cargos_CadastradosKeyReleased
         // TODO add your handling code here:
-        
+
         // codigo que sera executado quando soltar o botao apos clicar na tabela
-        
+
         if(Tabelas.getSelectedRow() != -1) {
-            
+
             txtNomeCargo.setText(Tabelas.getValueAt(Tabelas.getSelectedRow(), 1).toString());
             boxQntDigitosCargo.setSelectedItem(Tabelas.getValueAt(Tabelas.getSelectedRow(), 2).toString());
             txtDescricaoCargo.setText(Tabelas.getValueAt(Tabelas.getSelectedRow(), 3).toString());
         }
     }//GEN-LAST:event_Cargos_CadastradosKeyReleased
+
+    private void TabelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelasMouseClicked
+
+        // Verifica se foi clique com o botão esquerdo
+        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+
+            // Obtém a linha selecionada
+            if(Tabelas.getSelectedRow() != -1) {
+
+                txtNomeCargo.setText(Tabelas.getValueAt(Tabelas.getSelectedRow(), 1).toString());
+                boxQntDigitosCargo.setSelectedItem(Tabelas.getValueAt(Tabelas.getSelectedRow(), 2).toString());
+                txtDescricaoCargo.setText(Tabelas.getValueAt(Tabelas.getSelectedRow(), 3).toString());
+            }
+        }
+    }//GEN-LAST:event_TabelasMouseClicked
+
+    private void Cadastrar_CargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cadastrar_CargoActionPerformed
+        // TODO add your handling code here:
+        String nome = txtNomeCargo.getText().trim();
+        String digitosStr = boxQntDigitosCargo.getSelectedItem().toString().trim();
+
+        if (nome.isEmpty() || digitosStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Preencha o nome do cargo e a quantidade de dígitos.");
+            return;
+        }
+
+        try {
+            int digitos = Integer.parseInt(digitosStr);
+
+            // parte de inserir no banco de dados:
+            Cargo c = new Cargo();
+            CargoDAO cdao = new CargoDAO();
+
+            c.setNome(txtNomeCargo.getText());
+            c.setDescricao(txtDescricaoCargo.getText());
+            c.setQuantidadeDigitos(Integer.parseInt(boxQntDigitosCargo.getSelectedItem().toString()));
+
+            cdao.inserir(c);
+            //finalizou
+
+            readTabelaCargo();
+
+            txtNomeCargo.setText("");
+            boxQntDigitosCargo.setSelectedIndex(-1);
+            txtDescricaoCargo.setText("");
+            txtNomeCargo.requestFocus();
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "A quantidade de dígitos deve ser um número inteiro.");
+        }
+    }//GEN-LAST:event_Cadastrar_CargoActionPerformed
+
+    private void txtNomeCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeCargoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeCargoActionPerformed
+
+    private void PartidosCadastradosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PartidosCadastradosKeyReleased
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+
+        // codigo que sera executado quando soltar o botao apos clicar na tabela
+
+        if(Tabelas.getSelectedRow() != -1) {
+
+            txtNumPartido.setText(Tabelas.getValueAt(Tabelas.getSelectedRow(), 1).toString());
+            txtSiglaPartido.setText(Tabelas.getValueAt(Tabelas.getSelectedRow(), 2).toString());
+            txtNomePartido.setText(Tabelas.getValueAt(Tabelas.getSelectedRow(), 3).toString());
+        }
+    }//GEN-LAST:event_PartidosCadastradosKeyReleased
+
+    private void TabelaPartidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaPartidoMouseClicked
+        // TODO add your handling code here:
+
+        // Verifica se foi um clique  com o botão esquerdo
+        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+            // Obtém o índice da linha selecionada
+            int linhaSelecionada = TabelaPartido.getSelectedRow();
+
+            if (linhaSelecionada != -1) {
+                /* Se tem uma linha selecionada voc */
+                String id = TabelaPartido.getValueAt(linhaSelecionada, 0).toString();
+                String numero = TabelaPartido.getValueAt(linhaSelecionada, 1).toString();
+                String sigla = TabelaPartido.getValueAt(linhaSelecionada, 2).toString();
+                String nome = TabelaPartido.getValueAt(linhaSelecionada, 3).toString();
+
+                // Joga os dados de volta para os campos de texto para edição
+                txtNumPartido.setText(numero);
+                txtSiglaPartido.setText(sigla);
+                txtNomePartido.setText(nome);
+            }
+        }
+    }//GEN-LAST:event_TabelaPartidoMouseClicked
 
     /**
      * @param args the comêmand line arguments

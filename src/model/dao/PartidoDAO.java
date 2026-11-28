@@ -17,12 +17,12 @@ public class PartidoDAO {
     //inserir os dados de uma pessoa no mysql
     public void inserir(Partido p){
       try{   
-        String sql = "insert into Partido (numeroPartido, sigla, nome) values ( ?, ?, ?)";
+        String sql = "insert into Partido (numeroPartido, sigla, nomePartido) values ( ?, ?, ?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         
         ps.setString(1, p.getNumeroPartido());
         ps.setString(2, p.getSigla());
-        ps.setString(3, p.getNome());
+        ps.setString(3, p.getNomePartido());
 
          
         ps.executeUpdate();
@@ -44,7 +44,7 @@ public class PartidoDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 Partido p = new Partido(rs.getInt("id"), rs.getString("numeroPartido"),
-                rs.getString("sigla"), rs.getString("nome"));
+                rs.getString("sigla"), rs.getString("nomePartido"));
                
                 partido.add(p);
             }
@@ -65,7 +65,7 @@ public class PartidoDAO {
         
         ps.setString(1, p.getNumeroPartido());
         ps.setString(2, p.getSigla());
-        ps.setString(3, p.getNome());
+        ps.setString(3, p.getNomePartido());
         ps.setInt(4, p.getId());
 
          

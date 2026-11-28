@@ -410,7 +410,7 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="-2" pref="166" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
                               <Component id="ExcluirPartido" min="-2" pref="109" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
                               <Component id="CadastrarPartido" min="-2" pref="105" max="-2" attributes="0"/>
@@ -506,6 +506,9 @@
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="PartidosCadastrados">
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="PartidosCadastradosKeyReleased"/>
+              </Events>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>

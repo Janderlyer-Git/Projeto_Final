@@ -7,14 +7,14 @@ public class Partido {
     private int id;
     private String numeroPartido;
     private String sigla;
-    private String nome;
+    private String nomePartido;
 
     /* Construtor completo */
-    public Partido(int id, String numeroPartido, String sigla, String nome) {
+    public Partido(int id, String numeroPartido, String sigla, String nomePartido) {
         this.id = id;
         this.numeroPartido = numeroPartido;
         this.sigla = sigla;
-        this.nome = nome;
+        this.nomePartido = nomePartido;
     }
 
     /* Construtor vazio */
@@ -27,7 +27,7 @@ System.out.println("Informações: ");
 System.out.println("ID: "+id);
 System.out.println("Número do Partido: "+numeroPartido);
 System.out.println("Sigla: "+sigla);
-System.out.println("Nome: "+nome);
+System.out.println("Nome: "+nomePartido);
 
 }
 
@@ -56,11 +56,11 @@ System.out.println("Nome: "+nome);
         this.sigla = sigla;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomePartido() {
+        return nomePartido;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomePartido(String nome) {
+        this.nomePartido = nome;
     }
 }
