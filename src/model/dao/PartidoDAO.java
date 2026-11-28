@@ -97,7 +97,7 @@ public class PartidoDAO {
    public Partido buscarPorSigla(String sigla) {
     Partido p = null;
     try {
-        String sql = "SELECT * FROM Partido WHERE nome = ?";
+        String sql = "SELECT * FROM Partido WHERE sigla = ?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setString(1, sigla);
         
@@ -111,7 +111,7 @@ public class PartidoDAO {
             );
         }
     } catch (Exception e) {
-        System.out.println("Erro ao buscar Partido por nome: " + e);
+        System.out.println("Erro ao buscar Partido por sigla: " + e);
     }
     return p;
 }

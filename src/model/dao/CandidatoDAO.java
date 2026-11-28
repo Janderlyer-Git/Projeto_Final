@@ -17,7 +17,7 @@ public class CandidatoDAO {
     //inserir os dados de uma pessoa no mysql
     public void inserir(Candidato c){
       try{   
-        String sql = "insert into Candidato ( nome, cpf, numero, foto, votos, idPartido, idCargo) values ( ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into Candidato ( nome, cpf, numero, foto, idPartido, idCargo) values ( ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         
 
@@ -25,9 +25,8 @@ public class CandidatoDAO {
         ps.setString(2, c.getCpf());
         ps.setInt(3, c.getNumero());
         ps.setBytes(4, c.getFoto());
-        ps.setInt(5, c.getVotos());
-        ps.setInt(6, c.getPartido().getId());;
-        ps.setInt(7, c.getCargo().getId());
+        ps.setInt(5, c.getPartido().getId());;
+        ps.setInt(6, c.getCargo().getId());
          
         ps.executeUpdate();
         
@@ -85,17 +84,16 @@ public class CandidatoDAO {
    
    public void atualizar(Candidato c){
       try{   
-        String sql = "UPDATE Candidato SET nome = ?, cpf = ?, numero = ?, foto = ?, votos = ?, idPartido = ?, idCargo = ? WHERE id = ?";
+        String sql = "UPDATE Candidato SET nome = ?, cpf = ?, numero = ?, foto = ?, idPartido = ?, idCargo = ? WHERE id = ?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         
         ps.setString(1, c.getNome());
         ps.setString(2, c.getCpf());
         ps.setInt(3, c.getNumero());
         ps.setBytes(4, c.getFoto());
-        ps.setInt(5, c.getVotos());
-        ps.setInt(6, c.getPartido().getId());;
-        ps.setInt(7, c.getCargo().getId());
-        ps.setInt(8, c.getId());
+        ps.setInt(5, c.getPartido().getId());;
+        ps.setInt(6, c.getCargo().getId());
+        ps.setInt(7, c.getId());
 
          
         ps.executeUpdate();

@@ -129,6 +129,8 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         ExcluirCandidato = new javax.swing.JButton();
         Candidatos_Cadastrados = new javax.swing.JScrollPane();
         TabelaCandidato = new javax.swing.JTable();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        PartidoCandidato1 = new javax.swing.JLabel();
         Eleitor = new javax.swing.JPanel();
         NomeEleitor = new javax.swing.JLabel();
         NomeEleitor_Caixa = new javax.swing.JTextField();
@@ -440,7 +442,7 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         CargoCandidato.setText("Cargo");
 
         PartidoCandidato.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
-        PartidoCandidato.setText("Partido");
+        PartidoCandidato.setText("CPF");
 
         boxCargoCandidato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
 
@@ -491,6 +493,12 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         });
         Candidatos_Cadastrados.setViewportView(TabelaCandidato);
 
+        jFormattedTextField1.setText("jFormattedTextField1");
+        jFormattedTextField1.addActionListener(this::jFormattedTextField1ActionPerformed);
+
+        PartidoCandidato1.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        PartidoCandidato1.setText("Partido");
+
         javax.swing.GroupLayout CandidatoLayout = new javax.swing.GroupLayout(Candidato);
         Candidato.setLayout(CandidatoLayout);
         CandidatoLayout.setHorizontalGroup(
@@ -498,20 +506,26 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CandidatoLayout.createSequentialGroup()
                 .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CandidatoLayout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(NumeroCandidato)
-                            .addComponent(NomeCandidato)
-                            .addComponent(CargoCandidato)
-                            .addComponent(PartidoCandidato))
-                        .addGap(18, 18, 18)
                         .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(boxCargoCandidato, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtNumCandidato, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(boxPartidoCandidato, javax.swing.GroupLayout.Alignment.LEADING, 0, 145, Short.MAX_VALUE))
-                            .addComponent(txtNomeCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE))
+                            .addGroup(CandidatoLayout.createSequentialGroup()
+                                .addGap(74, 74, 74)
+                                .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(NumeroCandidato)
+                                    .addComponent(NomeCandidato)
+                                    .addComponent(CargoCandidato)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CandidatoLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(PartidoCandidato)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNomeCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(boxCargoCandidato, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtNumCandidato, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(boxPartidoCandidato, javax.swing.GroupLayout.Alignment.LEADING, 0, 145, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CandidatoLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ExcluirCandidato)
@@ -529,6 +543,11 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CandidatoLayout.createSequentialGroup()
                 .addComponent(Candidatos_Cadastrados)
                 .addContainerGap())
+            .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(CandidatoLayout.createSequentialGroup()
+                    .addGap(194, 194, 194)
+                    .addComponent(PartidoCandidato1)
+                    .addContainerGap(623, Short.MAX_VALUE)))
         );
         CandidatoLayout.setVerticalGroup(
             CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -548,20 +567,27 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
                             .addComponent(CargoCandidato)
                             .addComponent(boxCargoCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(28, 28, 28)
-                        .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(boxPartidoCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(PartidoCandidato)))
+                        .addComponent(boxPartidoCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(CandidatoLayout.createSequentialGroup()
                         .addComponent(Foto, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(SelecionarFoto)))
-                .addGap(32, 32, 32)
+                .addGap(16, 16, 16)
+                .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PartidoCandidato))
+                .addGap(5, 5, 5)
                 .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CadastrarCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AtualizarCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ExcluirCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Candidatos_Cadastrados, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(CandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(CandidatoLayout.createSequentialGroup()
+                    .addGap(190, 190, 190)
+                    .addComponent(PartidoCandidato1)
+                    .addContainerGap(333, Short.MAX_VALUE)))
         );
 
         Opcoes.addTab("Candidato", Candidato);
@@ -1137,10 +1163,21 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
             Candidato c = new Candidato();
             CandidatoDAO cdao = new CandidatoDAO();
             
-            ca.setNome(boxCargoCandidato.getSelectedItem().toString());
-
+            c.setCargo(ca);
+            c.setPartido(pa);
+            c.setNome(txtNomeCandidato.getText());
+            c.setNumero(Integer.parseInt(txtNumCandidato.getText()));
             
+            if (!caminhoFoto.isEmpty()) {
+                c.setFoto(java.nio.file.Files.readAllBytes(java.nio.file.Paths.get(caminhoFoto)));
+                }
+
+            // Salva no banco de dados
+
+            cdao.inserir(c);
+
             listaFotos.add(caminhoFoto);
+            
 
             // Limpa os campos e restaura o quadro da foto
             txtNomeCandidato.setText("");
@@ -1152,6 +1189,8 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
 
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "O número do candidato deve conter apenas algarismos!");
+        }catch (java.io.IOException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao ler o arquivo da foto: " + e.getMessage());
         }
     }//GEN-LAST:event_CadastrarCandidatoActionPerformed
 
@@ -1466,6 +1505,10 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
         }
     }//GEN-LAST:event_TabelaPartidoMouseClicked
 
+    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
+
     /**
      * @param args the comêmand line arguments
      */
@@ -1529,6 +1572,7 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private javax.swing.JPanel PainelAdm;
     private javax.swing.JPanel Partido;
     private javax.swing.JLabel PartidoCandidato;
+    private javax.swing.JLabel PartidoCandidato1;
     private javax.swing.JScrollPane PartidosCadastrados;
     private javax.swing.JButton Sair;
     private javax.swing.JButton SelecionarFoto;
@@ -1544,6 +1588,7 @@ java.util.ArrayList<String> listaFotos = new java.util.ArrayList<>();
     private javax.swing.JComboBox<String> boxCargoCandidato;
     private javax.swing.JComboBox<String> boxPartidoCandidato;
     private javax.swing.JComboBox<String> boxQntDigitosCargo;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JTextArea txtDescricaoCargo;
     private javax.swing.JTextField txtNomeCandidato;
     private javax.swing.JTextField txtNomeCargo;
