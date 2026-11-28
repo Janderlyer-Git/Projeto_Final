@@ -1,77 +1,58 @@
-create database Projeto_Final ;
-use Projeto_Final;
+DROP DATABASE IF EXISTS Projeto_Final;
+CREATE DATABASE Projeto_Final;
+USE Projeto_Final;
 
-create table Administrador(
-	id int not null primary key,
-	login varchar(255),
-    senha varchar(255),
-    nome varchar(255),
-    cpf varchar(11)
+CREATE TABLE Administrador (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    login VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    nome VARCHAR(255) NOT NULL,
+    cpf VARCHAR(20) UNIQUE
 );
 
-create table eleitor(
-	id int not null primary key,
-    nome varchar(255),
-    cpf varchar(11) unique,
-	tituloEleitoral varchar(255),
-    zona varchar(255),
-    secao varchar(255),
-    jaVotou boolean not null default false
+CREATE TABLE Eleitor (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    cpf VARCHAR(11) NOT NULL UNIQUE,
+    tituloEleitoral VARCHAR(255) NOT NULL UNIQUE,
+    zona VARCHAR(255),
+    secao VARCHAR(255),
+    jaVotou BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-
-
-create table partido(
-	id int not null primary key,
-    numeroPartido varchar(255),
-    sigla varchar(255),
-    nomePartido varchar(255)
+CREATE TABLE Partido (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    numeroPartido INT NOT NULL UNIQUE,
+    sigla VARCHAR(50) NOT NULL,
+    nomePartido VARCHAR(255) NOT NULL
 );
 
-create table cargo(
-	id int not null primary key,
-	nome varchar(255),
-    quantidadeDigitos int not null,
-    descricao varchar(1000)
-    
+CREATE TABLE Cargo (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    quantidadeDigitos INT NOT NULL,
+    descricao VARCHAR(1000)
 );
-create table Candidato(
-	id int not null primary key,
-    nome varchar(255),
-    cpf varchar(11) unique,
-    numero int not null,
-	foto LONGBLOB,
-    votos int default 0,
-    idPartido int not null,
-    numeroPartido int not null,
-    sigla varchar(255),
-    nomePartido varchar(255),
-	idCargo int not null,
-    nomeCargo varchar(255),
-    quantidadeDigitos int not null,
-    descricao varchar(1000),
-    foreign key (idPartido) REFERENCES partido(id),
-    foreign key (idCargo) References cargo(id)
-    
+
+CREATE TABLE Candidato (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    cpf VARCHAR(11) NOT NULL UNIQUE,
+    numero INT NOT NULL,
+    foto LONGBLOB,
+    votos INT NOT NULL DEFAULT 0,
+    idPartido INT NOT NULL,
+    idCargo INT NOT NULL,
+    FOREIGN KEY (idPartido) REFERENCES Partido(id),
+    FOREIGN KEY (idCargo) REFERENCES Cargo(id)
 );
-create table voto(
-	id int not null primary key,
-    idCandidato int not null,
-    nomeCandidato varchar(255) not null,
-	cpfCandidato varchar(11),
-    numeroCandidato int not null,
-    fotoCandidato LONGBLOB,
-    idPartido int not null,
-    numeroPartido int not null,
-    sigla varchar(255),
-    nomePartido varchar(255),
-	idCargo int not null,
-    nomeCargo varchar(255),
-    quantidadeDigitos int not null,
-    descricao varchar(1000),
-    tipoVoto enum("VALIDO","BRANCO","NULO"),
-    dataHora datetime default current_timestamp,
-    foreign key (idPartido) references partido(id),
-    foreign key (idCargo) references cargo(id),
-    foreign key (idCandidato) references Candidato(id)
+
+CREATE TABLE Voto (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idCandidato INT NULL,
+    idCargo INT NOT NULL,
+    tipoVoto ENUM('VALIDO', 'BRANCO', 'NULO') NOT NULL,
+    dataHora DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idCandidato) REFERENCES Candidato(id),
+    FOREIGN KEY (idCargo) REFERENCES Cargo(id)
 );
